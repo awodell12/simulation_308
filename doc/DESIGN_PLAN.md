@@ -22,10 +22,31 @@ This handles most of the "back-end" of the program. It updates the values of the
 - Visualization: This takes the current state of the board and displays it to the user. It will update the display after
  every generation. 
 ## Overview
+![Grid CRC](resources/Grid.PNG)
+![FileReader CRC](resources/FileReader.PNG)
+![Cell CRC](resources/Cell.PNG)
+![](resources/Main.PNG)
+![](resources/Visualizer.PNG)
 
 
 ## User Interface
+###Interaction Panel
+There will be a panel on the left side of the window that has the buttons and menus for user input. 
 
+- Simulation select: Drop down menu with different simulation types
+- Play Button: Moves the simulation along at the selected speed
+- Pause Button: Pauses the automatic changing of generations
+- Speed Slider: Changes the speed at which the simulation moves through generations. 
+- Step Button: Moves to next generation
+
+###Grid Display
+On the right half will be the visualization of the grid with different colors corresponding to different cell states.
+
+
+
+###Bottom display
+Along the bottom of the window there will be panel a that displays the legend, (i.e. what each color in the grid means). 
+This bottom panel can also be used to display error messages to the user if the XML file is bad
 
 ## Design Details
 
