@@ -30,6 +30,7 @@ This handles most of the "back-end" of the program. It updates the values of the
 
 
 ## User Interface
+![User Interface](resources/UI.PNG)
 ###Interaction Panel
 There will be a panel on the left side of the window that has the buttons and menus for user input. 
 
@@ -49,13 +50,34 @@ Along the bottom of the window there will be panel a that displays the legend, (
 This bottom panel can also be used to display error messages to the user if the XML file is bad
 
 ## Design Details
+### Grid 
+
+
+### FileReader
+
+
+### Cell
+
+
+### Main
+
+
+### Visualizer
+
+
+### Use Cases
+1.
+2.
+3.
+4.
+5.
+
 
 
 ## Design Considerations
 
 #### Components
 
-#### Use Cases
 
 
 ## Team Responsibilities
