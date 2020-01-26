@@ -58,7 +58,7 @@ To create the original grid, the main class will construct a new grid, passing i
 initial values for the cells. The grid will be implemented as a 2D array, or possibly a map. 
 The grid will have lookup capabilities in which you pass it a coordinate pair and it will tell return if the cell need
 to be updated by checking the values of the neighboring cells. This method will be able to check if the cell is on an edge.
-If it is then it will adjust which cells to check as neighbors. Since Grid will be an abstract class, implemented by
+If it is then it will adjust which cells to check as neighbors by checking fewer cells. Since Grid will be an abstract class, implemented by
 each class of the five simulations, the implementation of update methods will be slightly different based on the rules of
 each simulation.
 
@@ -82,13 +82,28 @@ through the simulation.
 
 ### Visualizer
 The Visualizer class displays what is read in from the xml file in the Grid class, and updates with each step in the
-Main class.
+Main class. The visualizer class will be responsible for handling input from the user via the buttons and drop-down menu.
+It will need to communicate with the Main simulation class to actually affect these parameters throughout the whole program.
+
 
 ### Use Cases
-1.
-2.
-3.
-4.
+1. We will create a GameOfLifeGrid during configuration. The Grid update method will be called on all cells in the Grid.
+Within the grid the checkNeighbors method will be invoked examining the eight neighbors,and (>4 will be alive) so then the rules will
+be applied to determine the return value of dead. This cell and the new state will be put into a List and after 
+every cell is checked all changed cells, including this will be updated. 
+
+2. When the Grid update method is called there will be a check to determine this is an edge cell being looked at. Based on
+which edge(s) the cell is on, and then only the 5 (or 3) in bounds neighbors will be checked. In this case 2 or 3 of these 
+neighbors are in the on state, so the cell with its next state will be added to the updates List and after all cells are 
+checked for updates this cell will get updated. 
+
+3. After all cells are checked, the List of cells to be updated will be iterated through and all necessary updates will 
+change the current state of the respective cells. After this method completes, the List will be passed to Main and the
+ Visualizer updateDisplay(List) method will be invoked which will change the image for all cells that have been updated. 
+
+4. In the FileReader class the XML Reader will parse this parameter out of the file and then pass it to the grid upon 
+calling the initializeGrid(Game Parameters) method. 
+
 5.
 
 
@@ -101,9 +116,15 @@ Main class.
 
 ## Team Responsibilities
 
- * Team Member #1
+ * Robert Chen
+ primary: Configuration
+ secondary: Simulation
 
- * Team Member #2
+ * Austin Odell
+ primary: Simulation
+ secondary: whatever is lacking
 
- * Team Member #3
+ * Nevzat Sevim
+ primary: Visualization
+ secondary: Simulation
 
