@@ -51,10 +51,16 @@ This bottom panel can also be used to display error messages to the user if the 
 
 ## Design Details
 ### Grid 
+To create the original grid, the main class will construct a new grid, passing in the size of the grid as well as the 
+initial values for the cells. The grid will be implemented as a 2D array, or possibly a map. 
+The grid will have lookup capabilities in which you pass it a coordinate pair and it will tell return if the cell need
+to be updated by checking the values of the neighboring cells. This method will be able to check if the cell is on an edge.
+If it is then it will adjust which cells to check as neighbors. 
 
 
 ### FileReader
-
+Reads in the XML file according to choice chosen by the user via the UI drop-down. It would look up the relevant XML file
+in the resources section then parse through it. Extracts which rule set to use based off game-type. 
 
 ### Cell
 
