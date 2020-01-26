@@ -28,6 +28,9 @@ This handles most of the "back-end" of the program. It updates the values of the
 ![](resources/Main.PNG)
 ![](resources/Visualizer.PNG)
 
+The Grid class is an abstract class that has a subclass for each of the simulation types, which will provide their own
+implementations of rules. Classes and methods will be described in detail in Design Details. Everything else can be
+found in the CRC cards.
 
 ## User Interface
 ![User Interface](resources/UI.PNG)
@@ -55,21 +58,31 @@ To create the original grid, the main class will construct a new grid, passing i
 initial values for the cells. The grid will be implemented as a 2D array, or possibly a map. 
 The grid will have lookup capabilities in which you pass it a coordinate pair and it will tell return if the cell need
 to be updated by checking the values of the neighboring cells. This method will be able to check if the cell is on an edge.
-If it is then it will adjust which cells to check as neighbors. 
+If it is then it will adjust which cells to check as neighbors. Since Grid will be an abstract class, implemented by
+each class of the five simulations, the implementation of update methods will be slightly different based on the rules of
+each simulation.
 
 
 ### FileReader
 Reads in the XML file according to choice chosen by the user via the UI drop-down. It would look up the relevant XML file
-in the resources section then parse through it. Extracts which rule set to use based off game-type. 
+in the resources section then parse through it. Extracts which rule set to use based off game-type. The class interacts
+with the Grid class.
 
 ### Cell
-
+The Cell class is a potential class that we will have. Its responsibilities are to hold its current state, update its
+state, and return its state. The class might also hold an image to represent what is in the cell to help with
+visualization. Because the class isn't very active, we will continue to look for more functionalities of the class.
 
 ### Main
-
+The Main class handles the step function, which represents each frame of the simulation. It does this by invoking a 
+method in the Grid class to analyze each cell and see which ones need to be updated. The Main class also links the
+classes together, so that Visualizer and Grid can communicate with each other to set the display. This will allow the
+visualization to change when the user selects a different simulation type, as well as starting, stopping, and stepping
+through the simulation.
 
 ### Visualizer
-
+The Visualizer class displays what is read in from the xml file in the Grid class, and updates with each step in the
+Main class.
 
 ### Use Cases
 1.
