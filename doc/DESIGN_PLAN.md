@@ -101,18 +101,39 @@ checked for updates this cell will get updated.
 change the current state of the respective cells. After this method completes, the List will be passed to Main and the
  Visualizer updateDisplay(List) method will be invoked which will change the image for all cells that have been updated. 
 
-4. In the FileReader class the XML Reader will parse this parameter out of the file and then pass it to the grid upon 
-calling the initializeGrid(Game Parameters) method. 
+4. In the FileReader class the XML Reader will parse this parameter out of the file (it will have its own unique tags)
+ and then pass it to the grid upon calling the initializeGrid(Game Parameters) method. This will set the parameter within
+ the GameOfLifeGrid.
 
-5.
-
+5. 
+The User will select a different simulation from the drop down menu in the UI. This will trigger an event that causes the 
+Main class to create a new WatorGrid and get rid of the old SegregationGrid. It will get all of the settable parameters 
+through the XML and call the initializeGrid method. The Main will then move into the step method to start stepping through 
+the generations of the simulation. 
 
 
 ## Design Considerations
 
-#### Components
+We need to decide how we set organize the connections between the different classes in order to make it so the Main class
+is able to run any of the game types and the game specific implementation is done in the other classes (mostly the Grid 
+subclasses). 
 
+#### Having the checkNeighbors method in Grid class
+We had to decide if we wanted to have the checkNeighbors method inside the cell class or the grid class. We eventually
+decided to implement this method inside our grid class.
+* pros: The biggest advantage is that conveniently check for every cell inside one class and store the next state of each
+in a separate list before actually updating the cells themselves.
+* cons: The grid class will be responsible for many methods and we fear that it might get a little too convoluted.
 
+#### Having a Cell class
+* pros: We can store images and states of each grid cell independently of the actual grid array. 
+* cons: It introduces another layer of abstraction 
+
+#### Inheritance hierarchy for the Grid class
+
+* pros: It makes it easier to implement multiple types of games without having to change things that are used across all 
+game types. By doing so it reduces code duplication. 
+* cons: None of us have ever used inheritance in this way before so there will be a bit of a learning curve. 
 
 ## Team Responsibilities
 
