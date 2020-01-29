@@ -133,7 +133,7 @@ in a separate list before actually updating the cells themselves.
 
 * pros: It makes it easier to implement multiple types of games without having to change things that are used across all 
 game types. By doing so it reduces code duplication. 
-* cons: None of us have ever used inheritance in this way before so there will be a bit of a learning curve. 
+* cons: None of us have ever used inheritance in this way before so there will be a bit of a learning curve. c
 
 ## Team Responsibilities
 
