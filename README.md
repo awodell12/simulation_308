@@ -4,7 +4,7 @@ simulation
 This project implements a cellular automata simulator.
 
 Names:
-Robert
+
 ### Timeline
 
 Start Date: 
