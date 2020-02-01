@@ -11,6 +11,11 @@ public abstract class Grid {
     numColumns = cols;
     numRows = rows;
     myCellGrid = new Cell[numColumns][numRows];
+    for (int i = 0; i < numRows; i ++) {
+      for (int j = 0; j < numColumns; j++) {
+        myCellGrid[i][j] = new Cell(0, i, j);
+      }
+    }
   }
 
   public abstract List<Cell> checkForUpdates();
@@ -22,9 +27,25 @@ public abstract class Grid {
    */
   public void updateCells(List<Cell> updateList){
     for (Cell c : updateList){
-      int x = (int) c.getMyXCoordinate();
-      int y = (int) c.getMyYCoordinate();
+      int x = c.getMyXCoordinate();
+      int y = c.getMyYCoordinate();
       myCellGrid[x][y] = c;
     }
+  }
+
+  /**
+   * debug/testing method to print out current states
+   */
+  public void printCells(){
+    for (int i = 0; i < numRows; i ++){
+      for (int j = 0; j < numColumns; j ++){
+        if (myCellGrid[i][j] == null)
+         System.out.print( "x ") ;
+        else
+        System.out.print(myCellGrid[i][j].getMyType() + " ");
+      }
+      System.out.println();
+    }
+    System.out.println();
   }
 }

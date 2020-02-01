@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Cells Types: 0-blocked 1-open 2-Filled
+ * Cells Types: 0-open 1-blocked 2-Filled
  */
 public class PercolationGrid extends Grid {
 
   public static int FILLED = 2;
-  public static int OPEN = 1;
-  public static int BLOCKED = 0;
+  public static int OPEN = 0;
+  public static int BLOCKED = 1;
 
   public PercolationGrid(int cols, int rows) {
     super(cols, rows);
@@ -20,7 +20,7 @@ public class PercolationGrid extends Grid {
   public List<Cell> checkForUpdates() {
     ArrayList<Cell> updateList = new ArrayList<Cell>();
     for (int i = 0; i < numRows ; i ++){
-      for (int j =0; j>numColumns; j++){
+      for (int j = 0; j<numColumns; j++){
         Cell curCell = myCellGrid[i][j];
         if (curCell.getMyType()!=OPEN){
           continue;
@@ -36,9 +36,9 @@ public class PercolationGrid extends Grid {
   private int checkNeighbors(int i, int j) {
     int count =0;
     boolean isTopEdge = (i == 0); //&& j!=0 && j!=numColumns);
-    boolean isBottomEdge = (i == numRows);// && j!=0 && j!=numColumns);
+    boolean isBottomEdge = (i == numRows - 1);// && j!=0 && j!=numColumns);
     boolean isLeftEdge = (j == 0); // && i!= numRows && i != 0);
-    boolean isRightEdge = (j == numColumns); // && i!= numRows && i != 0);
+    boolean isRightEdge = (j == numColumns-1); // && i!= numRows && i != 0);
 
       if (!isLeftEdge && !isTopEdge) if (myCellGrid[i-1][j-1].getMyType() ==2) count ++;
 
@@ -58,7 +58,7 @@ public class PercolationGrid extends Grid {
 
     if (count > 0)
     return FILLED;
-    return 1;
+    return OPEN;
   }
 
 }
