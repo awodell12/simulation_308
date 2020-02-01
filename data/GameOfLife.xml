@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<sim>
+    <data>
+        <type>Game of Life</type>
+        <title>Game of Life</title>
+        <author>Robert Chen</author>
+    </data>
+    <config>
+        <width>10</width>
+        <height>10</height>
+        <numAlive>20</numAlive>
+        <numDead>80</numDead>
+        <deadColor>black</deadColor>
+        <aliveColor>white</aliveColor>
+    </config>
+</sim>
