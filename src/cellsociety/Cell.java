@@ -11,13 +11,11 @@ public class Cell {
     myYCoordinate = y;
   }
 
-  public int getMyType() {
+  public int getType() {
     return myType;
   }
 
-  public void setMyType(int type) {
-    this.myType = type;
-  }
+
   public int getMyXCoordinate(){
     return myXCoordinate;
   }
