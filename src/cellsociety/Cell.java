@@ -3,7 +3,7 @@ package cellsociety;
 
 public class Cell {
   int myType;
-  int  myXCoordinate;
+  int myXCoordinate;
   int myYCoordinate;
   public Cell(int type, int x, int y){
     myType = type;

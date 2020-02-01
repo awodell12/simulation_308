@@ -8,9 +8,11 @@ import java.util.List;
  */
 public class PercolationGrid extends Grid {
 
-  public static int FILLED = 2;
-  public static int OPEN = 0;
-  public static int BLOCKED = 1;
+  public static final int FILLED = 2;
+  public static final int OPEN = 0;
+  public static final int BLOCKED = 1;
+
+  private boolean isPercolated;
 
   public PercolationGrid(int cols, int rows) {
     super(cols, rows);
@@ -19,6 +21,7 @@ public class PercolationGrid extends Grid {
   @Override
   public List<Cell> checkForUpdates() {
     ArrayList<Cell> updateList = new ArrayList<Cell>();
+    if (isPercolated) return updateList;
     for (int i = 0; i < numRows ; i ++){
       for (int j = 0; j<numColumns; j++){
         Cell curCell = myCellGrid[i][j];
