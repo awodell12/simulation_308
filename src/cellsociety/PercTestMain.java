@@ -10,13 +10,14 @@ public class PercTestMain {
      * Start of the program.
      */
     public static void main (String[] args) {
-      Grid myGrid = new PercolationGrid(4,4);
+      Grid myGrid = new GameOfLifeGrid(6,6);
       ArrayList<Cell> arr = new ArrayList<>();
-      arr.add(new Cell(2,0,0));
-      arr.add(new Cell (1,0,1));
-      arr.add(new Cell(0, 1,1));
-      arr.add(new Cell (1,1,0));
+      arr.add(new Cell(1,3,3));
+      arr.add(new Cell (1,4,4));
+      arr.add(new Cell(1, 3,4));
+      arr.add(new Cell (1,5,5));
       myGrid.updateCells(arr);
+      myGrid.printCells();
         for (int i = 0; i < 5; i++){
           myGrid.updateCells(myGrid.checkForUpdates());
           myGrid.printCells();
