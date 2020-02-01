@@ -1,13 +1,14 @@
 package cellsociety;
 
-import javafx.util.Pair;
 
 public class Cell {
   int myType;
-  Pair myCoordinates;
+  int  myXCoordinate;
+  int myYCoordinate;
   public Cell(int type, int x, int y){
     myType = type;
-    myCoordinates = new Pair(x, y);
+    myXCoordinate = x;
+    myYCoordinate = y;
   }
 
   public int getMyType() {
@@ -17,8 +18,11 @@ public class Cell {
   public void setMyType(int type) {
     this.myType = type;
   }
-  public Pair getCoordinates(){
-    return myCoordinates;
+  public int getMyXCoordinate(){
+    return myXCoordinate;
+  }
+  public int getMyYCoordinate(){
+    return myYCoordinate;
   }
 
 }
