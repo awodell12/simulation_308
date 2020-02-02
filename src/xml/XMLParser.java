@@ -5,16 +5,28 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
+
 
 public class XMLParser {
     private final DocumentBuilder DOCUMENT_BUILDER;
 
     public XMLParser () {
         DOCUMENT_BUILDER = getDocumentBuilder();
+    }
+
+    public Configuration getConfiguration (File dataFile) {
+        Element root = getRootElement(dataFile);
+        Map<String, String> results = new HashMap<>();
+        for (String field : Configuration.DATA_FIELDS) {
+            results.put(field, getTextValue(root, field));
+        }
+        return new Configuration(results);
     }
 
     public Element getRootElement (File xmlFile) {
