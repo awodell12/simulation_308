@@ -12,14 +12,12 @@ import org.xml.sax.SAXException;
 
 public class XMLParser {
     private final DocumentBuilder DOCUMENT_BUILDER;
-    // private final String TYPE_ATTRIBUTE;
 
-    public XMLParser (String type) {
+    public XMLParser () {
         DOCUMENT_BUILDER = getDocumentBuilder();
-        // TYPE_ATTRIBUTE = type;
     }
 
-    private Element getRootElement (File xmlFile) {
+    public Element getRootElement (File xmlFile) {
         try {
             DOCUMENT_BUILDER.reset();
             Document xmlDocument = DOCUMENT_BUILDER.parse(xmlFile);
@@ -30,7 +28,7 @@ public class XMLParser {
         }
     }
 
-    private String getTextValue (Element e, String tagName) {
+    public String getTextValue (Element e, String tagName) {
         NodeList nodeList = e.getElementsByTagName(tagName);
         if (nodeList != null && nodeList.getLength() > 0) {
             return nodeList.item(0).getTextContent();
