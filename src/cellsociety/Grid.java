@@ -2,6 +2,10 @@ package cellsociety;
 
 import java.util.List;
 
+/**
+ * By default all cells are initialized to their 0 state. If you want initial states you must call UpdateCells
+ * with a list of non-zero initial cells.
+ */
 public abstract class Grid {
   int numColumns;
   int numRows;
