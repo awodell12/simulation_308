@@ -10,7 +10,7 @@ public abstract class Grid {
   public Grid(int cols, int rows){
     numColumns = cols;
     numRows = rows;
-    myCellGrid = new Cell[numColumns][numRows];
+    myCellGrid = new Cell[numRows][numColumns];
     for (int i = 0; i < numRows; i ++) {
       for (int j = 0; j < numColumns; j++) {
         myCellGrid[i][j] = new Cell(0, i, j);
@@ -42,7 +42,7 @@ public abstract class Grid {
         if (myCellGrid[i][j] == null)
          System.out.print( "x ") ;
         else
-        System.out.print(myCellGrid[i][j].getMyType() + " ");
+        System.out.print(myCellGrid[i][j].getType() + " ");
       }
       System.out.println();
     }
