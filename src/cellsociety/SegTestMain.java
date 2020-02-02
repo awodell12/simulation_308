@@ -10,15 +10,22 @@ public class SegTestMain {
      * Start of the program.
      */
     public static void main (String[] args) {
-      Grid myGrid = new GameOfLifeGrid(3,3);
+      Grid myGrid = new SegregationGrid(3,5, 0.5);
       ArrayList<Cell> arr = new ArrayList<>();
-      arr.add(new Cell(1,3,3));
-      arr.add(new Cell (1,4,4));
-      arr.add(new Cell(1, 3,4));
-      arr.add(new Cell (1,5,5));
+      arr.add(new Cell(1,0,0));
+      arr.add(new Cell (1,0,2));
+      arr.add(new Cell(1, 2,2));
+      arr.add(new Cell(1,2,0));
+      arr.add(new Cell (1,3,2));
+      arr.add(new Cell(1, 4,2));
+      arr.add(new Cell (2,1,0));
+      arr.add(new Cell (2,1,2));
+      arr.add(new Cell (2,2,0));
+      arr.add(new Cell (2,3,2));
+
       myGrid.updateCells(arr);
       myGrid.printCells();
-        for (int i = 0; i < 5; i++){
+        for (int i = 0; i < 3; i++){
           myGrid.updateCells(myGrid.checkForUpdates());
           myGrid.printCells();
       }
