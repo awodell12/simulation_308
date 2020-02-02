@@ -5,12 +5,12 @@ import java.util.ArrayList;
 /**
  * Feel free to completely change this code or delete it entirely. 
  */
-public class PercTestMain {
+public class SegTestMain {
     /**
      * Start of the program.
      */
     public static void main (String[] args) {
-      Grid myGrid = new GameOfLifeGrid(6,6);
+      Grid myGrid = new GameOfLifeGrid(3,3);
       ArrayList<Cell> arr = new ArrayList<>();
       arr.add(new Cell(1,3,3));
       arr.add(new Cell (1,4,4));
