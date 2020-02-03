@@ -26,15 +26,17 @@ public class FireGrid extends Grid {
     for (int i = 0; i < numRows; i++) {
       for (int j = 0; j < numColumns; j++) {
         int curType = myCellGrid[i][j].getType();
-        if (curType == EMPTY) continue;
-        if (curType == BURNING){
-          updateList.add(new Cell(EMPTY,i,j));
+        if (curType == EMPTY) {
+          continue;
+        }
+        if (curType == BURNING) {
+          updateList.add(new Cell(EMPTY, i, j));
           continue;
         }
         hasBurningNeighbor = checkNeighbors(i, j);
-        if (hasBurningNeighbor){
-          if (Math.random()<burnChance){
-            updateList.add(new Cell(BURNING,i,j));
+        if (hasBurningNeighbor) {
+          if (Math.random() < burnChance) {
+            updateList.add(new Cell(BURNING, i, j));
           }
         }
       }
@@ -50,22 +52,30 @@ public class FireGrid extends Grid {
     boolean isLeftEdge = (j == 0); // && i!= numRows && i != 0);
     boolean isRightEdge = (j == numColumns - 1); // && i!= numRows && i != 0);
 
-    if (!isTopEdge)
-      if (myCellGrid[i - 1][j].getType() == BURNING)
+    if (!isTopEdge) {
+      if (myCellGrid[i - 1][j].getType() == BURNING) {
         count++;
+      }
+    }
 
-    if (!isLeftEdge)
-      if (myCellGrid[i][j - 1].getType() == BURNING)
+    if (!isLeftEdge) {
+      if (myCellGrid[i][j - 1].getType() == BURNING) {
         count++;
+      }
+    }
 
-    if (!isRightEdge)
-      if (myCellGrid[i][j + 1].getType() == BURNING)
+    if (!isRightEdge) {
+      if (myCellGrid[i][j + 1].getType() == BURNING) {
         count++;
+      }
+    }
 
-    if (!isBottomEdge)
-      if (myCellGrid[i + 1][j].getType() == BURNING)
+    if (!isBottomEdge) {
+      if (myCellGrid[i + 1][j].getType() == BURNING) {
         count++;
-      return (count > 0);
+      }
+    }
+    return (count > 0);
   }
 
 }
