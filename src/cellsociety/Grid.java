@@ -8,6 +8,7 @@ import javafx.util.Pair;
  * UpdateCells with a list of non-zero initial cells.
  */
 public abstract class Grid {
+
   public final int EMPTY = 0;
   int numColumns;
   int numRows;

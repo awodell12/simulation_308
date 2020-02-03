@@ -34,8 +34,8 @@ public class FireGrid extends Grid {
           updateList.add(new Cell(EMPTY, i, j));
           continue;
         }
-        Pair neighbors = checkLikeNeighbors(i, j,BURNING, true);
-        hasBurningNeighbor = ((int)neighbors.getKey() >= 1);
+        Pair neighbors = checkLikeNeighbors(i, j, BURNING, true);
+        hasBurningNeighbor = ((int) neighbors.getKey() >= 1);
         if (hasBurningNeighbor) {
           if (Math.random() < burnChance) {
             updateList.add(new Cell(BURNING, i, j));
@@ -45,7 +45,6 @@ public class FireGrid extends Grid {
     }
     return updateList;
   }
-
 
 
 }

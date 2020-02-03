@@ -36,10 +36,13 @@ public class PercolationGrid extends Grid {
         if (curCell.getType() != OPEN) {
           continue;
         }
-        Pair neighbors = checkLikeNeighbors(i, j,FILLED, false);
+        Pair neighbors = checkLikeNeighbors(i, j, FILLED, false);
         boolean fillUp = (int) neighbors.getKey() > 0;
-        if (fillUp)newType = FILLED;
-        else newType = OPEN;
+        if (fillUp) {
+          newType = FILLED;
+        } else {
+          newType = OPEN;
+        }
         if (newType == FILLED) {
           updateList.add(new Cell(newType, i, j));
           if (j == numColumns - 1) {
