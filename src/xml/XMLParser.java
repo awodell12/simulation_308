@@ -46,9 +46,13 @@ public class XMLParser {
                 if (stringType.equals("typeOne")) {
                     intType = 1;
                 }
-                else {
+                else if (stringType.equals("typeTwo")) {
                     intType = 2;
                 }
+                else if (stringType.equals("typeZero")){
+                    intType = 0;
+                }
+                else intType=0;
                 coordinates.put(stringToPoint(coordinate), intType);
             }
         }
