@@ -14,7 +14,4 @@
         <coordinate>3,4</coordinate>
         <coordinate>5,5</coordinate>
     </typeOne>
-    <typeTwo>
-        <coordinate>3,0</coordinate>
-    </typeTwo>
 </sim>

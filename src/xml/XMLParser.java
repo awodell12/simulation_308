@@ -83,14 +83,6 @@ public class XMLParser {
         return new Point(Integer.parseInt(coords[0]), Integer.parseInt(coords[1]));
     }
 
-    /*
-    public Point getPointValue (Element e, String tagName) {
-        String value = getTextValue(e, tagName);
-        String[] coords = value.split(",");
-        return new Point(Integer.parseInt(coords[0]), Integer.parseInt(coords[1]));
-    }
-     */
-
     private DocumentBuilder getDocumentBuilder () {
         try {
             return DocumentBuilderFactory.newInstance().newDocumentBuilder();

@@ -1,5 +1,8 @@
 package cellsociety;
 
+import xml.Configuration;
+import xml.XMLParser;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -13,6 +16,12 @@ import java.util.ArrayList;
 import static java.awt.Font.BOLD;
 
 public class simulationPanel extends JPanel implements ActionListener {
+
+    public static final String PERCOLATION = "data/Percolation.xml";
+    public static final String GAME_OF_LIFE = "data/GameOfLife.xml";
+    public static final String FIRE = "data/Fire.xml";
+    public static final String SEGREGATION = "data/Segregation.xml";
+    private Configuration config;
 
     // Create text
     String txt = "<html><h1 align='center'>Choose Simulation</h1>";
@@ -46,7 +55,9 @@ public class simulationPanel extends JPanel implements ActionListener {
     // Set Panel Variables
     private int width = Main.frameWidth;
     private int height = Main.frameHeight;
-    public static int cols = 15, rows = 15;
+
+    public static int cols = 6, rows = 6;
+
     public float cellWidth = 750/cols;
     public float cellHeight = 750/rows;
 
@@ -55,8 +66,7 @@ public class simulationPanel extends JPanel implements ActionListener {
     private int threadSpeed = 500;
 
     //Create Initial Grids
-    Grid mainGrid;
-    Grid percGrid = new PercolationGrid(cols,rows);
+    private Grid mainGrid;
 
     ArrayList<Cell> cellsArray = new ArrayList<>();
 
@@ -96,10 +106,6 @@ public class simulationPanel extends JPanel implements ActionListener {
 
         buttonChecker();
 
-        //Test Grid
-        cellsArray.add(new Cell(2,0,0));
-        percGrid.updateCells(cellsArray);
-
         thread = new Thread(() -> {
             while (true) {
                 update();
@@ -131,17 +137,36 @@ public class simulationPanel extends JPanel implements ActionListener {
     }
 
     private void buttonChecker() {
-        fireButton.addActionListener(listener -> { mainGrid = percGrid; fire=true;});
-        segButton.addActionListener(listener ->  { mainGrid = percGrid; seg=true;});
-        lifeButton.addActionListener(listener -> { mainGrid = percGrid; life=true;});
-        preyButton.addActionListener(listener -> { mainGrid = percGrid; prey=true;});
-        percButton.addActionListener(listener -> { mainGrid = percGrid; perc=true;});
+        fireButton.addActionListener(listener -> { fire=true; createGridFromXML(FIRE); perc = life = prey = seg = false; play =false;});
+        segButton.addActionListener(listener ->  { seg=true;  createGridFromXML(SEGREGATION); perc = life = prey = fire = false; play =false;});
+        lifeButton.addActionListener(listener -> { life=true; createGridFromXML(GAME_OF_LIFE); perc = prey = fire = seg = false; play =false;});
+        //preyButton.addActionListener(listener -> { prey=true; createGridFromXML(FIRE); perc = life = fire = seg = false; play =false;});
+        percButton.addActionListener(listener -> { perc=true; createGridFromXML(PERCOLATION); life = prey = fire = seg = false; play =false;});
 
         playButton.addActionListener(listener -> { play = !play; });
         stepButton.addActionListener(listener -> { step = !step; });
 
         speedUpButton.addActionListener(listener -> { if(threadSpeed > 200){ threadSpeed-= 100;} });
         speedDownButton.addActionListener(listener -> { if(threadSpeed < 1500){ threadSpeed+= 100;} });
+    }
+
+    private void createGridFromXML(String file) {
+        XMLParser myParser = new XMLParser();
+        config = myParser.getConfiguration(new File(file));
+
+        cols = config.getWidth();
+        rows = config.getHeight();
+
+        if (file.equals(PERCOLATION)) { mainGrid = new PercolationGrid(cols, rows); }
+        else if (file.equals(GAME_OF_LIFE)) { mainGrid = new GameOfLifeGrid(cols, rows); }
+        else if (file.equals(FIRE)) { mainGrid = new FireGrid(cols, rows, 0.5); } // TODO: Change so this is in XML file
+        else if (file.equals(SEGREGATION)) { mainGrid = new SegregationGrid(cols, rows, 0.5) ; } // TODO: ^^
+
+
+        for (Point p : config.getCellCoordinates().keySet()) {
+            cellsArray.add(new Cell(config.getCellCoordinates().get(p), p.x, p.y));
+        }
+        mainGrid.updateCells(cellsArray);
     }
 
     public void paintComponent (Graphics g) {
