@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <sim>
     <data>
-        <type>Game of Life</type>
-        <title>Game of Life</title>
+        <type>Fire</type>
+        <title>Spreading of Fire</title>
         <author>Robert Chen</author>
     </data>
     <config>
@@ -10,11 +10,11 @@
         <height>6</height>
     </config>
     <typeOne>
-        <coordinate>4,4</coordinate>
-        <coordinate>3,4</coordinate>
         <coordinate>5,5</coordinate>
     </typeOne>
     <typeTwo>
+        <coordinate>3,3</coordinate>
+        <coordinate>3,4</coordinate>
         <coordinate>3,0</coordinate>
     </typeTwo>
 </sim>
