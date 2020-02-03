@@ -56,7 +56,7 @@ public class simulationPanel extends JPanel implements ActionListener {
     // Set Panel Variables
     private int width = Main.frameWidth;
     private int height = Main.frameHeight;
-    public static int cols = 5, rows = 5;
+    public static int cols = 6, rows = 6;
     public float cellWidth = 750/cols;
     public float cellHeight = 750/rows;
 
@@ -65,8 +65,8 @@ public class simulationPanel extends JPanel implements ActionListener {
     private int threadSpeed = 500;
 
     //Create Initial Grids
-    Grid mainGrid;
-    Grid percGrid = new PercolationGrid(cols,rows);
+    private Grid mainGrid;
+    private Grid percGrid;
 
     ArrayList<Cell> cellsArray = new ArrayList<>();
 
@@ -98,32 +98,22 @@ public class simulationPanel extends JPanel implements ActionListener {
         this.add(speedDownButton);
         this.add(speedUpButton);
         this.setBackground(Color.getHSBColor(100, 100, 100));
-/*
+
         //Read in xml File
         XMLParser myParser = new XMLParser();
         config = myParser.getConfiguration(new File(PERCOLATION));
 
-        Grid myGrid = new PercolationGrid(config.getWidth(),config.getHeight());
-        ArrayList<Cell> arr = new ArrayList<>();
+        cols = config.getWidth();
+        rows = config.getHeight();
+
+        percGrid = new PercolationGrid(cols, rows);
 
         for (Point p : config.getCellCoordinates().keySet()) {
-            arr.add(new Cell(config.getCellCoordinates().get(p), p.x, p.y));
+            cellsArray.add(new Cell(config.getCellCoordinates().get(p), p.x, p.y));
         }
-
-        myGrid.updateCells(arr);
-        myGrid.printCells();
-        for (int i = 0; i < 5; i++){
-            myGrid.updateCells(myGrid.checkForUpdates());
-            myGrid.printCells();
-        }
-
- */
+        percGrid.updateCells(cellsArray);
 
         buttonChecker();
-
-        //Test Grid
-        cellsArray.add(new Cell(2,0,0));
-        percGrid.updateCells(cellsArray);
 
         thread = new Thread(() -> {
             while (true) {
