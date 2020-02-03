@@ -56,18 +56,17 @@ public class simulationPanel extends JPanel implements ActionListener {
     // Set Panel Variables
     private int width = Main.frameWidth;
     private int height = Main.frameHeight;
-    public static int cols = 4, rows = 4;
+    public static int cols = 5, rows = 5;
     public float cellWidth = 750/cols;
     public float cellHeight = 750/rows;
 
     //Set Panel Thread
     Thread thread;
-    private int[] threadSpeed = {200,400,500,600,700,800,1000};
-    private int speedIndex = 2;
+    private int threadSpeed = 500;
 
     //Create Initial Grids
     Grid mainGrid;
-    Grid percGrid = new PercolationGrid(4,4);
+    Grid percGrid = new PercolationGrid(cols,rows);
 
     ArrayList<Cell> cellsArray = new ArrayList<>();
 
@@ -120,6 +119,8 @@ public class simulationPanel extends JPanel implements ActionListener {
 
  */
 
+        buttonChecker();
+
         //Test Grid
         cellsArray.add(new Cell(2,0,0));
         percGrid.updateCells(cellsArray);
@@ -128,7 +129,7 @@ public class simulationPanel extends JPanel implements ActionListener {
             while (true) {
                 update();
                 try {
-                    Thread.sleep(threadSpeed[speedIndex]);
+                    Thread.sleep(threadSpeed);
                 } catch (InterruptedException err) {
                     err.printStackTrace();
                 }
@@ -139,13 +140,12 @@ public class simulationPanel extends JPanel implements ActionListener {
 
     public void update() {
         if(play) {
-            mainGrid.updateCells(percGrid.checkForUpdates());
+            mainGrid.updateCells(mainGrid.checkForUpdates());
         }
         if(step & !play){
-            mainGrid.updateCells(percGrid.checkForUpdates());
+            mainGrid.updateCells(mainGrid.checkForUpdates());
             step = !step;
         }
-        buttonChecker();
         repaint();
     }
 
@@ -159,8 +159,8 @@ public class simulationPanel extends JPanel implements ActionListener {
         playButton.addActionListener(listener -> { play = !play; });
         stepButton.addActionListener(listener -> { step = !step; });
 
-        speedUpButton.addActionListener(listener -> { if(speedIndex > 0){ speedIndex++;} });
-        speedUpButton.addActionListener(listener -> { if(speedIndex < 6){ speedIndex--;} });
+        speedUpButton.addActionListener(listener -> { if(threadSpeed > 100){ threadSpeed-= 100;} });
+        speedDownButton.addActionListener(listener -> { if(threadSpeed < 1500){ threadSpeed+= 100;} });
     }
 
     public void paintComponent (Graphics g) {
@@ -174,6 +174,7 @@ public class simulationPanel extends JPanel implements ActionListener {
                         e.printStackTrace();
                     }
                     mainGrid.myCellGrid[i][j].draw(g, this);
+                    //System.out.println(threadSpeed);
                 }
             }
         }
@@ -181,14 +182,17 @@ public class simulationPanel extends JPanel implements ActionListener {
 
     public void imageDecider (Cell x) throws IOException {
         if(perc){
-            if(x.myType == 0){
-                x.pic = ImageIO.read(new File("src/images/minus.png"));
+            if(x.myType == 0 & x.pic_name != "dog"){
+                x.pic = ImageIO.read(new File("src/images/shark_frame.png"));
+                x.pic_name = "dog";
             }
-            if(x.myType == 1){
-                x.pic = ImageIO.read(new File("src/images/plus.png"));
+            if(x.myType == 1 & x.pic_name != "cat"){
+                x.pic = ImageIO.read(new File("src/images/black.png"));
+                x.pic_name = "cat";
             }
-            if(x.myType == 2){
-                x.pic = ImageIO.read(new File("src/images/play.png"));
+            if(x.myType == 2 & x.pic_name != "hat"){
+                x.pic = ImageIO.read(new File("src/images/fish_frame.png"));
+                x.pic_name = "hat";
             }
         }
     }

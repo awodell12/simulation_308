@@ -38,7 +38,7 @@ public class Main {
         simframe.setResizable(false);
 
 
-        Grid myGrid = new PercolationGrid(4,4);
+        Grid myGrid = new PercolationGrid(10,10);
         ArrayList<Cell> cellsArray = new ArrayList<>();
         cellsArray.add(new Cell(2,0,0));
         myGrid.updateCells(cellsArray);

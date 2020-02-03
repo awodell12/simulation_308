@@ -11,6 +11,7 @@ public class Cell {
   public int myX;
   public int myY;
   Image pic;
+  String pic_name;
   int myAge;
   int timeSinceEat;
 
