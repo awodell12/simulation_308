@@ -2,10 +2,14 @@ package cellsociety;
 
 
 public class Cell {
-  int myType;
-  int myXCoordinate;
-  int myYCoordinate;
-  public Cell(int type, int x, int y){
+
+  private int myType;
+  private int myXCoordinate;
+  private int myYCoordinate;
+  int myAge;
+  int timeSinceEat;
+
+  public Cell(int type, int x, int y) {
     myType = type;
     myXCoordinate = x;
     myYCoordinate = y;
@@ -15,12 +19,13 @@ public class Cell {
     return myType;
   }
 
-
-  public int getMyXCoordinate(){
+  public int getMyXCoordinate() {
     return myXCoordinate;
   }
-  public int getMyYCoordinate(){
+
+  public int getMyYCoordinate() {
     return myYCoordinate;
   }
+
 
 }
