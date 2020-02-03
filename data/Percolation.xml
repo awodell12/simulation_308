@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<sim>
+    <data>
+        <type>Percolation</type>
+        <title>Percolation</title>
+        <author>Robert Chen</author>
+    </data>
+    <config>
+        <width>6</width>
+        <height>6</height>
+    </config>
+    <typeOne>
+        <coordinate>4,4</coordinate>
+        <coordinate>3,4</coordinate>
+        <coordinate>5,5</coordinate>
+    </typeOne>
+    <typeTwo>
+        <coordinate>3,0</coordinate>
+    </typeTwo>
+</sim>

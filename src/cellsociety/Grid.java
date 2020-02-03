@@ -1,6 +1,7 @@
 package cellsociety;
 
 import java.util.List;
+import javafx.util.Pair;
 
 /**
  * By default all cells are initialized to their 0 state. If you want initial states you must call
@@ -8,6 +9,7 @@ import java.util.List;
  */
 public abstract class Grid {
 
+  public final int EMPTY = 0;
   int numColumns;
   int numRows;
   Cell[][] myCellGrid;
@@ -18,7 +20,7 @@ public abstract class Grid {
     myCellGrid = new Cell[numRows][numColumns];
     for (int i = 0; i < numRows; i++) {
       for (int j = 0; j < numColumns; j++) {
-        myCellGrid[i][j] = new Cell(0, i, j);
+        myCellGrid[i][j] = new Cell(EMPTY, i, j);
       }
     }
   }
@@ -54,5 +56,81 @@ public abstract class Grid {
       System.out.println();
     }
     System.out.println();
+  }
+
+  Pair checkLikeNeighbors(int i, int j, int type, boolean onlyFourNeighbors) {
+    int similarCount = 0;
+    int neighborCount = 0;
+    boolean isTopEdge = (i == 0); //&& j!=0 && j!=numColumns);
+    boolean isBottomEdge = (i == numRows - 1);// && j!=0 && j!=numColumns);
+    boolean isLeftEdge = (j == 0); // && i!= numRows && i != 0);
+    boolean isRightEdge = (j == numColumns - 1); // && i!= numRows && i != 0);
+
+    if (!isLeftEdge && !isTopEdge && !onlyFourNeighbors) {
+      if (myCellGrid[i - 1][j - 1].myType == type) {
+        similarCount++;
+      }
+      if (myCellGrid[i - 1][j - 1].myType != EMPTY) {
+        neighborCount++;
+      }
+    }
+    if (!isTopEdge) {
+      if (myCellGrid[i - 1][j].myType == type) {
+        similarCount++;
+      }
+      if (myCellGrid[i - 1][j].myType != EMPTY) {
+        neighborCount++;
+      }
+    }
+    if (!isTopEdge && !isRightEdge && !onlyFourNeighbors) {
+      if (myCellGrid[i - 1][j + 1].myType == type) {
+        similarCount++;
+      }
+      if (myCellGrid[i - 1][j + 1].myType != EMPTY) {
+        neighborCount++;
+      }
+    }
+    if (!isLeftEdge) {
+      if (myCellGrid[i][j - 1].myType == type) {
+        similarCount++;
+      }
+      if (myCellGrid[i][j - 1].myType != EMPTY) {
+        neighborCount++;
+      }
+    }
+    if (!isRightEdge) {
+      if (myCellGrid[i][j + 1].myType == type) {
+        similarCount++;
+      }
+      if (myCellGrid[i][j + 1].myType != EMPTY) {
+        neighborCount++;
+      }
+    }
+    if (!isBottomEdge && !isLeftEdge && !onlyFourNeighbors) {
+      if (myCellGrid[i + 1][j - 1].myType == type) {
+        similarCount++;
+      }
+      if (myCellGrid[i + 1][j - 1].myType != EMPTY) {
+        neighborCount++;
+      }
+    }
+    if (!isBottomEdge) {
+      if (myCellGrid[i + 1][j].myType == type) {
+        similarCount++;
+      }
+      if (myCellGrid[i + 1][j].myType != EMPTY) {
+        neighborCount++;
+      }
+    }
+    if (!isBottomEdge && !isRightEdge && !onlyFourNeighbors) {
+      if (myCellGrid[i + 1][j + 1].myType == type) {
+        similarCount++;
+      }
+      if (myCellGrid[i + 1][j + 1].myType != EMPTY) {
+        neighborCount++;
+      }
+    }
+
+    return new Pair(similarCount, neighborCount);
   }
 }

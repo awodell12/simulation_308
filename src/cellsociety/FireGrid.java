@@ -2,6 +2,7 @@ package cellsociety;
 
 import java.util.ArrayList;
 import java.util.List;
+import javafx.util.Pair;
 
 /**
  * Cells Types: 0-Tree 1-Burning 2-Empty
@@ -33,7 +34,8 @@ public class FireGrid extends Grid {
           updateList.add(new Cell(EMPTY, i, j));
           continue;
         }
-        hasBurningNeighbor = checkNeighbors(i, j);
+        Pair neighbors = checkLikeNeighbors(i, j, BURNING, true);
+        hasBurningNeighbor = ((int) neighbors.getKey() >= 1);
         if (hasBurningNeighbor) {
           if (Math.random() < burnChance) {
             updateList.add(new Cell(BURNING, i, j));
@@ -44,38 +46,6 @@ public class FireGrid extends Grid {
     return updateList;
   }
 
-  private boolean checkNeighbors(int i, int j) {
 
-    int count = 0;
-    boolean isTopEdge = (i == 0); //&& j!=0 && j!=numColumns);
-    boolean isBottomEdge = (i == numRows - 1);// && j!=0 && j!=numColumns);
-    boolean isLeftEdge = (j == 0); // && i!= numRows && i != 0);
-    boolean isRightEdge = (j == numColumns - 1); // && i!= numRows && i != 0);
-
-    if (!isTopEdge) {
-      if (myCellGrid[i - 1][j].myType == BURNING) {
-        count++;
-      }
-    }
-
-    if (!isLeftEdge) {
-      if (myCellGrid[i][j - 1].myType == BURNING) {
-        count++;
-      }
-    }
-
-    if (!isRightEdge) {
-      if (myCellGrid[i][j + 1].myType == BURNING) {
-        count++;
-      }
-    }
-
-    if (!isBottomEdge) {
-      if (myCellGrid[i + 1][j].myType == BURNING) {
-        count++;
-      }
-    }
-    return (count > 0);
-  }
 
 }
