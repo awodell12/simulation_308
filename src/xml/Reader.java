@@ -1,5 +1,6 @@
 package xml;
 
+import java.awt.Point;
 import java.io.File;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -9,8 +10,6 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.FileChooser.ExtensionFilter;
 
-import org.w3c.dom.Element;
-
 public class Reader extends Application {
 
     public static final String DATA_FILE_EXTENSION = "*.xml";
@@ -19,13 +18,16 @@ public class Reader extends Application {
     private Configuration config;
 
     @Override
-    public void start (Stage primaryStage) throws Exception {
+    public void start (Stage primaryStage) {
         File dataFile = FILE_CHOOSER.showOpenDialog(primaryStage);
         while (dataFile != null) {
             try {
                 XMLParser myParser = new XMLParser();
                 config = myParser.getConfiguration(dataFile);
-                System.out.print(config.getHeight());
+                for (Point key : config.getCellCoordinates().keySet()) {
+                    System.out.print(key);
+                    System.out.println(config.getCellCoordinates().get(key));
+                }
             }
             catch (XMLException e) {
                 // handle error of unexpected file format
