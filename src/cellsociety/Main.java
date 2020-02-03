@@ -37,7 +37,7 @@ public class Main {
         simframe.setVisible(true);
         simframe.setResizable(false);
 
-
+/*
         Grid myGrid = new PercolationGrid(10,10);
         ArrayList<Cell> cellsArray = new ArrayList<>();
         cellsArray.add(new Cell(2,0,0));
@@ -46,6 +46,8 @@ public class Main {
             myGrid.updateCells(myGrid.checkForUpdates());
             myGrid.printCells();
         }
+
+ */
     }
 }
 
