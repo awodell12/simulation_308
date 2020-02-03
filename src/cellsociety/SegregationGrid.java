@@ -23,7 +23,7 @@ public class SegregationGrid extends Grid {
     ArrayList<Pair> emptyCells = findEmptyCells();
     for (int i = 0; i < numRows; i++) {
       for (int j = 0; j < numColumns; j++) {
-        int curType = myCellGrid[i][j].getType();
+        int curType = myCellGrid[i][j].myType;
         if (curType == EMPTY) {
           continue;
         }
@@ -52,7 +52,7 @@ public class SegregationGrid extends Grid {
     ArrayList<Pair> emptyCells = new ArrayList<>();
     for (int i = 0; i < numRows; i++) {
       for (int j = 0; j < numColumns; j++) {
-        int curType = myCellGrid[i][j].getType();
+        int curType = myCellGrid[i][j].myType;
         if (curType == EMPTY) {
           emptyCells.add(new Pair(i, j));
         }
@@ -60,6 +60,7 @@ public class SegregationGrid extends Grid {
     }
     return emptyCells;
   }
+
 
 
 }

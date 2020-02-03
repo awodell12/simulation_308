@@ -26,7 +26,7 @@ public class FireGrid extends Grid {
     boolean hasBurningNeighbor;
     for (int i = 0; i < numRows; i++) {
       for (int j = 0; j < numColumns; j++) {
-        int curType = myCellGrid[i][j].getType();
+        int curType = myCellGrid[i][j].myType;
         if (curType == EMPTY) {
           continue;
         }
@@ -45,6 +45,7 @@ public class FireGrid extends Grid {
     }
     return updateList;
   }
+
 
 
 }

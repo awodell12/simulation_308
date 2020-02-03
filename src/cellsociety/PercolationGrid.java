@@ -33,7 +33,7 @@ public class PercolationGrid extends Grid {
     for (int i = 0; i < numRows; i++) {
       for (int j = 0; j < numColumns; j++) {
         Cell curCell = myCellGrid[i][j];
-        if (curCell.getType() != OPEN) {
+        if (curCell.myType != OPEN) {
           continue;
         }
         Pair neighbors = checkLikeNeighbors(i, j, FILLED, false);
