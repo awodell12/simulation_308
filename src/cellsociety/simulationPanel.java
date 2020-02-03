@@ -1,5 +1,8 @@
 package cellsociety;
 
+import xml.Configuration;
+import xml.XMLParser;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -13,6 +16,12 @@ import java.util.ArrayList;
 import static java.awt.Font.BOLD;
 
 public class simulationPanel extends JPanel implements ActionListener {
+
+    public static final String PERCOLATION = "data/Percolation.xml";
+    public static final String GAME_OF_LIFE = "data/GameOfLife.xml";
+    public static final String FIRE = "data/Fire.xml";
+    public static final String Segregation = "data/Segregation.xml";
+    private Configuration config;
 
     // Create text
     String txt = "<html><h1 align='center'>Choose Simulation</h1>";
@@ -90,6 +99,26 @@ public class simulationPanel extends JPanel implements ActionListener {
         this.add(speedDownButton);
         this.add(speedUpButton);
         this.setBackground(Color.getHSBColor(100, 100, 100));
+/*
+        //Read in xml File
+        XMLParser myParser = new XMLParser();
+        config = myParser.getConfiguration(new File(PERCOLATION));
+
+        Grid myGrid = new PercolationGrid(config.getWidth(),config.getHeight());
+        ArrayList<Cell> arr = new ArrayList<>();
+
+        for (Point p : config.getCellCoordinates().keySet()) {
+            arr.add(new Cell(config.getCellCoordinates().get(p), p.x, p.y));
+        }
+
+        myGrid.updateCells(arr);
+        myGrid.printCells();
+        for (int i = 0; i < 5; i++){
+            myGrid.updateCells(myGrid.checkForUpdates());
+            myGrid.printCells();
+        }
+
+ */
 
         //Test Grid
         cellsArray.add(new Cell(2,0,0));
