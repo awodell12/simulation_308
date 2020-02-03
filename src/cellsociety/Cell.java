@@ -1,24 +1,31 @@
 package cellsociety;
 
-import javafx.util.Pair;
 
 public class Cell {
-  int myType;
-  Pair myCoordinates;
-  public Cell(int type, int x, int y){
+
+  private int myType;
+  private int myXCoordinate;
+  private int myYCoordinate;
+  int myAge;
+  int timeSinceEat;
+
+  public Cell(int type, int x, int y) {
     myType = type;
-    myCoordinates = new Pair(x, y);
+    myXCoordinate = x;
+    myYCoordinate = y;
   }
 
-  public int getMyType() {
+  public int getType() {
     return myType;
   }
 
-  public void setMyType(int type) {
-    this.myType = type;
+  public int getMyXCoordinate() {
+    return myXCoordinate;
   }
-  public Pair getCoordinates(){
-    return myCoordinates;
+
+  public int getMyYCoordinate() {
+    return myYCoordinate;
   }
+
 
 }
