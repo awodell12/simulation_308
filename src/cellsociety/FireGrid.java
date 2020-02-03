@@ -25,7 +25,7 @@ public class FireGrid extends Grid {
     boolean hasBurningNeighbor;
     for (int i = 0; i < numRows; i++) {
       for (int j = 0; j < numColumns; j++) {
-        int curType = myCellGrid[i][j].getType();
+        int curType = myCellGrid[i][j].myType;
         if (curType == EMPTY) {
           continue;
         }
@@ -53,25 +53,25 @@ public class FireGrid extends Grid {
     boolean isRightEdge = (j == numColumns - 1); // && i!= numRows && i != 0);
 
     if (!isTopEdge) {
-      if (myCellGrid[i - 1][j].getType() == BURNING) {
+      if (myCellGrid[i - 1][j].myType == BURNING) {
         count++;
       }
     }
 
     if (!isLeftEdge) {
-      if (myCellGrid[i][j - 1].getType() == BURNING) {
+      if (myCellGrid[i][j - 1].myType == BURNING) {
         count++;
       }
     }
 
     if (!isRightEdge) {
-      if (myCellGrid[i][j + 1].getType() == BURNING) {
+      if (myCellGrid[i][j + 1].myType == BURNING) {
         count++;
       }
     }
 
     if (!isBottomEdge) {
-      if (myCellGrid[i + 1][j].getType() == BURNING) {
+      if (myCellGrid[i + 1][j].myType == BURNING) {
         count++;
       }
     }

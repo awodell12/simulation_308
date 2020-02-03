@@ -26,7 +26,7 @@ public class GameOfLifeGrid extends Grid {
         } else {
           newType = DEAD;
         }
-        if (newType != curCell.getType()) {
+        if (newType != curCell.myType) {
           updateList.add(new Cell(newType, i, j));
         }
       }
@@ -42,49 +42,49 @@ public class GameOfLifeGrid extends Grid {
     boolean isRightEdge = (j == numColumns - 1); // && i!= numRows && i != 0);
 
     if (!isLeftEdge && !isTopEdge) {
-      if (myCellGrid[i - 1][j - 1].getType() == ALIVE) {
+      if (myCellGrid[i - 1][j - 1].myType == ALIVE) {
         count++;
       }
     }
 
     if (!isTopEdge) {
-      if (myCellGrid[i - 1][j].getType() == ALIVE) {
+      if (myCellGrid[i - 1][j].myType == ALIVE) {
         count++;
       }
     }
 
     if (!isTopEdge && !isRightEdge) {
-      if (myCellGrid[i - 1][j + 1].getType() == ALIVE) {
+      if (myCellGrid[i - 1][j + 1].myType == ALIVE) {
         count++;
       }
     }
 
     if (!isLeftEdge) {
-      if (myCellGrid[i][j - 1].getType() == ALIVE) {
+      if (myCellGrid[i][j - 1].myType == ALIVE) {
         count++;
       }
     }
 
     if (!isRightEdge) {
-      if (myCellGrid[i][j + 1].getType() == ALIVE) {
+      if (myCellGrid[i][j + 1].myType == ALIVE) {
         count++;
       }
     }
 
     if (!isBottomEdge && !isLeftEdge) {
-      if (myCellGrid[i + 1][j - 1].getType() == ALIVE) {
+      if (myCellGrid[i + 1][j - 1].myType == ALIVE) {
         count++;
       }
     }
 
     if (!isBottomEdge) {
-      if (myCellGrid[i + 1][j].getType() == ALIVE) {
+      if (myCellGrid[i + 1][j].myType == ALIVE) {
         count++;
       }
     }
 
     if (!isBottomEdge && !isRightEdge) {
-      if (myCellGrid[i + 1][j + 1].getType() == ALIVE) {
+      if (myCellGrid[i + 1][j + 1].myType == ALIVE) {
         count++;
       }
     }

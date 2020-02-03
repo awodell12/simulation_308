@@ -23,7 +23,7 @@ public class SegregationGrid extends Grid {
     ArrayList<Pair> emptyCells = findEmptyCells();
     for (int i = 0; i < numRows; i++) {
       for (int j = 0; j < numColumns; j++) {
-        int curType = myCellGrid[i][j].getType();
+        int curType = myCellGrid[i][j].myType;
         if (curType == EMPTY) {
           continue;
         }
@@ -52,7 +52,7 @@ public class SegregationGrid extends Grid {
     ArrayList<Pair> emptyCells = new ArrayList<>();
     for (int i = 0; i < numRows; i++) {
       for (int j = 0; j < numColumns; j++) {
-        int curType = myCellGrid[i][j].getType();
+        int curType = myCellGrid[i][j].myType;
         if (curType == EMPTY) {
           emptyCells.add(new Pair(i, j));
         }
@@ -70,66 +70,66 @@ public class SegregationGrid extends Grid {
     boolean isRightEdge = (j == numColumns - 1); // && i!= numRows && i != 0);
 
     if (!isLeftEdge && !isTopEdge) {
-      if (myCellGrid[i - 1][j - 1].getType() == type) {
+      if (myCellGrid[i - 1][j - 1].myType == type) {
         similarCount++;
       }
-      if (myCellGrid[i - 1][j - 1].getType() != EMPTY) {
+      if (myCellGrid[i - 1][j - 1].myType != EMPTY) {
         neighborCount++;
       }
     }
     if (!isTopEdge) {
-      if (myCellGrid[i - 1][j].getType() == type) {
+      if (myCellGrid[i - 1][j].myType == type) {
         similarCount++;
       }
-      if (myCellGrid[i - 1][j].getType() != EMPTY) {
+      if (myCellGrid[i - 1][j].myType != EMPTY) {
         neighborCount++;
       }
     }
     if (!isTopEdge && !isRightEdge) {
-      if (myCellGrid[i - 1][j + 1].getType() == type) {
+      if (myCellGrid[i - 1][j + 1].myType == type) {
         similarCount++;
       }
-      if (myCellGrid[i - 1][j + 1].getType() != EMPTY) {
+      if (myCellGrid[i - 1][j + 1].myType != EMPTY) {
         neighborCount++;
       }
     }
     if (!isLeftEdge) {
-      if (myCellGrid[i][j - 1].getType() == type) {
+      if (myCellGrid[i][j - 1].myType == type) {
         similarCount++;
       }
-      if (myCellGrid[i][j - 1].getType() != EMPTY) {
+      if (myCellGrid[i][j - 1].myType != EMPTY) {
         neighborCount++;
       }
     }
     if (!isRightEdge) {
-      if (myCellGrid[i][j + 1].getType() == type) {
+      if (myCellGrid[i][j + 1].myType == type) {
         similarCount++;
       }
-      if (myCellGrid[i][j + 1].getType() != EMPTY) {
+      if (myCellGrid[i][j + 1].myType != EMPTY) {
         neighborCount++;
       }
     }
     if (!isBottomEdge && !isLeftEdge) {
-      if (myCellGrid[i + 1][j - 1].getType() == type) {
+      if (myCellGrid[i + 1][j - 1].myType == type) {
         similarCount++;
       }
-      if (myCellGrid[i + 1][j - 1].getType() != EMPTY) {
+      if (myCellGrid[i + 1][j - 1].myType != EMPTY) {
         neighborCount++;
       }
     }
     if (!isBottomEdge) {
-      if (myCellGrid[i + 1][j].getType() == type) {
+      if (myCellGrid[i + 1][j].myType == type) {
         similarCount++;
       }
-      if (myCellGrid[i + 1][j].getType() != EMPTY) {
+      if (myCellGrid[i + 1][j].myType != EMPTY) {
         neighborCount++;
       }
     }
     if (!isBottomEdge && !isRightEdge) {
-      if (myCellGrid[i + 1][j + 1].getType() == type) {
+      if (myCellGrid[i + 1][j + 1].myType == type) {
         similarCount++;
       }
-      if (myCellGrid[i + 1][j + 1].getType() != EMPTY) {
+      if (myCellGrid[i + 1][j + 1].myType != EMPTY) {
         neighborCount++;
       }
     }

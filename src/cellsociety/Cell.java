@@ -1,31 +1,33 @@
 package cellsociety;
 
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 
 public class Cell {
 
-  private int myType;
-  private int myXCoordinate;
-  private int myYCoordinate;
+  public int myType;
+  public int myX;
+  public int myY;
+  Image pic;
   int myAge;
   int timeSinceEat;
 
   public Cell(int type, int x, int y) {
     myType = type;
-    myXCoordinate = x;
-    myYCoordinate = y;
+    this.myX = x;
+    this.myY = y;
+
+   /* try {
+      pic = ImageIO.read(new File("src/images/"+s));
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }*/
   }
 
-  public int getType() {
-    return myType;
+  public void draw(Graphics g, Component c) {
+    g.drawImage(pic, 400 + (myX * 750/simulationPanel.cols), 100 + (myY * 750/simulationPanel.rows), 750/simulationPanel.cols, 750/simulationPanel.rows, c);
   }
-
-  public int getMyXCoordinate() {
-    return myXCoordinate;
-  }
-
-  public int getMyYCoordinate() {
-    return myYCoordinate;
-  }
-
-
 }

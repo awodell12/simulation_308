@@ -31,7 +31,7 @@ public class PercolationGrid extends Grid {
     for (int i = 0; i < numRows; i++) {
       for (int j = 0; j < numColumns; j++) {
         Cell curCell = myCellGrid[i][j];
-        if (curCell.getType() != OPEN) {
+        if (curCell.myType != OPEN) {
           continue;
         }
         int newType = checkNeighbors(i, j);
@@ -54,49 +54,49 @@ public class PercolationGrid extends Grid {
     boolean isRightEdge = (j == numColumns - 1); // && i!= numRows && i != 0);
 
     if (!isLeftEdge && !isTopEdge) {
-      if (myCellGrid[i - 1][j - 1].getType() == FILLED) {
+      if (myCellGrid[i - 1][j - 1].myType == FILLED) {
         count++;
       }
     }
 
     if (!isTopEdge) {
-      if (myCellGrid[i - 1][j].getType() == FILLED) {
+      if (myCellGrid[i - 1][j].myType == FILLED) {
         count++;
       }
     }
 
     if (!isTopEdge && !isRightEdge) {
-      if (myCellGrid[i - 1][j + 1].getType() == FILLED) {
+      if (myCellGrid[i - 1][j + 1].myType == FILLED) {
         count++;
       }
     }
 
     if (!isLeftEdge) {
-      if (myCellGrid[i][j - 1].getType() == FILLED) {
+      if (myCellGrid[i][j - 1].myType == FILLED) {
         count++;
       }
     }
 
     if (!isRightEdge) {
-      if (myCellGrid[i][j + 1].getType() == FILLED) {
+      if (myCellGrid[i][j + 1].myType == FILLED) {
         count++;
       }
     }
 
     if (!isBottomEdge && !isLeftEdge) {
-      if (myCellGrid[i + 1][j - 1].getType() == FILLED) {
+      if (myCellGrid[i + 1][j - 1].myType == FILLED) {
         count++;
       }
     }
 
     if (!isBottomEdge) {
-      if (myCellGrid[i + 1][j].getType() == FILLED) {
+      if (myCellGrid[i + 1][j].myType == FILLED) {
         count++;
       }
     }
 
     if (!isBottomEdge && !isRightEdge) {
-      if (myCellGrid[i + 1][j + 1].getType() == FILLED) {
+      if (myCellGrid[i + 1][j + 1].myType == FILLED) {
         count++;
       }
     }

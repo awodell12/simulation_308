@@ -33,8 +33,8 @@ public abstract class Grid {
    */
   public void updateCells(List<Cell> updateList) {
     for (Cell c : updateList) {
-      int x = c.getMyXCoordinate();
-      int y = c.getMyYCoordinate();
+      int x = c.myX;
+      int y = c.myY;
       myCellGrid[x][y] = c;
     }
   }
@@ -48,7 +48,7 @@ public abstract class Grid {
         if (myCellGrid[i][j] == null) {
           System.out.print("x ");
         } else {
-          System.out.print(myCellGrid[i][j].getType() + " ");
+          System.out.print(myCellGrid[i][j].myType + " ");
         }
       }
       System.out.println();
