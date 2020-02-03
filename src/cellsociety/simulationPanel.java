@@ -20,7 +20,7 @@ public class simulationPanel extends JPanel implements ActionListener {
     public static final String PERCOLATION = "data/Percolation.xml";
     public static final String GAME_OF_LIFE = "data/GameOfLife.xml";
     public static final String FIRE = "data/Fire.xml";
-    public static final String Segregation = "data/Segregation.xml";
+    public static final String SEGREGATION = "data/Segregation.xml";
     private Configuration config;
 
     // Create text
@@ -66,7 +66,6 @@ public class simulationPanel extends JPanel implements ActionListener {
 
     //Create Initial Grids
     private Grid mainGrid;
-    private Grid percGrid;
 
     ArrayList<Cell> cellsArray = new ArrayList<>();
 
@@ -99,19 +98,8 @@ public class simulationPanel extends JPanel implements ActionListener {
         this.add(speedUpButton);
         this.setBackground(Color.getHSBColor(100, 100, 100));
 
-        //Read in xml File
-        XMLParser myParser = new XMLParser();
-        config = myParser.getConfiguration(new File(PERCOLATION));
-
-        cols = config.getWidth();
-        rows = config.getHeight();
-
-        percGrid = new PercolationGrid(cols, rows);
-
-        for (Point p : config.getCellCoordinates().keySet()) {
-            cellsArray.add(new Cell(config.getCellCoordinates().get(p), p.x, p.y));
-        }
-        percGrid.updateCells(cellsArray);
+        //Read in Percolation xml File
+        createGridFromXML(PERCOLATION);
 
         buttonChecker();
 
@@ -140,11 +128,11 @@ public class simulationPanel extends JPanel implements ActionListener {
     }
 
     private void buttonChecker() {
-        fireButton.addActionListener(listener -> { mainGrid = percGrid; fire=true;});
-        segButton.addActionListener(listener ->  { mainGrid = percGrid; seg=true;});
-        lifeButton.addActionListener(listener -> { mainGrid = percGrid; life=true;});
-        preyButton.addActionListener(listener -> { mainGrid = percGrid; prey=true;});
-        percButton.addActionListener(listener -> { mainGrid = percGrid; perc=true;});
+        fireButton.addActionListener(listener -> { fire=true;});
+        segButton.addActionListener(listener ->  { seg=true;});
+        lifeButton.addActionListener(listener -> { life=true;});
+        preyButton.addActionListener(listener -> { prey=true;});
+        percButton.addActionListener(listener -> { perc=true;});
 
         playButton.addActionListener(listener -> { play = !play; });
         stepButton.addActionListener(listener -> { step = !step; });
@@ -153,17 +141,35 @@ public class simulationPanel extends JPanel implements ActionListener {
         speedDownButton.addActionListener(listener -> { if(threadSpeed < 1500){ threadSpeed+= 100;} });
     }
 
+    private void createGridFromXML(String file) {
+        XMLParser myParser = new XMLParser();
+        config = myParser.getConfiguration(new File(file));
+
+        cols = config.getWidth();
+        rows = config.getHeight();
+
+        if (file.equals(PERCOLATION)) { mainGrid = new PercolationGrid(cols, rows); }
+        else if (file.equals(GAME_OF_LIFE)) { mainGrid = new GameOfLifeGrid(cols, rows); }
+        else if (file.equals(FIRE)) { mainGrid = new FireGrid(cols, rows, 0.5); } // TODO: Change so this is in XML file
+        else if (file.equals(SEGREGATION)) { mainGrid = new SegregationGrid(cols, rows, 0.5) ; } // TODO: ^^
+
+        for (Point p : config.getCellCoordinates().keySet()) {
+            cellsArray.add(new Cell(config.getCellCoordinates().get(p), p.x, p.y));
+        }
+        mainGrid.updateCells(cellsArray);
+    }
+
     public void paintComponent (Graphics g) {
         //Check if the Simulation is indeed running
         if(perc || life || prey || fire || seg) {
             for (int i = 0; i < rows; i++) {
                 for (int j = 0; j < cols; j++) {
                     try {
-                        imageDecider(mainGrid.myCellGrid[i][j]);
+                        imageDecider(mainGrid.myCellGrid[j][i]);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    mainGrid.myCellGrid[i][j].draw(g, this);
+                    mainGrid.myCellGrid[j][i].draw(g, this);
                     //System.out.println(threadSpeed);
                 }
             }
@@ -186,7 +192,6 @@ public class simulationPanel extends JPanel implements ActionListener {
             }
         }
     }
-
 
     @Override
     public void actionPerformed(ActionEvent e) {
