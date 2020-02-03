@@ -10,8 +10,8 @@ public class FireTestMain {
     Grid myGrid = new FireGrid(6,6, 0.6);
     ArrayList<Cell> arr = new ArrayList<>();
     arr.add(new Cell(2,3,0));
-    arr.add(new Cell (2,3,3));
-    arr.add(new Cell(2, 3,4));
+    arr.add(new Cell (1,3,3));
+    arr.add(new Cell(1, 3,4));
     arr.add(new Cell (1,5,5));
     myGrid.updateCells(arr);
     myGrid.printCells();

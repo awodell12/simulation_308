@@ -2,6 +2,7 @@ package cellsociety;
 
 import java.util.ArrayList;
 import java.util.List;
+import javafx.util.Pair;
 
 public class GameOfLifeGrid extends Grid {
 
@@ -20,7 +21,8 @@ public class GameOfLifeGrid extends Grid {
       for (int j = 0; j < numColumns; j++) {
         Cell curCell = myCellGrid[i][j];
 
-        int aliveNeighbors = checkNeighbors(i, j);
+        Pair neighbors = checkLikeNeighbors(i, j, ALIVE, false);
+        int aliveNeighbors = (int) neighbors.getKey();
         if (aliveNeighbors >= 2 && aliveNeighbors < 4) {
           newType = ALIVE;
         } else {
@@ -34,61 +36,5 @@ public class GameOfLifeGrid extends Grid {
     return updateList;
   }
 
-  private int checkNeighbors(int i, int j) {
-    int count = 0;
-    boolean isTopEdge = (i == 0); //&& j!=0 && j!=numColumns);
-    boolean isBottomEdge = (i == numRows - 1);// && j!=0 && j!=numColumns);
-    boolean isLeftEdge = (j == 0); // && i!= numRows && i != 0);
-    boolean isRightEdge = (j == numColumns - 1); // && i!= numRows && i != 0);
 
-    if (!isLeftEdge && !isTopEdge) {
-      if (myCellGrid[i - 1][j - 1].getType() == ALIVE) {
-        count++;
-      }
-    }
-
-    if (!isTopEdge) {
-      if (myCellGrid[i - 1][j].getType() == ALIVE) {
-        count++;
-      }
-    }
-
-    if (!isTopEdge && !isRightEdge) {
-      if (myCellGrid[i - 1][j + 1].getType() == ALIVE) {
-        count++;
-      }
-    }
-
-    if (!isLeftEdge) {
-      if (myCellGrid[i][j - 1].getType() == ALIVE) {
-        count++;
-      }
-    }
-
-    if (!isRightEdge) {
-      if (myCellGrid[i][j + 1].getType() == ALIVE) {
-        count++;
-      }
-    }
-
-    if (!isBottomEdge && !isLeftEdge) {
-      if (myCellGrid[i + 1][j - 1].getType() == ALIVE) {
-        count++;
-      }
-    }
-
-    if (!isBottomEdge) {
-      if (myCellGrid[i + 1][j].getType() == ALIVE) {
-        count++;
-      }
-    }
-
-    if (!isBottomEdge && !isRightEdge) {
-      if (myCellGrid[i + 1][j + 1].getType() == ALIVE) {
-        count++;
-      }
-    }
-
-    return count;
-  }
 }
