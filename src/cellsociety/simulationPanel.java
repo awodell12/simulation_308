@@ -32,22 +32,21 @@ public class simulationPanel extends JPanel implements ActionListener {
     private boolean step, play;
     private boolean perc = false, life = false, prey = false, seg = false, fire = false;
 
-    /*
-    ImageIcon stepIcon = new ImageIcon("src/cellsociety/step.png");
-    ImageIcon playIcon = new ImageIcon("src/cellsociety/play.png");
-    ImageIcon speedUpIcon = new ImageIcon("src/cellsociety/plus.png");
-    ImageIcon speedDownIcon = new ImageIcon("src/cellsociety/minus.png");
-    */
+    ImageIcon stepIcon = new ImageIcon("src/images/step.png");
+    ImageIcon playIcon = new ImageIcon("src/images/play.png");
+    ImageIcon speedUpIcon = new ImageIcon("src/images/plus.png");
+    ImageIcon speedDownIcon = new ImageIcon("src/images/minus.png");
 
-    JButton stepButton = new JButton("stepIcon");
-    JButton playButton = new JButton("playIcon");
-    JButton speedUpButton = new JButton("speedUpIcon");
-    JButton speedDownButton = new JButton("speedDownIcon");
+    JButton stepButton = new JButton(stepIcon);
+    JButton playButton = new JButton(playIcon);
+    JButton speedUpButton = new JButton(speedUpIcon);
+    JButton speedDownButton = new JButton(speedDownIcon);
+
 
     // Set Panel Variables
     private int width = Main.frameWidth;
     private int height = Main.frameHeight;
-    public static int cols = 5, rows = 5;
+    public static int cols = 15, rows = 15;
     public float cellWidth = 750/cols;
     public float cellHeight = 750/rows;
 
@@ -76,6 +75,11 @@ public class simulationPanel extends JPanel implements ActionListener {
         playButton.setBounds(80, 400, 50, 50);
         speedUpButton.setBounds(20, 400, 50, 50);
         speedDownButton.setBounds(200, 400, 50, 50);
+
+        buttonSettings(playButton);
+        buttonSettings(stepButton);
+        buttonSettings(speedUpButton);
+        buttonSettings(speedDownButton);
 
         //Add the Buttons to the panel
         this.add(percButton, lifeButton);
@@ -110,14 +114,20 @@ public class simulationPanel extends JPanel implements ActionListener {
     }
 
     public void update() {
-        if(play) {
+        if(play & (perc || life || prey || fire || seg)) {
             mainGrid.updateCells(mainGrid.checkForUpdates());
         }
-        if(step & !play){
+        if(step & !play & (perc || life || prey || fire || seg)){
             mainGrid.updateCells(mainGrid.checkForUpdates());
             step = !step;
         }
         repaint();
+    }
+
+    public void buttonSettings(JButton b){
+        b.setOpaque(false);
+        b.setContentAreaFilled(false);
+        b.setBorderPainted(false);
     }
 
     private void buttonChecker() {
@@ -130,7 +140,7 @@ public class simulationPanel extends JPanel implements ActionListener {
         playButton.addActionListener(listener -> { play = !play; });
         stepButton.addActionListener(listener -> { step = !step; });
 
-        speedUpButton.addActionListener(listener -> { if(threadSpeed > 100){ threadSpeed-= 100;} });
+        speedUpButton.addActionListener(listener -> { if(threadSpeed > 200){ threadSpeed-= 100;} });
         speedDownButton.addActionListener(listener -> { if(threadSpeed < 1500){ threadSpeed+= 100;} });
     }
 
@@ -153,21 +163,37 @@ public class simulationPanel extends JPanel implements ActionListener {
 
     public void imageDecider (Cell x) throws IOException {
         if(perc){
-            if(x.myType == 0 & x.pic_name != "dog"){
-                x.pic = ImageIO.read(new File("src/images/shark_frame.png"));
-                x.pic_name = "dog";
-            }
-            if(x.myType == 1 & x.pic_name != "cat"){
-                x.pic = ImageIO.read(new File("src/images/black.png"));
-                x.pic_name = "cat";
-            }
-            if(x.myType == 2 & x.pic_name != "hat"){
-                x.pic = ImageIO.read(new File("src/images/fish_frame.png"));
-                x.pic_name = "hat";
-            }
+            decisionHelper(x, 0, "white_frame.png");
+            decisionHelper(x, 1, "black.png");
+            decisionHelper(x, 2, "turquoise_frame.png");
+        }
+        if(fire){
+            decisionHelper(x, 0, "tree_frame.png");
+            decisionHelper(x, 1, "fire_frame.png");
+            decisionHelper(x, 2, "empty_frame.png");
+        }
+       /* if(prey){
+            decisionHelper(x, 0, "white_frame", "src/images/white_frame.png");
+            decisionHelper(x, 1, "black", "src/images/black.png");
+            decisionHelper(x, 2, "turquoise_frame", "src/images/turquoise_frame.png");
+        }*/
+        if(life){
+            decisionHelper(x, 0, "empty_frame.png");
+            decisionHelper(x, 1, "man_frame.png");
+        }
+        if(seg){
+            decisionHelper(x, 0, "empty_frame.png");
+            decisionHelper(x, 1, "kid_frame.png");
+            decisionHelper(x, 2, "man_frame.png");
         }
     }
 
+    private void decisionHelper(Cell x, int i, String s) throws IOException {
+        if (x.myType == i & x.pic_name != s) {
+            x.pic = ImageIO.read(new File("src/images/" + s));
+            x.pic_name = s;
+        }
+    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
