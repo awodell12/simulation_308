@@ -11,8 +11,8 @@ public class Cell {
   public int myX;
   public int myY;
   Image pic;
-  int myAge;
-  int timeSinceEat;
+  int myAge = 0;
+  int timeSinceEat = 0;
 
   public Cell(int type, int x, int y) {
     myType = type;
