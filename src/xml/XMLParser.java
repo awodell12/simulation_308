@@ -77,7 +77,7 @@ public class XMLParser {
             return nodeList.item(0).getTextContent();
         }
         else {
-            // FIXME: Possibly fix because in some cases it may be an error to not find any text
+            // didn't find any text
             return "";
         }
     }

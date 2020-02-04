@@ -70,7 +70,6 @@ public class simulationPanel extends JPanel implements ActionListener {
 
     ArrayList<Cell> cellsArray = new ArrayList<>();
 
-
     simulationPanel(){
         //Create a Layout for buttons
         this.setLayout(null);
@@ -151,16 +150,18 @@ public class simulationPanel extends JPanel implements ActionListener {
     }
 
     private void createGridFromXML(String file) {
+        resetGrid();
         XMLParser myParser = new XMLParser();
         config = myParser.getConfiguration(new File(file));
 
         cols = config.getWidth();
         rows = config.getHeight();
+        double percentage = config.getPercentage();
 
         if (file.equals(PERCOLATION)) { mainGrid = new PercolationGrid(cols, rows); }
         else if (file.equals(GAME_OF_LIFE)) { mainGrid = new GameOfLifeGrid(cols, rows); }
-        else if (file.equals(FIRE)) { mainGrid = new FireGrid(cols, rows, 0.5); } // TODO: Change so this is in XML file
-        else if (file.equals(SEGREGATION)) { mainGrid = new SegregationGrid(cols, rows, 0.5) ; } // TODO: ^^
+        else if (file.equals(FIRE)) { mainGrid = new FireGrid(cols, rows, percentage); }
+        else if (file.equals(SEGREGATION)) { mainGrid = new SegregationGrid(cols, rows, percentage) ; }
 
 
         for (Point p : config.getCellCoordinates().keySet()) {
@@ -218,6 +219,13 @@ public class simulationPanel extends JPanel implements ActionListener {
             x.pic = ImageIO.read(new File("src/images/" + s));
             x.pic_name = s;
         }
+    }
+
+    private void resetGrid() {
+        cellsArray = new ArrayList<>();
+        /*
+        TODO: REMOVE ALL IMAGES IN THE CELLS AND UN-PAINT ALL CELLS @ NEVZAT
+         */
     }
 
     @Override
