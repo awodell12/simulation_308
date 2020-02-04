@@ -21,6 +21,7 @@ public class simulationPanel extends JPanel implements ActionListener {
     public static final String GAME_OF_LIFE = "data/GameOfLife.xml";
     public static final String FIRE = "data/Fire.xml";
     public static final String SEGREGATION = "data/Segregation.xml";
+    public static final String WATOR = "data/Wator.xml";
     private Configuration config;
 
     // Create text
@@ -139,7 +140,7 @@ public class simulationPanel extends JPanel implements ActionListener {
         fireButton.addActionListener(listener -> { fire=true; createGridFromXML(FIRE); perc = life = prey = seg = false; play =false;});
         segButton.addActionListener(listener ->  { seg=true;  createGridFromXML(SEGREGATION); perc = life = prey = fire = false; play =false;});
         lifeButton.addActionListener(listener -> { life=true; createGridFromXML(GAME_OF_LIFE); perc = prey = fire = seg = false; play =false;});
-        //preyButton.addActionListener(listener -> { prey=true; createGridFromXML(FIRE); perc = life = fire = seg = false; play =false;});
+        preyButton.addActionListener(listener -> { prey=true; createGridFromXML(WATOR); perc = life = fire = seg = false; play =false;});
         percButton.addActionListener(listener -> { perc=true; createGridFromXML(PERCOLATION); life = prey = fire = seg = false; play =false;});
 
         playButton.addActionListener(listener -> { play = !play; });
@@ -162,7 +163,8 @@ public class simulationPanel extends JPanel implements ActionListener {
         else if (file.equals(GAME_OF_LIFE)) { mainGrid = new GameOfLifeGrid(cols, rows); }
         else if (file.equals(FIRE)) { mainGrid = new FireGrid(cols, rows, percentage); }
         else if (file.equals(SEGREGATION)) { mainGrid = new SegregationGrid(cols, rows, percentage) ; }
-
+        else if (file.equals(WATOR)) { mainGrid = new WatorGrid(cols, rows, 5, 3, 2); }
+        // TODO don't hard code these in
 
         for (Point p : config.getCellCoordinates().keySet()) {
             cellsArray.add(new Cell(config.getCellCoordinates().get(p), p.x, p.y));
@@ -198,11 +200,11 @@ public class simulationPanel extends JPanel implements ActionListener {
             decisionHelper(x, 1, "fire_frame.png");
             decisionHelper(x, 2, "empty_frame.png");
         }
-       /* if(prey){
-            decisionHelper(x, 0, "white_frame", "src/images/white_frame.png");
-            decisionHelper(x, 1, "black", "src/images/black.png");
-            decisionHelper(x, 2, "turquoise_frame", "src/images/turquoise_frame.png");
-        }*/
+       if(prey){
+            decisionHelper(x, 0, "white_frame.png");
+            decisionHelper(x, 1, "black.png");
+            decisionHelper(x, 2, "turquoise_frame.png");
+        }
         if(life){
             decisionHelper(x, 0, "empty_frame.png");
             decisionHelper(x, 1, "man_frame.png");
