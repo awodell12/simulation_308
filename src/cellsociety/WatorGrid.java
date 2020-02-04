@@ -23,6 +23,8 @@ public class WatorGrid extends Grid {
   private Set<Integer> myFish = new HashSet();
   private Set<Integer> mySharks= new HashSet();
   private Set<Integer> emptyCells = new HashSet<>();
+  private Set<Integer> fishToRemove = new HashSet<>();
+  private Set<Integer> myFishToAdd = new HashSet<>();
   private boolean initialize = true;
 
 
@@ -45,7 +47,7 @@ public class WatorGrid extends Grid {
           myFish.add(cell.myX * numColumns + cell.myY);
         }
       }
-      for (Pair pair :findEmptyCells()){
+      for (Pair pair:findEmptyCells()){
         emptyCells.add(calcLocation((int)pair.getKey(),(int)pair.getValue()));
       }
       initialize = false;
@@ -57,16 +59,49 @@ public class WatorGrid extends Grid {
   public List<Cell> checkForUpdates() {
     ArrayList<Cell> updateList = new ArrayList<>();
     updateList.addAll(updateSharks());
-    for (int i = 0; i < numRows; i++) {
-      for (int j = 0; j < numColumns; j++) {
-        Cell curCell = myCellGrid[i][j];
-
-        if (curCell.myType==FISH){
-
-        }
-      }
-    }
+    updateList.addAll(updateFish());
+    myFish.removeAll(fishToRemove);
+    myFish.addAll(myFishToAdd);
+    fishToRemove.clear();
+    myFishToAdd.clear();
     return updateList;
+  }
+
+  private Collection<Cell> updateFish() {
+    ArrayList<Cell> updateList = new ArrayList<>();
+    for(Integer location: myFish){
+      int x = location/numColumns ;
+      int y = location % numColumns;
+        Cell curCell = myCellGrid[x][y];
+        List<Pair> emptySpots;
+        emptySpots = checkForNeighbors(x,y,emptyCells);
+        if (emptySpots.isEmpty()){
+          continue;
+        }
+        updateList.add(moveFish(emptySpots, x,y,curCell,updateList));
+        curCell.myAge ++;
+      }
+    return updateList;
+  }
+
+  private Cell moveFish(List<Pair> emptySpots, int x, int y, Cell curCell, List updateList) {
+    int randIndex = (int) (Math.random()*emptySpots.size());
+    Pair newCoordinates = emptySpots.get(randIndex);
+    int newx =(int) newCoordinates.getKey();
+    int newy = (int) newCoordinates.getValue();
+    curCell.myX = newx;
+    curCell.myY = newy;
+    myFishToAdd.add(calcLocation(newx,newy));
+    if (curCell.myAge > fishTimeToBreed){
+      curCell.myAge = 0;
+      updateList.add(new Cell(FISH,x,y));
+    }
+    else{
+      updateList.add(new Cell(EMPTY,x,y));
+      fishToRemove.add(calcLocation(x,y));
+      emptyCells.add(calcLocation(x,y));
+    }
+    return curCell;
   }
 
   private Collection<Cell> updateSharks() {
@@ -143,7 +178,7 @@ public class WatorGrid extends Grid {
   }
 
   private List<Pair> checkForNeighbors(int i, int j, Set lookingFor) {
-    List<Pair> neighborFish = new ArrayList<>();
+    List<Pair> neighbors = new ArrayList<>();
     Integer sharkCoordinate = i*numColumns + j;
 
     boolean isTopEdge = (i == 0); //&& j!=0 && j!=numColumns);
@@ -152,21 +187,19 @@ public class WatorGrid extends Grid {
     boolean isRightEdge = (j == numColumns - 1); // && i!= numRows && i != 0);
 
   if (!isTopEdge && lookingFor.contains(sharkCoordinate - numColumns)){
-    neighborFish.add(new Pair(i-1,j));
+    neighbors.add(new Pair(i-1,j));
   }
     if (!isBottomEdge && lookingFor.contains(sharkCoordinate + numColumns)){
-      neighborFish.add(new Pair(i+1,j));
+      neighbors.add(new Pair(i+1,j));
     }
     if (!isRightEdge && lookingFor.contains(sharkCoordinate + 1)){
-      neighborFish.add(new Pair(i,j+1));
+      neighbors.add(new Pair(i,j+1));
     }
     if (!isLeftEdge && lookingFor.contains(sharkCoordinate - 1)){
-      neighborFish.add(new Pair(i,j-1));
+      neighbors.add(new Pair(i,j-1));
     }
 
-
-
-    return neighborFish;
+    return neighbors;
   }
 }
 
