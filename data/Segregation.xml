@@ -8,6 +8,7 @@
     <config>
         <width>6</width>
         <height>6</height>
+        <percentage>0.7</percentage>
     </config>
     <typeZero>
         <coordinate>0,1</coordinate>
