@@ -1,5 +1,6 @@
 package cellsociety;
 
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -13,6 +14,7 @@ public class WatorGrid extends Grid {
   public static final int SHARK = 2;
   public static final int FISH = 1;
   public static final int EMPTY = 0;
+  public static final int ENERGY_FROM_FISH = 1;
 
   private int fishTimeToBreed;
   private int sharkTimeToBreed;
@@ -20,7 +22,7 @@ public class WatorGrid extends Grid {
 
   private Set<Integer> myFish = new HashSet();
   private Set<Integer> mySharks= new HashSet();
-  private Set<Pair> emptyCells = new HashSet<>();
+  private Set<Integer> emptyCells = new HashSet<>();
   private boolean initialize = true;
 
 
@@ -37,13 +39,15 @@ public class WatorGrid extends Grid {
     if (initialize) {
       for (Cell cell : updateList) {
         if (cell.myType == SHARK) {
-          myFish.add(cell.myX*numColumns+ cell.myY);
+          mySharks.add(cell.myX*numColumns+ cell.myY);
         }
-        else{
-          mySharks.add(cell.myX * numColumns + cell.myY);
+        else if (cell.myType == FISH){
+          myFish.add(cell.myX * numColumns + cell.myY);
         }
       }
-      emptyCells.addAll(findEmptyCells());
+      for (Pair pair :findEmptyCells()){
+        emptyCells.add(calcLocation((int)pair.getKey(),(int)pair.getValue()));
+      }
       initialize = false;
     }
     super.updateCells(updateList);
@@ -73,37 +77,68 @@ public class WatorGrid extends Grid {
       for (int j = 0; j < numColumns; j++) {
         Cell curCell = myCellGrid[i][j];
         if (curCell.myType == SHARK){
+          if (curCell.timeSinceEat > sharkDeathTime){
+            updateList.add(new Cell(EMPTY,i,j));
+            emptyCells.add(calcLocation(i,j));
+            mySharks.remove(curCell);
+            continue;
+          }
           fish = checkForNeighbors(i,j,myFish);
           if (fish.isEmpty()){
             emptySpots = checkForNeighbors(i,j,emptyCells);
             if (!emptySpots.isEmpty()){
               updateList.add(moveShark(emptySpots,i,j,curCell,false));
+              addNewSharkOrEmpty(updateList, i, j, curCell);
+            }
+            else{
+              curCell.myAge ++;
+              curCell.timeSinceEat ++;
             }
           }
           else {
             updateList.add(moveShark(fish, i, j, curCell, true));
+            addNewSharkOrEmpty(updateList, i, j, curCell);
           }
+
         }
       }
     }
     return updateList;
   }
 
-  private Cell moveShark(List<Pair> fish, int i, int j, Cell curCell, boolean killFish) {
-    int randIndex = (int) (Math.random()*fish.size());
-    Pair newCoordinates = fish.get(randIndex);
+  private Integer calcLocation(int i, int j) {
+    return i * numColumns + j;
+  }
+
+  private void addNewSharkOrEmpty(ArrayList<Cell> updateList, int i, int j, Cell curCell) {
+    if (curCell.myAge > sharkTimeToBreed) {
+      updateList.add(new Cell(SHARK, i, j));
+      mySharks.add(i*numColumns + j);
+      curCell.myAge = 0;
+    } else {
+      updateList.add(new Cell(EMPTY, i, j));
+      emptyCells.add(calcLocation(i,j));
+    }
+  }
+
+  private Cell moveShark(List<Pair> placesToMove, int i, int j, Cell curCell, boolean killFish) {
+    int randIndex = (int) (Math.random()*placesToMove.size());
+    Pair newCoordinates = placesToMove.get(randIndex);
     int newx =(int) newCoordinates.getKey();
     int newy = (int) newCoordinates.getValue();
     if(killFish) {
       myFish.remove(newx * numColumns + newy);
+      curCell.timeSinceEat -= ENERGY_FROM_FISH;
     }
     else {
       emptyCells.remove(newx * numColumns + newy);
+      curCell.timeSinceEat ++;
     }
     mySharks.remove(i*numColumns + j);
     mySharks.add(newx*numColumns + newy);
     curCell.myX = newx;
     curCell.myY = newy;
+    curCell.myAge ++;
     return curCell;
   }
 
