@@ -13,6 +13,8 @@ public class Cell {
   Image pic;
   int myAge = 0;
   int timeSinceEat = 0;
+  String pic_name;
+
 
   public Cell(int type, int x, int y) {
     myType = type;

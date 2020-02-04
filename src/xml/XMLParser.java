@@ -46,9 +46,13 @@ public class XMLParser {
                 if (stringType.equals("typeOne")) {
                     intType = 1;
                 }
-                else {
+                else if (stringType.equals("typeTwo")) {
                     intType = 2;
                 }
+                else if (stringType.equals("typeZero")){
+                    intType = 0;
+                }
+                else intType=0;
                 coordinates.put(stringToPoint(coordinate), intType);
             }
         }
@@ -82,14 +86,6 @@ public class XMLParser {
         String[] coords = coordinate.split(",");
         return new Point(Integer.parseInt(coords[0]), Integer.parseInt(coords[1]));
     }
-
-    /*
-    public Point getPointValue (Element e, String tagName) {
-        String value = getTextValue(e, tagName);
-        String[] coords = value.split(",");
-        return new Point(Integer.parseInt(coords[0]), Integer.parseInt(coords[1]));
-    }
-     */
 
     private DocumentBuilder getDocumentBuilder () {
         try {
