@@ -66,9 +66,7 @@ public class simulationPanel extends JPanel implements ActionListener {
     //Create Initial Grids
     private Grid mainGrid;
 
-    ArrayList<Cell> cellsArray = new ArrayList<>();
-
-    simulationPanel(){
+    simulationPanel() {
         //Create a Layout for buttons
         this.setLayout(null);
         percButton.setBounds(width / 24, height / 9, 200, 50);
@@ -148,7 +146,6 @@ public class simulationPanel extends JPanel implements ActionListener {
     }
 
     private void createGridFromXML(String file) {
-        resetGrid();
         XMLParser myParser = new XMLParser();
         config = myParser.getConfiguration(new File(file));
 
@@ -163,8 +160,10 @@ public class simulationPanel extends JPanel implements ActionListener {
         else if (file.equals(WATOR_XML)) { mainGrid = new WatorGrid(cols, rows, 5, 3, 2); }
         // TODO don't hard code these in
 
+        ArrayList<Cell> cellsArray = new ArrayList<>();
         for (Point p : config.getCellCoordinates().keySet()) {
-            cellsArray.add(new Cell(config.getCellCoordinates().get(p), p.x, p.y));
+
+            cellsArray.add(new Cell(config.getCellCoordinates().get(p), p.y, p.x));
         }
         mainGrid.updateCells(cellsArray);
     }
@@ -198,9 +197,9 @@ public class simulationPanel extends JPanel implements ActionListener {
             decisionHelper(x, 2, "empty_frame.png");
         }
        if(prey){
-            decisionHelper(x, 0, "white_frame.png");
-            decisionHelper(x, 1, "black.png");
-            decisionHelper(x, 2, "turquoise_frame.png");
+            decisionHelper(x, 0, "empty_frame.png");
+            decisionHelper(x, 1, "fish_frame.png");
+            decisionHelper(x, 2, "shark_frame.png");
         }
         if(life){
             decisionHelper(x, 0, "empty_frame.png");
@@ -218,13 +217,6 @@ public class simulationPanel extends JPanel implements ActionListener {
             x.pic = ImageIO.read(new File("src/images/" + s));
             x.pic_name = s;
         }
-    }
-
-    private void resetGrid() {
-        cellsArray = new ArrayList<>();
-        /*
-        TODO: REMOVE ALL IMAGES IN THE CELLS AND UN-PAINT ALL CELLS @ NEVZAT
-         */
     }
 
     @Override
