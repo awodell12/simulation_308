@@ -8,20 +8,17 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import static java.awt.Font.BOLD;
 
 public class simulationPanel extends JPanel implements ActionListener {
 
-    public static final String PERCOLATION = "data/Percolation.xml";
-    public static final String GAME_OF_LIFE = "data/GameOfLife.xml";
-    public static final String FIRE = "data/Fire.xml";
-    public static final String SEGREGATION = "data/Segregation.xml";
-    public static final String WATOR = "data/Wator.xml";
+    public static final String PERCOLATION_XML = "data/Percolation.xml";
+    public static final String GAME_OF_LIFE_XML = "data/GameOfLife.xml";
+    public static final String FIRE_XML = "data/Fire.xml";
+    public static final String SEGREGATION_XML = "data/Segregation.xml";
+    public static final String WATOR_XML = "data/Wator.xml";
     private Configuration config;
 
     // Create text
@@ -54,8 +51,8 @@ public class simulationPanel extends JPanel implements ActionListener {
 
 
     // Set Panel Variables
-    private int width = Main.frameWidth;
-    private int height = Main.frameHeight;
+    private int width = Main.FRAME_WIDTH;
+    private int height = Main.FRAME_HEIGHT;
 
     public static int cols = 6, rows = 6;
 
@@ -120,10 +117,10 @@ public class simulationPanel extends JPanel implements ActionListener {
     }
 
     public void update() {
-        if(play & (perc || life || prey || fire || seg)) {
+        if(play && (perc || life || prey || fire || seg)) {
             mainGrid.updateCells(mainGrid.checkForUpdates());
         }
-        if(step & !play & (perc || life || prey || fire || seg)){
+        if(step && !play && (perc || life || prey || fire || seg)){
             mainGrid.updateCells(mainGrid.checkForUpdates());
             step = !step;
         }
@@ -137,11 +134,11 @@ public class simulationPanel extends JPanel implements ActionListener {
     }
 
     private void buttonChecker() {
-        fireButton.addActionListener(listener -> { fire=true; createGridFromXML(FIRE); perc = life = prey = seg = false; play =false;});
-        segButton.addActionListener(listener ->  { seg=true;  createGridFromXML(SEGREGATION); perc = life = prey = fire = false; play =false;});
-        lifeButton.addActionListener(listener -> { life=true; createGridFromXML(GAME_OF_LIFE); perc = prey = fire = seg = false; play =false;});
-        preyButton.addActionListener(listener -> { prey=true; createGridFromXML(WATOR); perc = life = fire = seg = false; play =false;});
-        percButton.addActionListener(listener -> { perc=true; createGridFromXML(PERCOLATION); life = prey = fire = seg = false; play =false;});
+        fireButton.addActionListener(listener -> { fire=true; createGridFromXML(FIRE_XML); perc = life = prey = seg = false; play =false;});
+        segButton.addActionListener(listener ->  { seg=true;  createGridFromXML(SEGREGATION_XML); perc = life = prey = fire = false; play =false;});
+        lifeButton.addActionListener(listener -> { life=true; createGridFromXML(GAME_OF_LIFE_XML); perc = prey = fire = seg = false; play =false;});
+        preyButton.addActionListener(listener -> { prey=true; createGridFromXML(WATOR_XML); perc = life = fire = seg = false; play =false;});
+        percButton.addActionListener(listener -> { perc=true; createGridFromXML(PERCOLATION_XML); life = prey = fire = seg = false; play =false;});
 
         playButton.addActionListener(listener -> { play = !play; });
         stepButton.addActionListener(listener -> { step = !step; });
@@ -159,11 +156,11 @@ public class simulationPanel extends JPanel implements ActionListener {
         rows = config.getHeight();
         double percentage = config.getPercentage();
 
-        if (file.equals(PERCOLATION)) { mainGrid = new PercolationGrid(cols, rows); }
-        else if (file.equals(GAME_OF_LIFE)) { mainGrid = new GameOfLifeGrid(cols, rows); }
-        else if (file.equals(FIRE)) { mainGrid = new FireGrid(cols, rows, percentage); }
-        else if (file.equals(SEGREGATION)) { mainGrid = new SegregationGrid(cols, rows, percentage) ; }
-        else if (file.equals(WATOR)) { mainGrid = new WatorGrid(cols, rows, 5, 3, 2); }
+        if (file.equals(PERCOLATION_XML)) { mainGrid = new PercolationGrid(cols, rows); }
+        else if (file.equals(GAME_OF_LIFE_XML)) { mainGrid = new GameOfLifeGrid(cols, rows); }
+        else if (file.equals(FIRE_XML)) { mainGrid = new FireGrid(cols, rows, percentage); }
+        else if (file.equals(SEGREGATION_XML)) { mainGrid = new SegregationGrid(cols, rows, percentage) ; }
+        else if (file.equals(WATOR_XML)) { mainGrid = new WatorGrid(cols, rows, 5, 3, 2); }
         // TODO don't hard code these in
 
         for (Point p : config.getCellCoordinates().keySet()) {
@@ -217,7 +214,7 @@ public class simulationPanel extends JPanel implements ActionListener {
     }
 
     private void decisionHelper(Cell x, int i, String s) throws IOException {
-        if (x.myType == i & x.pic_name != s) {
+        if (x.myType == i && x.pic_name != s) {
             x.pic = ImageIO.read(new File("src/images/" + s));
             x.pic_name = s;
         }

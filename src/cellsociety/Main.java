@@ -1,10 +1,6 @@
 package cellsociety;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
 import javax.swing.*;
-import java.awt.*;
 
 /**
  * Feel free to completely change this code or delete it entirely.
@@ -21,7 +17,7 @@ public class Main {
     // label to display text
     static JLabel label;
 
-    public static final int frameWidth = 1200, frameHeight = 900;
+    public static final int FRAME_WIDTH = 1200, FRAME_HEIGHT = 900;
 
     public static void main (String[] args) {
 
@@ -33,7 +29,7 @@ public class Main {
         // add panel to frame
         simframe.add(p);
         // set the size of frame
-        simframe.setSize(frameWidth, frameHeight);
+        simframe.setSize(FRAME_WIDTH, FRAME_HEIGHT);
         simframe.setVisible(true);
         simframe.setResizable(false);
 
