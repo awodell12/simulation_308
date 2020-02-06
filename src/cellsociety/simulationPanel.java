@@ -38,6 +38,7 @@ public class simulationPanel extends JPanel implements ActionListener {
 
     private boolean step, play;
     private boolean perc = false, life = false, prey = false, seg = false, fire = false;
+    private boolean buttonPressed;
 
     ImageIcon stepIcon = new ImageIcon("src/images/step.png");
     ImageIcon playIcon = new ImageIcon("src/images/play.png");
@@ -115,10 +116,11 @@ public class simulationPanel extends JPanel implements ActionListener {
     }
 
     public void update() {
-        if(play && (perc || life || prey || fire || seg)) {
+        buttonPressed = (perc || life || prey || fire || seg);
+        if(play && buttonPressed) {
             mainGrid.updateCells(mainGrid.checkForUpdates());
         }
-        if(step && !play && (perc || life || prey || fire || seg)){
+        if(step && !play && buttonPressed){
             mainGrid.updateCells(mainGrid.checkForUpdates());
             step = !step;
         }
@@ -170,7 +172,8 @@ public class simulationPanel extends JPanel implements ActionListener {
 
     public void paintComponent (Graphics g) {
         //Check if the Simulation is indeed running
-        if(perc || life || prey || fire || seg) {
+        buttonPressed = (perc || life || prey || fire || seg);
+        if(buttonPressed) {
             for (int i = 0; i < rows; i++) {
                 for (int j = 0; j < cols; j++) {
                     try {
