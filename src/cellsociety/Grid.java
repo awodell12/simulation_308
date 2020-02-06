@@ -135,7 +135,7 @@ public abstract class Grid {
     return new Pair(similarCount, neighborCount);
   }
 
-  public ArrayList<Pair> findEmptyCells() {
+  public List<Pair> findEmptyCells() {
     ArrayList<Pair> emptyCells = new ArrayList<>();
     for (int i = 0; i < numRows; i++) {
       for (int j = 0; j < numColumns; j++) {
