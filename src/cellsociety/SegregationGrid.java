@@ -48,18 +48,7 @@ public class SegregationGrid extends Grid {
     return updateList;
   }
 
-  private ArrayList<Pair> findEmptyCells() {
-    ArrayList<Pair> emptyCells = new ArrayList<>();
-    for (int i = 0; i < numRows; i++) {
-      for (int j = 0; j < numColumns; j++) {
-        int curType = myCellGrid[i][j].myType;
-        if (curType == EMPTY) {
-          emptyCells.add(new Pair(i, j));
-        }
-      }
-    }
-    return emptyCells;
-  }
+
 
 
 

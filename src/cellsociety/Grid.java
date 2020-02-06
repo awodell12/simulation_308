@@ -1,5 +1,6 @@
 package cellsociety;
 
+import java.util.ArrayList;
 import java.util.List;
 import javafx.util.Pair;
 
@@ -132,5 +133,18 @@ public abstract class Grid {
     }
 
     return new Pair(similarCount, neighborCount);
+  }
+
+  public ArrayList<Pair> findEmptyCells() {
+    ArrayList<Pair> emptyCells = new ArrayList<>();
+    for (int i = 0; i < numRows; i++) {
+      for (int j = 0; j < numColumns; j++) {
+        int curType = myCellGrid[i][j].myType;
+        if (curType == EMPTY) {
+          emptyCells.add(new Pair(i, j));
+        }
+      }
+    }
+    return emptyCells;
   }
 }
