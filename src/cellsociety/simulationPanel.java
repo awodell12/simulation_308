@@ -68,8 +68,6 @@ public class simulationPanel extends JPanel implements ActionListener {
     //Create Initial Grids
     private Grid mainGrid;
 
-    ArrayList<Cell> cellsArray = new ArrayList<>();
-
 
     simulationPanel(){
         //Create a Layout for buttons
@@ -162,8 +160,9 @@ public class simulationPanel extends JPanel implements ActionListener {
         else if (file.equals(FIRE)) { mainGrid = new FireGrid(cols, rows, 0.5); } // TODO: Change so this is in XML file
         else if (file.equals(SEGREGATION)) { mainGrid = new SegregationGrid(cols, rows, 0.5) ; } // TODO: ^^
 
-
+        ArrayList<Cell> cellsArray = new ArrayList<>();
         for (Point p : config.getCellCoordinates().keySet()) {
+
             cellsArray.add(new Cell(config.getCellCoordinates().get(p), p.x, p.y));
         }
         mainGrid.updateCells(cellsArray);
