@@ -28,7 +28,7 @@ public class GameOfLifeGrid extends Grid {
         } else {
           newType = DEAD;
         }
-        if (newType != curCell.myType) {
+        if (newType != curCell.getType()) {
           updateList.add(new Cell(newType, i, j));
         }
       }

@@ -1,6 +1,5 @@
 package cellsociety;
 
-import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -40,11 +39,11 @@ public class WatorGrid extends Grid {
   public void updateCells(List<Cell> updateList) {
     if (initialize) {
       for (Cell cell : updateList) {
-        if (cell.myType == SHARK) {
-          mySharks.add(cell.myX*numColumns+ cell.myY);
+        if (cell.getType() == SHARK) {
+          mySharks.add(cell.getX()*numColumns+ cell.getY());
         }
-        else if (cell.myType == FISH){
-          myFish.add(cell.myX * numColumns + cell.myY);
+        else if (cell.getType() == FISH){
+          myFish.add(cell.getX() * numColumns + cell.getY());
         }
       }
       for (Pair pair:findEmptyCells()){
@@ -89,8 +88,8 @@ public class WatorGrid extends Grid {
     Pair newCoordinates = emptySpots.get(randIndex);
     int newx =(int) newCoordinates.getKey();
     int newy = (int) newCoordinates.getValue();
-    curCell.myX = newx;
-    curCell.myY = newy;
+    curCell.setX(newx);
+    curCell.setY(newy);
     myFishToAdd.add(calcLocation(newx,newy));
     if (curCell.myAge > fishTimeToBreed){
       curCell.myAge = 0;
@@ -111,7 +110,7 @@ public class WatorGrid extends Grid {
     for (int i = 0; i < numRows; i++) {
       for (int j = 0; j < numColumns; j++) {
         Cell curCell = myCellGrid[i][j];
-        if (curCell.myType == SHARK){
+        if (curCell.getType() == SHARK){
           if (curCell.timeSinceEat > sharkDeathTime){
             updateList.add(new Cell(EMPTY,i,j));
             emptyCells.add(calcLocation(i,j));
@@ -171,8 +170,8 @@ public class WatorGrid extends Grid {
     }
     mySharks.remove(i*numColumns + j);
     mySharks.add(newx*numColumns + newy);
-    curCell.myX = newx;
-    curCell.myY = newy;
+    curCell.setX(newx);
+    curCell.setY(newy);
     curCell.myAge ++;
     return curCell;
   }

@@ -1,15 +1,12 @@
 package cellsociety;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
-import java.io.File;
-import java.io.IOException;
 
 public class Cell {
 
-  public int myType;
-  public int myX;
-  public int myY;
+  private int myType;
+  private int myX;
+  private int myY;
   Image pic;
   int myAge = 0;
   int timeSinceEat = 0;
@@ -20,13 +17,30 @@ public class Cell {
     myType = type;
     this.myX = x;
     this.myY = y;
+  }
 
-   /* try {
-      pic = ImageIO.read(new File("src/images/"+s));
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-  }*/
+  public int getType() {
+    return myType;
+  }
+
+  public int getX() {
+    return myX;
+  }
+
+  public int getY() {
+    return myY;
+  }
+
+  public void setX(int x) {
+    myX = x;
+  }
+
+  public void setY(int y) {
+    myY = y;
+  }
+
+  public void setType(int type) {
+    myType = type;
   }
 
   public void draw(Graphics g, Component c) {

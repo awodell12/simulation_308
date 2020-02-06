@@ -213,7 +213,7 @@ public class simulationPanel extends JPanel implements ActionListener {
     }
 
     private void decisionHelper(Cell x, int i, String s) throws IOException {
-        if (x.myType == i && x.pic_name != s) {
+        if (x.getType() == i && x.pic_name != s) {
             x.pic = ImageIO.read(new File("src/images/" + s));
             x.pic_name = s;
         }
