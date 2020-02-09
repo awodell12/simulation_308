@@ -1,5 +1,8 @@
 package cellsociety;
 
+import cellsociety.simulation.Cell;
+import cellsociety.simulation.FireGrid;
+import cellsociety.simulation.Grid;
 import java.util.ArrayList;
 
 public class FireTestMain {

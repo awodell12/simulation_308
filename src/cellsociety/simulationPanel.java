@@ -1,5 +1,12 @@
 package cellsociety;
 
+import cellsociety.simulation.Cell;
+import cellsociety.simulation.FireGrid;
+import cellsociety.simulation.GameOfLifeGrid;
+import cellsociety.simulation.Grid;
+import cellsociety.simulation.PercolationGrid;
+import cellsociety.simulation.SegregationGrid;
+import cellsociety.simulation.WatorGrid;
 import xml.Configuration;
 import xml.XMLParser;
 
@@ -177,11 +184,11 @@ public class simulationPanel extends JPanel implements ActionListener {
             for (int i = 0; i < rows; i++) {
                 for (int j = 0; j < cols; j++) {
                     try {
-                        imageDecider(mainGrid.myCellGrid[i][j]);
+                        imageDecider(mainGrid.getGrid()[i][j]);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    mainGrid.myCellGrid[i][j].draw(g, this);
+                    mainGrid.getGrid()[i][j].draw(g, this);
                     //System.out.println(threadSpeed);
                 }
             }
@@ -216,9 +223,9 @@ public class simulationPanel extends JPanel implements ActionListener {
     }
 
     private void decisionHelper(Cell x, int i, String s) throws IOException {
-        if (x.getType() == i && x.pic_name != s) {
-            x.pic = ImageIO.read(new File("src/images/" + s));
-            x.pic_name = s;
+        if (x.getType() == i && x.getPic_name() != s) {
+            x.setPic(ImageIO.read(new File("src/images/" + s)));
+            x.setPicName(s);
         }
     }
 

@@ -1,4 +1,4 @@
-package cellsociety;
+package cellsociety.simulation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,8 +42,14 @@ public abstract class Grid {
     }
   }
 
+
+  public Cell[][] getGrid(){
+    return myCellGrid;
+  }
+
   /**
    * debug/testing method to print out current states
+   * @return
    */
   public void printCells() {
     for (int i = 0; i < numRows; i++) {
@@ -135,7 +141,7 @@ public abstract class Grid {
     return new Pair(similarCount, neighborCount);
   }
 
-  public ArrayList<Pair> findEmptyCells() {
+  public List<Pair> findEmptyCells() {
     ArrayList<Pair> emptyCells = new ArrayList<>();
     for (int i = 0; i < numRows; i++) {
       for (int j = 0; j < numColumns; j++) {

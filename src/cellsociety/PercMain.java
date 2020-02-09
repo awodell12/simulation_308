@@ -1,5 +1,8 @@
 package cellsociety;
 
+import cellsociety.simulation.Cell;
+import cellsociety.simulation.Grid;
+import cellsociety.simulation.PercolationGrid;
 import java.util.ArrayList;
 import java.awt.Point;
 import java.io.File;
