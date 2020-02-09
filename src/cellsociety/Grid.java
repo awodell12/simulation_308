@@ -36,8 +36,8 @@ public abstract class Grid {
    */
   public void updateCells(List<Cell> updateList) {
     for (Cell c : updateList) {
-      int x = c.myX;
-      int y = c.myY;
+      int x = c.getX();
+      int y = c.getY();
       myCellGrid[x][y] = c;
     }
   }
@@ -57,7 +57,7 @@ public abstract class Grid {
         if (myCellGrid[i][j] == null) {
           System.out.print("x ");
         } else {
-          System.out.print(myCellGrid[i][j].myType + " ");
+          System.out.print(myCellGrid[i][j].getType() + " ");
         }
       }
       System.out.println();
@@ -74,66 +74,66 @@ public abstract class Grid {
     boolean isRightEdge = (j == numColumns - 1); // && i!= numRows && i != 0);
 
     if (!isLeftEdge && !isTopEdge && !onlyFourNeighbors) {
-      if (myCellGrid[i - 1][j - 1].myType == type) {
+      if (myCellGrid[i - 1][j - 1].getType() == type) {
         similarCount++;
       }
-      if (myCellGrid[i - 1][j - 1].myType != EMPTY) {
+      if (myCellGrid[i - 1][j - 1].getType() != EMPTY) {
         neighborCount++;
       }
     }
     if (!isTopEdge) {
-      if (myCellGrid[i - 1][j].myType == type) {
+      if (myCellGrid[i - 1][j].getType() == type) {
         similarCount++;
       }
-      if (myCellGrid[i - 1][j].myType != EMPTY) {
+      if (myCellGrid[i - 1][j].getType() != EMPTY) {
         neighborCount++;
       }
     }
     if (!isTopEdge && !isRightEdge && !onlyFourNeighbors) {
-      if (myCellGrid[i - 1][j + 1].myType == type) {
+      if (myCellGrid[i - 1][j + 1].getType() == type) {
         similarCount++;
       }
-      if (myCellGrid[i - 1][j + 1].myType != EMPTY) {
+      if (myCellGrid[i - 1][j + 1].getType() != EMPTY) {
         neighborCount++;
       }
     }
     if (!isLeftEdge) {
-      if (myCellGrid[i][j - 1].myType == type) {
+      if (myCellGrid[i][j - 1].getType() == type) {
         similarCount++;
       }
-      if (myCellGrid[i][j - 1].myType != EMPTY) {
+      if (myCellGrid[i][j - 1].getType() != EMPTY) {
         neighborCount++;
       }
     }
     if (!isRightEdge) {
-      if (myCellGrid[i][j + 1].myType == type) {
+      if (myCellGrid[i][j + 1].getType() == type) {
         similarCount++;
       }
-      if (myCellGrid[i][j + 1].myType != EMPTY) {
+      if (myCellGrid[i][j + 1].getType() != EMPTY) {
         neighborCount++;
       }
     }
     if (!isBottomEdge && !isLeftEdge && !onlyFourNeighbors) {
-      if (myCellGrid[i + 1][j - 1].myType == type) {
+      if (myCellGrid[i + 1][j - 1].getType() == type) {
         similarCount++;
       }
-      if (myCellGrid[i + 1][j - 1].myType != EMPTY) {
+      if (myCellGrid[i + 1][j - 1].getType() != EMPTY) {
         neighborCount++;
       }
     }
     if (!isBottomEdge) {
-      if (myCellGrid[i + 1][j].myType == type) {
+      if (myCellGrid[i + 1][j].getType() == type) {
         similarCount++;
       }
-      if (myCellGrid[i + 1][j].myType != EMPTY) {
+      if (myCellGrid[i + 1][j].getType() != EMPTY) {
         neighborCount++;
       }
     }
     if (!isBottomEdge && !isRightEdge && !onlyFourNeighbors) {
-      if (myCellGrid[i + 1][j + 1].myType == type) {
+      if (myCellGrid[i + 1][j + 1].getType() == type) {
         similarCount++;
       }
-      if (myCellGrid[i + 1][j + 1].myType != EMPTY) {
+      if (myCellGrid[i + 1][j + 1].getType() != EMPTY) {
         neighborCount++;
       }
     }
@@ -145,7 +145,7 @@ public abstract class Grid {
     ArrayList<Pair> emptyCells = new ArrayList<>();
     for (int i = 0; i < numRows; i++) {
       for (int j = 0; j < numColumns; j++) {
-        int curType = myCellGrid[i][j].myType;
+        int curType = myCellGrid[i][j].getType();
         if (curType == EMPTY) {
           emptyCells.add(new Pair(i, j));
         }
