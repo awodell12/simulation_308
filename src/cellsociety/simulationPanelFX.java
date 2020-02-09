@@ -50,8 +50,8 @@ public class simulationPanelFX extends VBox implements EventHandler {
     public static final String WATOR = "data/Wator.xml";
 
     //create simulation parameters
-    private  double canvasWidth = 800;
-    private  double canvasHeight = 800;
+    private  double canvasWidth = 600;
+    private  double canvasHeight = 600;
     private int cols, rows;
 
   public List<Point> neighbors;
@@ -60,7 +60,7 @@ public class simulationPanelFX extends VBox implements EventHandler {
 
     public simulationPanelFX() {
         //add the canvas to the panel and handle it
-        this.canvas = new Canvas(800,800);
+        this.canvas = new Canvas(canvasWidth,canvasHeight);
         this.canvas.setOnMousePressed(this::handleDraw);
         this.canvas.setOnMouseDragged(this::handleDraw);
 
@@ -107,7 +107,10 @@ public class simulationPanelFX extends VBox implements EventHandler {
             int yCord = (int) simCord.getY();
 
             if (xCord >= 0 & xCord < cols & yCord >= 0 & yCord < rows) {
-                this.mainGrid.getGrid()[xCord][yCord].setType(drawType);
+              List <Cell> updateList = new ArrayList<>();
+              updateList.add(new Cell(drawType,xCord,yCord));
+                this.mainGrid.updateCells(updateList);
+                    //getGrid()[xCord][yCord].setType(drawType);
                 draw();
             }
         } catch (NonInvertibleTransformException e) {

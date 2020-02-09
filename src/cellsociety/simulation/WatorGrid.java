@@ -16,7 +16,7 @@ public class WatorGrid extends Grid {
   public static final int SHARK = 2;
   public static final int FISH = 1;
   public static final int EMPTY = 0;
-  public static final int ENERGY_FROM_FISH = 1;
+  public static final int ENERGY_FROM_FISH = 5;
 
   private int fishTimeToBreed;
   private int sharkTimeToBreed;
@@ -44,7 +44,6 @@ public class WatorGrid extends Grid {
 
   @Override
   public void updateCells(List<Cell> updateList) {
-    if (initialize) {
       for (Cell cell : updateList) {
         if (cell.getType() == SHARK) {
           mySharks.add(cell.getX()*numColumns+ cell.getY());
@@ -59,7 +58,6 @@ public class WatorGrid extends Grid {
         emptyCells.removeAll(mySharks);
       }
       initialize = false;
-    }
     super.updateCells(updateList);
   }
 
@@ -103,6 +101,7 @@ public class WatorGrid extends Grid {
     if (curCell.getAge() > fishTimeToBreed){
       curCell.resetAge();
       updateList.add(new Cell(FISH,x,y));
+      emptyCells.remove(calcLocation(x,y));
     }
     else{
       updateList.add(new Cell(EMPTY,x,y));
@@ -157,6 +156,7 @@ public class WatorGrid extends Grid {
     if (curCell.getAge() > sharkTimeToBreed) {
       updateList.add(new Cell(SHARK, i, j));
       mySharks.add(i*numColumns + j);
+      emptyCells.remove(calcLocation(i,j));
       curCell.resetAge();
     } else {
       updateList.add(new Cell(EMPTY, i, j));

@@ -24,7 +24,7 @@ import java.util.ArrayList;
  * Feel free to completely change this code or delete it entirely.
  */
 public class MainFX extends Application {
-    private final int simWidth = 800, simHeight = 900;
+    private final int simWidth = 650, simHeight = 700;
     int newX = 50;
     int newY = 50;
     int stageNo = 1;
