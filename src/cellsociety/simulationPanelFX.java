@@ -56,8 +56,6 @@ public class simulationPanelFX extends VBox implements EventHandler {
 
   public List<Point> neighbors;
 
-
-
     public simulationPanelFX() {
         //add the canvas to the panel and handle it
         this.canvas = new Canvas(canvasWidth,canvasHeight);

@@ -9,7 +9,7 @@ public class toolBar extends ToolBar {
     Slider sizeSlider;
     Slider speedSlider;
     Button playButton;
-    String playStop = "play";
+    String playStop = "Play";
 
 
 
@@ -24,7 +24,7 @@ public class toolBar extends ToolBar {
         stepButton.setOnAction(this::handleSteps);
         Button resizeButton = new Button("Resize");
         resizeButton.setOnAction(this::handleResize);
-        playButton = new Button("Play");
+        playButton = new Button(playStop);
         playButton.setOnAction(this::handlePlay);
 
         //Generate the Labels
@@ -62,8 +62,8 @@ public class toolBar extends ToolBar {
     }
 
     private void handlePlay(ActionEvent actionEvent) {
-        if(playStop.equals("play")){playStop = "stop";}
-        else if(playStop.equals("stop")){playStop = "play";}
+        if(playStop.equals("Play")){playStop = "Stop";}
+        else if(playStop.equals("Stop")){playStop = "Play";}
       playButton.setText(playStop);
       this.fx.play = !this.fx.play;
     }
