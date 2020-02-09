@@ -1,5 +1,8 @@
 package cellsociety;
 
+import cellsociety.simulation.Cell;
+import cellsociety.simulation.Grid;
+import cellsociety.simulation.WatorGrid;
 import java.util.ArrayList;
 
 public class WatorTestMain {

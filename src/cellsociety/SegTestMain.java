@@ -1,5 +1,8 @@
 package cellsociety;
 
+import cellsociety.simulation.Cell;
+import cellsociety.simulation.Grid;
+import cellsociety.simulation.SegregationGrid;
 import java.util.ArrayList;
 
 /**
