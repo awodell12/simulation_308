@@ -24,7 +24,7 @@ import java.util.ArrayList;
  * Feel free to completely change this code or delete it entirely.
  */
 public class MainFX extends Application {
-    private final int simWidth = 650, simHeight = 700;
+    private final int simWidth = 950, simHeight = 950;
     int newX = 50;
     int newY = 50;
     int stageNo = 1;
@@ -32,39 +32,16 @@ public class MainFX extends Application {
     @Override
     public void start(Stage stage) throws Exception {
 
-        VBox rootPane = new VBox();
-        StackPane stupidEdit = new StackPane();
-        Button newStage = new Button("New Stage");
-        newStage.setAlignment(Pos.BOTTOM_CENTER);
-        stupidEdit.getChildren().add(newStage);
-
         simulationPanelFX mainPanel = new simulationPanelFX();
-
-        rootPane.getChildren().addAll(mainPanel,stupidEdit);
-
-        Scene scene = new Scene(rootPane, simWidth, simHeight);
+        Scene scene = new Scene(mainPanel, simWidth, simHeight);
         stage.setTitle("Main Simulation");
         stage.setScene(scene);
         stage.show();
 
-        newStage.setOnAction(this::handleStage);
-
         mainPanel.draw();
     }
 
-  private void handleStage(ActionEvent actionEvent) {
-        simulationPanelFX mainPanel = new simulationPanelFX();
-        Scene scene = new Scene(mainPanel, simWidth, simHeight);
-        Stage stage = new Stage();
-        stage.setTitle("Duplicate Simulation " + stageNo);
-        stage.setScene(scene);
-        stage.setX(newX);
-        stage.setY(newY);
-        newX += 20;
-        newY += 20;
-        stage.show();
-        stageNo ++;
-    }
+
 
 
     public static void main (String[] args) {

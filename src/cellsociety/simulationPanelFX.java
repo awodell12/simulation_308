@@ -50,8 +50,8 @@ public class simulationPanelFX extends VBox implements EventHandler {
     public static final String WATOR = "data/Wator.xml";
 
     //create simulation parameters
-    private  double canvasWidth = 600;
-    private  double canvasHeight = 600;
+    private  double canvasWidth = 800;
+    private  double canvasHeight = 800;
     private int cols, rows;
 
   public List<Point> neighbors;
@@ -222,6 +222,7 @@ public class simulationPanelFX extends VBox implements EventHandler {
         public void resizeGrid(int size, String str){
         cols = size;
         rows = size;
+        // TODO: REFACTOR
             if (str.equals("Percolation")) { mainGrid = new PercolationGrid(size,size,neighbors);}
             if (str.equals("Fire")) { mainGrid = new FireGrid(size,size,percentage,neighbors);}
             if (str.equals("Segregation")) { mainGrid = new SegregationGrid(size,size,percentage,neighbors);}

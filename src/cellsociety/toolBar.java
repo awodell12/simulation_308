@@ -1,6 +1,8 @@
 package cellsociety;
 import javafx.event.ActionEvent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.stage.Stage;
 
 public class toolBar extends ToolBar {
 
@@ -18,6 +20,8 @@ public class toolBar extends ToolBar {
         this.fx = fx;
 
         //Generate the Buttons
+        Button newWindow = new Button("+");
+        newWindow.setOnAction(this::handleWindow);
         Button changesButton = new Button("Reset");
         changesButton.setOnAction(this::handleChanges);
         Button stepButton = new Button("Step");
@@ -58,9 +62,18 @@ public class toolBar extends ToolBar {
         this.getItems().addAll( simulationChoiceBox, changesButton, new Separator(),
                 fx.drawChoiceBox, new Separator(),
                 speedLabel, speedSlider, playButton, stepButton, new Separator(),
-                sizeLabel, sizeSlider, resizeButton);
+                sizeLabel, sizeSlider, resizeButton, newWindow);
     }
 
+    private void handleWindow(ActionEvent actionEvent) {
+        simulationPanelFX mainPanel = new simulationPanelFX();
+        Scene scene = new Scene(mainPanel, 950, 950);
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.setX(10);
+        stage.setY(10);
+        stage.show();
+    }
     private void handlePlay(ActionEvent actionEvent) {
         if(playStop.equals("Play")){playStop = "Stop";}
         else if(playStop.equals("Stop")){playStop = "Play";}
