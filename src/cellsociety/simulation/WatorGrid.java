@@ -78,7 +78,7 @@ public class WatorGrid extends Grid {
           continue;
         }
         updateList.add(moveFish(emptySpots, x,y,curCell,updateList));
-        curCell.myAge ++;
+        curCell.increaseAge();
       }
     return updateList;
   }
@@ -91,8 +91,8 @@ public class WatorGrid extends Grid {
     curCell.setX(newx);
     curCell.setY(newy);
     myFishToAdd.add(calcLocation(newx,newy));
-    if (curCell.myAge > fishTimeToBreed){
-      curCell.myAge = 0;
+    if (curCell.getAge() > fishTimeToBreed){
+      curCell.resetAge();
       updateList.add(new Cell(FISH,x,y));
     }
     else{
@@ -111,7 +111,7 @@ public class WatorGrid extends Grid {
       for (int j = 0; j < numColumns; j++) {
         Cell curCell = myCellGrid[i][j];
         if (curCell.getType() == SHARK){
-          if (curCell.timeSinceEat > sharkDeathTime){
+          if (curCell.getTimeSinceEat() > sharkDeathTime){
             updateList.add(new Cell(EMPTY,i,j));
             emptyCells.add(calcLocation(i,j));
             mySharks.remove(curCell);
@@ -125,8 +125,8 @@ public class WatorGrid extends Grid {
               addNewSharkOrEmpty(updateList, i, j, curCell);
             }
             else{
-              curCell.myAge ++;
-              curCell.timeSinceEat ++;
+              curCell.increaseAge();
+              curCell.setTimeSinceEat(1);
             }
           }
           else {
@@ -145,10 +145,10 @@ public class WatorGrid extends Grid {
   }
 
   private void addNewSharkOrEmpty(ArrayList<Cell> updateList, int i, int j, Cell curCell) {
-    if (curCell.myAge > sharkTimeToBreed) {
+    if (curCell.getAge() > sharkTimeToBreed) {
       updateList.add(new Cell(SHARK, i, j));
       mySharks.add(i*numColumns + j);
-      curCell.myAge = 0;
+      curCell.resetAge();
     } else {
       updateList.add(new Cell(EMPTY, i, j));
       emptyCells.add(calcLocation(i,j));
@@ -162,17 +162,17 @@ public class WatorGrid extends Grid {
     int newy = (int) newCoordinates.getValue();
     if(killFish) {
       myFish.remove(newx * numColumns + newy);
-      curCell.timeSinceEat -= ENERGY_FROM_FISH;
+      curCell.setTimeSinceEat(-ENERGY_FROM_FISH);
     }
     else {
       emptyCells.remove(newx * numColumns + newy);
-      curCell.timeSinceEat ++;
+      curCell.setTimeSinceEat(1);
     }
     mySharks.remove(i*numColumns + j);
     mySharks.add(newx*numColumns + newy);
     curCell.setX(newx);
     curCell.setY(newy);
-    curCell.myAge ++;
+    curCell.increaseAge();
     return curCell;
   }
 

@@ -20,7 +20,7 @@ public class SegregationGrid extends Grid {
   @Override
   public List<Cell> checkForUpdates() {
     ArrayList<Cell> updateList = new ArrayList<>();
-    ArrayList<Pair> emptyCells = findEmptyCells();
+    List<Pair> emptyCells = findEmptyCells();
     for (int i = 0; i < numRows; i++) {
       for (int j = 0; j < numColumns; j++) {
         int curType = myCellGrid[i][j].getType();

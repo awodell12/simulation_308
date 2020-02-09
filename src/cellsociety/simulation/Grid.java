@@ -43,7 +43,7 @@ public abstract class Grid {
   }
 
   /**
-   * Because its an array I thought returning a copy would be a good way to make it immutable 
+   * Because its an array I thought returning a copy would be a good way to make it immutable
    * @return
    */
   public Cell[][] getGrid(){

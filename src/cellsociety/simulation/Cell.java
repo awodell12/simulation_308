@@ -59,6 +59,20 @@ public class Cell {
     return picName;
   }
 
+  public int getAge(){return myAge;}
+
+  public int getTimeSinceEat(){ return  timeSinceEat;}
+
+  public void increaseAge(){
+    myAge ++;
+  }
+  public void resetAge(){
+    myAge = 0;
+  }
+  public void setTimeSinceEat(int time){
+    timeSinceEat += time;
+  }
+
   public void draw(Graphics g, Component c) {
     g.drawImage(pic, 400 + (myX * 750/ simulationPanel.cols), 100 + (myY * 750/simulationPanel.rows), 750/simulationPanel.cols, 750/simulationPanel.rows, c);
   }
