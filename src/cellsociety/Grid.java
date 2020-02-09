@@ -42,8 +42,14 @@ public abstract class Grid {
     }
   }
 
+
+  public Cell[][] getGrid(){
+    return myCellGrid;
+  }
+
   /**
    * debug/testing method to print out current states
+   * @return
    */
   public void printCells() {
     for (int i = 0; i < numRows; i++) {
