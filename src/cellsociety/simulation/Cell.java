@@ -52,8 +52,8 @@ public class Cell {
     pic = picture;
   }
 
-  public void setPicName(String picName){
-    picName= picName;
+  public void setPicName(String pictureName){
+    picName = pictureName;
   }
   public String getPic_name(){
     return picName;

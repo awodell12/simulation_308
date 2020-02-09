@@ -42,9 +42,15 @@ public abstract class Grid {
     }
   }
 
-
+  /**
+   * Because its an array I thought returning a copy would be a good way to make it immutable 
+   * @return
+   */
   public Cell[][] getGrid(){
-    return myCellGrid;
+    Cell [][] retu = new Cell[myCellGrid.length][myCellGrid[0].length];
+     System.arraycopy(myCellGrid, 0, retu, 0, myCellGrid.length );
+     return retu;
+
   }
 
   /**
