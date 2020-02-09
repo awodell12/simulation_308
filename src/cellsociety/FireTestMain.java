@@ -3,7 +3,9 @@ package cellsociety;
 import cellsociety.simulation.Cell;
 import cellsociety.simulation.FireGrid;
 import cellsociety.simulation.Grid;
+import java.awt.Point;
 import java.util.ArrayList;
+import java.util.List;
 
 public class FireTestMain {
 
@@ -11,7 +13,12 @@ public class FireTestMain {
    * Start of the program.
    */
   public static void main(String[] args) {
-    Grid myGrid = new FireGrid(6, 6, 0.6);
+    List<Point> neighbors = new ArrayList<>();
+    neighbors.add(new Point(0,1));
+    neighbors.add(new Point(0,-1));
+    neighbors.add(new Point(1,0));
+    neighbors.add(new Point(-1,0));
+    Grid myGrid = new FireGrid(6, 6, 0.6, neighbors);
     ArrayList<Cell> arr = new ArrayList<>();
     arr.add(new Cell(2, 3, 0));
     arr.add(new Cell(1, 3, 3));
