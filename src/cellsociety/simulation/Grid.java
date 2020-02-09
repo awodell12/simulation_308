@@ -19,16 +19,19 @@ public abstract class Grid {
   Cell[][] myCellGrid;
   private List<Point> neighborCoords;
 
-  public Grid(int cols, int rows, List<Point> neighborLocations) {
+  public Grid(int cols, int rows) {
     numColumns = cols;
     numRows = rows;
-    neighborCoords = neighborLocations;
     myCellGrid = new Cell[numRows][numColumns];
     for (int i = 0; i < numRows; i++) {
       for (int j = 0; j < numColumns; j++) {
         myCellGrid[i][j] = new Cell(EMPTY, i, j);
       }
     }
+  }
+  public Grid(int cols, int rows, List<Point> neighborLocations) {
+    this(cols, rows);
+    neighborCoords = neighborLocations;
   }
 
   public abstract List<Cell> checkForUpdates();
@@ -107,7 +110,6 @@ public abstract class Grid {
     boolean notLegal = (i >= numRows || i < 0 || j >= numColumns || j < 0);
     return !notLegal;
   }
-  
 
   public List<Pair> findEmptyCells() {
     ArrayList<Pair> emptyCells = new ArrayList<>();
