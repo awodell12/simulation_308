@@ -56,9 +56,9 @@ public abstract class Grid {
    * @return
    */
   public Cell[][] getGrid() {
-    Cell[][] retu = new Cell[myCellGrid.length][myCellGrid[0].length];
-    System.arraycopy(myCellGrid, 0, retu, 0, myCellGrid.length);
-    return retu;
+    //Cell[][] retu = new Cell[myCellGrid.length][myCellGrid[0].length];
+    //System.arraycopy(myCellGrid, 0, retu, 0, myCellGrid.length);
+    return myCellGrid;
   }
 
   /**

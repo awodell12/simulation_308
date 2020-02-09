@@ -8,6 +8,10 @@ public class toolBar extends ToolBar {
     ComboBox<String> simulationChoiceBox;
     Slider sizeSlider;
     Slider speedSlider;
+    Button playButton;
+    String playStop = "play";
+
+
 
     public toolBar(simulationPanelFX fx){
         //Get the Main Panel in
@@ -20,7 +24,7 @@ public class toolBar extends ToolBar {
         stepButton.setOnAction(this::handleSteps);
         Button resizeButton = new Button("Resize");
         resizeButton.setOnAction(this::handleResize);
-        Button playButton = new Button("Play");
+        playButton = new Button("Play");
         playButton.setOnAction(this::handlePlay);
 
         //Generate the Labels
@@ -58,7 +62,10 @@ public class toolBar extends ToolBar {
     }
 
     private void handlePlay(ActionEvent actionEvent) {
-        this.fx.play = !this.fx.play;
+        if(playStop.equals("play")){playStop = "stop";}
+        else if(playStop.equals("stop")){playStop = "play";}
+      playButton.setText(playStop);
+      this.fx.play = !this.fx.play;
     }
 
     private void handleResize(ActionEvent actionEvent) {

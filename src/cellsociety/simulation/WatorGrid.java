@@ -41,11 +41,6 @@ public class WatorGrid extends Grid {
     //setNeighborLocs(neighbors);
   }
 
-//  private void setNeighborLocs(List<Point> neighbors) {
-//    for (Point p : neighbors){
-//      neighborLocs.add(p.x * numColumns + p.y);
-//    }
-//  }
 
   @Override
   public void updateCells(List<Cell> updateList) {

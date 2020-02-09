@@ -1,6 +1,7 @@
 package cellsociety;
 
 import cellsociety.simulation.*;
+import java.util.List;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
@@ -53,12 +54,21 @@ public class simulationPanelFX extends VBox implements EventHandler {
     private  double canvasHeight = 800;
     private int cols, rows;
 
+  public List<Point> neighbors;
+
+
 
     public simulationPanelFX() {
         //add the canvas to the panel and handle it
         this.canvas = new Canvas(800,800);
         this.canvas.setOnMousePressed(this::handleDraw);
         this.canvas.setOnMouseDragged(this::handleDraw);
+
+      neighbors = new ArrayList<>();
+      neighbors.add(new Point(0,1));
+      neighbors.add(new Point(0,-1));
+      neighbors.add(new Point(1,0));
+      neighbors.add(new Point(-1,0));
 
         //create initial grid and scale the simulation
         createGridFromXML(PERCOLATION);
@@ -80,6 +90,7 @@ public class simulationPanelFX extends VBox implements EventHandler {
         simSpeed = (int) this.tb.speedSlider.getValue();
         this.timeline.setRate(simSpeed);
         if(this.play) {
+          //mainGrid.printCells();
             mainGrid.updateCells(mainGrid.checkForUpdates());
             draw();
         }
@@ -187,15 +198,15 @@ public class simulationPanelFX extends VBox implements EventHandler {
             percentage = config.getPercentage();
 
             if (file.equals(PERCOLATION)) {
-                mainGrid = new PercolationGrid(cols, rows);
+                mainGrid = new PercolationGrid(cols, rows, neighbors);
             } else if (file.equals(GAME_OF_LIFE)) {
-                mainGrid = new GameOfLifeGrid(cols, rows);
+                mainGrid = new GameOfLifeGrid(cols, rows, neighbors);
             } else if (file.equals(FIRE)) {
-                mainGrid = new FireGrid(cols, rows, percentage);
+                mainGrid = new FireGrid(cols, rows, percentage, neighbors);
             } else if (file.equals(SEGREGATION)) {
-                mainGrid = new SegregationGrid(cols, rows, percentage);
+                mainGrid = new SegregationGrid(cols, rows, percentage, neighbors);
             } else if (file.equals(WATOR)) {
-                mainGrid = new WatorGrid(cols, rows, 5, 3, 2);
+                mainGrid = new WatorGrid(cols, rows, 5, 3, 2, neighbors);
             }
             // TODO don't hard code these in
 
@@ -210,11 +221,11 @@ public class simulationPanelFX extends VBox implements EventHandler {
         public void resizeGrid(int size, String str){
         cols = size;
         rows = size;
-            if (str.equals("Percolation")) { mainGrid = new PercolationGrid(size,size);}
-            if (str.equals("Fire")) { mainGrid = new FireGrid(size,size,percentage);}
-            if (str.equals("Segregation")) { mainGrid = new SegregationGrid(size,size,percentage);}
-            if (str.equals("Prey/Predator")) { mainGrid = new WatorGrid(size,size,5,3,2);}
-            if (str.equals("Game of Life")) { mainGrid = new GameOfLifeGrid(size,size);}
+            if (str.equals("Percolation")) { mainGrid = new PercolationGrid(size,size,neighbors);}
+            if (str.equals("Fire")) { mainGrid = new FireGrid(size,size,percentage,neighbors);}
+            if (str.equals("Segregation")) { mainGrid = new SegregationGrid(size,size,percentage,neighbors);}
+            if (str.equals("Prey/Predator")) { mainGrid = new WatorGrid(size,size,5,3,2,neighbors);}
+            if (str.equals("Game of Life")) { mainGrid = new GameOfLifeGrid(size,size,neighbors);}
     }
 
     public Grid getMainGrid() {
