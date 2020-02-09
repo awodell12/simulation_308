@@ -1,6 +1,6 @@
 package cellsociety.simulation;
 
-import cellsociety.simulationPanel;
+//import cellsociety.simulationPanel;
 import java.awt.*;
 
 public class Cell {
@@ -74,6 +74,6 @@ public class Cell {
   }
 
   public void draw(Graphics g, Component c) {
-    g.drawImage(pic, 400 + (myX * 750/ simulationPanel.cols), 100 + (myY * 750/simulationPanel.rows), 750/simulationPanel.cols, 750/simulationPanel.rows, c);
+    //g.drawImage(pic, 400 + (myX * 750/ simulationPanel.cols), 100 + (myY * 750/simulationPanel.rows), 750/simulationPanel.cols, 750/simulationPanel.rows, c);
   }
 }

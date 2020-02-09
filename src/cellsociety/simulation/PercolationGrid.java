@@ -1,5 +1,6 @@
 package cellsociety.simulation;
 
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.util.Pair;
@@ -19,7 +20,7 @@ public class PercolationGrid extends Grid {
 
   private boolean isPercolated = false;
 
-  public PercolationGrid(int cols, int rows) {
+  public PercolationGrid(int cols, int rows, List<Point> neighborLocations) {
     super(cols, rows, neighborLocations);
   }
 

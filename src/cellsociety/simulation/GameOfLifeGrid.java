@@ -1,5 +1,6 @@
 package cellsociety.simulation;
 
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.util.Pair;
@@ -9,7 +10,7 @@ public class GameOfLifeGrid extends Grid {
   public static final int DEAD = 0;
   public static final int ALIVE = 1;
 
-  public GameOfLifeGrid(int cols, int rows) {
+  public GameOfLifeGrid(int cols, int rows, List<Point> neighborLocations) {
     super(cols, rows, neighborLocations);
   }
 

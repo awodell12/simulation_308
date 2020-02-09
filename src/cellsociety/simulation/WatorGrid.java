@@ -1,9 +1,12 @@
 package cellsociety.simulation;
 
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 import java.util.Set;
 import javafx.util.Pair;
 
@@ -24,15 +27,23 @@ public class WatorGrid extends Grid {
   private Set<Integer> emptyCells = new HashSet<>();
   private Set<Integer> fishToRemove = new HashSet<>();
   private Set<Integer> myFishToAdd = new HashSet<>();
+  private List<Integer> neighborLocs = new ArrayList<>();
   private boolean initialize = true;
 
 
 
-  public WatorGrid(int cols, int rows, int sharkBreed, int fishBreed, int sharkDie ) {
-    super(cols, rows);
+  public WatorGrid(int cols, int rows, int sharkBreed, int fishBreed, int sharkDie, List<Point> neighbors ) {
+    super(cols, rows, neighbors);
     fishTimeToBreed = fishBreed;
     sharkDeathTime = sharkDie;
     sharkTimeToBreed = sharkBreed;
+    setNeighborLocs(neighbors);
+  }
+
+  private void setNeighborLocs(List<Point> neighbors) {
+    for (Point p : neighbors){
+      neighborLocs.add(p.x * numColumns + p.y);
+    }
   }
 
   @Override
@@ -178,27 +189,26 @@ public class WatorGrid extends Grid {
 
   private List<Pair> checkForNeighbors(int i, int j, Set lookingFor) {
     List<Pair> neighbors = new ArrayList<>();
-    Integer sharkCoordinate = i*numColumns + j;
+    Integer sharkCoordinate = i * numColumns + j;
 
-    boolean isTopEdge = (i == 0); //&& j!=0 && j!=numColumns);
-    boolean isBottomEdge = (i == numRows - 1);// && j!=0 && j!=numColumns);
-    boolean isLeftEdge = (j == 0); // && i!= numRows && i != 0);
-    boolean isRightEdge = (j == numColumns - 1); // && i!= numRows && i != 0);
-
-  if (!isTopEdge && lookingFor.contains(sharkCoordinate - numColumns)){
-    neighbors.add(new Pair(i-1,j));
-  }
-    if (!isBottomEdge && lookingFor.contains(sharkCoordinate + numColumns)){
-      neighbors.add(new Pair(i+1,j));
+    Queue<Integer> neighborsToCheck = findNeighbors(sharkCoordinate);
+    while (neighborsToCheck.peek() != null) {
+      Integer currentCell = neighborsToCheck.remove();
+      if (lookingFor.contains(currentCell))
+        neighbors.add(new Pair(currentCell / numColumns, currentCell % numColumns));
     }
-    if (!isRightEdge && lookingFor.contains(sharkCoordinate + 1)){
-      neighbors.add(new Pair(i,j+1));
-    }
-    if (!isLeftEdge && lookingFor.contains(sharkCoordinate - 1)){
-      neighbors.add(new Pair(i,j-1));
-    }
-
     return neighbors;
   }
+
+  protected Queue<Integer> findNeighbors(int location) {
+    LinkedList<Integer> neighbors = new LinkedList<>();
+    for (Integer i : neighborLocs) {
+      if (isLegalCell(location / numColumns, location % numColumns)) {
+        neighbors.add(location + i);
+      }
+    }
+    return neighbors;
+  }
+
 }
 

@@ -106,7 +106,7 @@ public abstract class Grid {
     }
     return neighbors;
   }
-  private boolean isLegalCell(int i, int j) {
+  boolean isLegalCell(int i, int j) {
     boolean notLegal = (i >= numRows || i < 0 || j >= numColumns || j < 0);
     return !notLegal;
   }

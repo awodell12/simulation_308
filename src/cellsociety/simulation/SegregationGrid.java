@@ -1,5 +1,6 @@
 package cellsociety.simulation;
 
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.util.Pair;
@@ -12,7 +13,8 @@ public class SegregationGrid extends Grid {
 
   private double satisfactionThreshold;
 
-  public SegregationGrid(int cols, int rows, double threshold) {
+  public SegregationGrid(int cols, int rows, double threshold,
+      List<Point> neighborLocations) {
     super(cols, rows, neighborLocations);
     satisfactionThreshold = threshold;
   }
