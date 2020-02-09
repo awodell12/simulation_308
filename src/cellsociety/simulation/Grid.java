@@ -2,6 +2,7 @@ package cellsociety.simulation;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Queue;
 import javafx.util.Pair;
 
 /**
@@ -48,9 +49,8 @@ public abstract class Grid {
    */
   public Cell[][] getGrid(){
     Cell [][] retu = new Cell[myCellGrid.length][myCellGrid[0].length];
-     System.arraycopy(myCellGrid, 0, retu, 0, myCellGrid.length );
+     System.arraycopy(myCellGrid, 0, retu, 0, myCellGrid.length);
      return retu;
-
   }
 
   /**
@@ -71,13 +71,35 @@ public abstract class Grid {
     System.out.println();
   }
 
-  Pair checkLikeNeighbors(int i, int j, int type, boolean onlyFourNeighbors) {
+  Pair checkLikeNeighbors(int i, int j, int type, boolean onlyFourNeighbors){
+    int similarCount = 0;
+    int notEmptyNeighborCount = 0;
+
+    Queue<Cell> neighborsToCheck = findNeighbors(i, j);
+
+     while (neighborsToCheck.peek() != null){
+        Cell currentCell = neighborsToCheck.remove();
+        if (currentCell.getType() == type){
+          similarCount++;
+        }
+        else if (currentCell.getType() == EMPTY){
+          notEmptyNeighborCount ++;
+        }
+     }
+     return new Pair(similarCount, notEmptyNeighborCount);
+  }
+
+  protected abstract Queue<Cell> findNeighbors(int i, int j);
+
+
+
+ /* Pair checkLikeNeighbors(int i, int j, int type, boolean onlyFourNeighbors) {
     int similarCount = 0;
     int neighborCount = 0;
-    boolean isTopEdge = (i == 0); //&& j!=0 && j!=numColumns);
-    boolean isBottomEdge = (i == numRows - 1);// && j!=0 && j!=numColumns);
-    boolean isLeftEdge = (j == 0); // && i!= numRows && i != 0);
-    boolean isRightEdge = (j == numColumns - 1); // && i!= numRows && i != 0);
+    boolean isTopEdge = (i == 0);
+    boolean isBottomEdge = (i == numRows - 1);
+    boolean isLeftEdge = (j == 0);
+    boolean isRightEdge = (j == numColumns - 1);
 
     if (!isLeftEdge && !isTopEdge && !onlyFourNeighbors) {
       if (myCellGrid[i - 1][j - 1].getType() == type) {
@@ -145,7 +167,7 @@ public abstract class Grid {
     }
 
     return new Pair(similarCount, neighborCount);
-  }
+  }*/
 
   public List<Pair> findEmptyCells() {
     ArrayList<Pair> emptyCells = new ArrayList<>();
