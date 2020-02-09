@@ -26,10 +26,11 @@ import java.util.ArrayList;
 
 public class simulationPanelFX extends VBox implements EventHandler {
 
+    //
     public boolean play;
     public int simSpeed = 500;
-    Timeline timeline;
-    toolBar tb;
+    private Timeline timeline;
+    private toolBar tb;
 
     //create Panel features
     public ComboBox<Integer> drawChoiceBox;
@@ -43,18 +44,18 @@ public class simulationPanelFX extends VBox implements EventHandler {
     double percentage;
 
     //create XML helpers
-    public static final String PERCOLATION = "data/Percolation.xml";
-    public static final String GAME_OF_LIFE = "data/GameOfLife.xml";
-    public static final String FIRE = "data/Fire.xml";
-    public static final String SEGREGATION = "data/Segregation.xml";
-    public static final String WATOR = "data/Wator.xml";
+    private static final String PERCOLATION = "data/Percolation.xml";
+    private static final String GAME_OF_LIFE = "data/GameOfLife.xml";
+    private static final String FIRE = "data/Fire.xml";
+    private static final String SEGREGATION = "data/Segregation.xml";
+    private static final String WATOR = "data/Wator.xml";
 
     //create simulation parameters
-    private  double canvasWidth = 600;
-    private  double canvasHeight = 600;
+    private  double canvasWidth = 830;
+    private  double canvasHeight = 830;
     private int cols, rows;
 
-  public List<Point> neighbors;
+    private List<Point> neighbors;
 
     public simulationPanelFX() {
         //add the canvas to the panel and handle it
@@ -197,6 +198,8 @@ public class simulationPanelFX extends VBox implements EventHandler {
             cols = config.getWidth();
             rows = config.getHeight();
             percentage = config.getPercentage();
+            //neighbors = config.getNeighbors();
+            //currentSim = config.getCurrentSim();
 
             if (file.equals(PERCOLATION)) {
                 mainGrid = new PercolationGrid(cols, rows, neighbors);
