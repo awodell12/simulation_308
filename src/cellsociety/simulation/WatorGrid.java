@@ -27,7 +27,7 @@ public class WatorGrid extends Grid {
   private Set<Integer> emptyCells = new HashSet<>();
   private Set<Integer> fishToRemove = new HashSet<>();
   private Set<Integer> myFishToAdd = new HashSet<>();
-  private List<Integer> neighborLocs = new ArrayList<>();
+  private List<Point> neighborLocs;
   private boolean initialize = true;
 
 
@@ -37,14 +37,15 @@ public class WatorGrid extends Grid {
     fishTimeToBreed = fishBreed;
     sharkDeathTime = sharkDie;
     sharkTimeToBreed = sharkBreed;
-    setNeighborLocs(neighbors);
+    neighborLocs = neighbors;
+    //setNeighborLocs(neighbors);
   }
 
-  private void setNeighborLocs(List<Point> neighbors) {
-    for (Point p : neighbors){
-      neighborLocs.add(p.x * numColumns + p.y);
-    }
-  }
+//  private void setNeighborLocs(List<Point> neighbors) {
+//    for (Point p : neighbors){
+//      neighborLocs.add(p.x * numColumns + p.y);
+//    }
+//  }
 
   @Override
   public void updateCells(List<Cell> updateList) {
@@ -59,6 +60,8 @@ public class WatorGrid extends Grid {
       }
       for (Pair pair:findEmptyCells()){
         emptyCells.add(calcLocation((int)pair.getKey(),(int)pair.getValue()));
+        emptyCells.removeAll(myFish);
+        emptyCells.removeAll(mySharks);
       }
       initialize = false;
     }
@@ -189,22 +192,23 @@ public class WatorGrid extends Grid {
 
   private List<Pair> checkForNeighbors(int i, int j, Set lookingFor) {
     List<Pair> neighbors = new ArrayList<>();
-    Integer sharkCoordinate = i * numColumns + j;
+    Integer sharkCoordinate = calcLocation(i,j);
 
     Queue<Integer> neighborsToCheck = findNeighbors(sharkCoordinate);
     while (neighborsToCheck.peek() != null) {
       Integer currentCell = neighborsToCheck.remove();
-      if (lookingFor.contains(currentCell))
+      if (lookingFor.contains(currentCell)) {
         neighbors.add(new Pair(currentCell / numColumns, currentCell % numColumns));
+      }
     }
     return neighbors;
   }
 
   protected Queue<Integer> findNeighbors(int location) {
     LinkedList<Integer> neighbors = new LinkedList<>();
-    for (Integer i : neighborLocs) {
-      if (isLegalCell(location / numColumns, location % numColumns)) {
-        neighbors.add(location + i);
+    for (Point p : neighborLocs) {
+      if (isLegalCell((location / numColumns) + p.x , (location % numColumns) + p.y)) {
+        neighbors.add(location + calcLocation(p.x,p.y));
       }
     }
     return neighbors;

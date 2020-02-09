@@ -9,8 +9,8 @@ public class Cell {
   private int myX;
   private int myY;
   private Image pic;
-  private int myAge = 0;
-  private int timeSinceEat = 0;
+  private int myAge;
+  private int timeSinceEat;
   private String picName;
 
 
@@ -18,6 +18,8 @@ public class Cell {
     myType = type;
     this.myX = x;
     this.myY = y;
+    timeSinceEat = 0;
+    myAge = 0;
   }
 
   public int getType() {
