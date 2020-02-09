@@ -29,7 +29,7 @@ public class WatorGrid extends Grid {
 
 
   public WatorGrid(int cols, int rows, int sharkBreed, int fishBreed, int sharkDie ) {
-    super(cols, rows);
+    super(cols, rows, neighborLocations);
     fishTimeToBreed = fishBreed;
     sharkDeathTime = sharkDie;
     sharkTimeToBreed = sharkBreed;

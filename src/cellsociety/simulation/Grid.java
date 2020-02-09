@@ -1,6 +1,8 @@
 package cellsociety.simulation;
 
+import java.awt.Point;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 import javafx.util.Pair;
@@ -15,10 +17,12 @@ public abstract class Grid {
   int numColumns;
   int numRows;
   Cell[][] myCellGrid;
+  private List<Point> neighborCoords;
 
-  public Grid(int cols, int rows) {
+  public Grid(int cols, int rows, List<Point> neighborLocations) {
     numColumns = cols;
     numRows = rows;
+    neighborCoords = neighborLocations;
     myCellGrid = new Cell[numRows][numColumns];
     for (int i = 0; i < numRows; i++) {
       for (int j = 0; j < numColumns; j++) {
@@ -45,16 +49,18 @@ public abstract class Grid {
 
   /**
    * Because its an array I thought returning a copy would be a good way to make it immutable
+   *
    * @return
    */
-  public Cell[][] getGrid(){
-    Cell [][] retu = new Cell[myCellGrid.length][myCellGrid[0].length];
-     System.arraycopy(myCellGrid, 0, retu, 0, myCellGrid.length);
-     return retu;
+  public Cell[][] getGrid() {
+    Cell[][] retu = new Cell[myCellGrid.length][myCellGrid[0].length];
+    System.arraycopy(myCellGrid, 0, retu, 0, myCellGrid.length);
+    return retu;
   }
 
   /**
    * debug/testing method to print out current states
+   *
    * @return
    */
   public void printCells() {
@@ -71,103 +77,37 @@ public abstract class Grid {
     System.out.println();
   }
 
-  Pair checkLikeNeighbors(int i, int j, int type, boolean onlyFourNeighbors){
+  Pair checkLikeNeighbors(int i, int j, int type) {
     int similarCount = 0;
     int notEmptyNeighborCount = 0;
 
     Queue<Cell> neighborsToCheck = findNeighbors(i, j);
 
-     while (neighborsToCheck.peek() != null){
-        Cell currentCell = neighborsToCheck.remove();
-        if (currentCell.getType() == type){
-          similarCount++;
-        }
-        else if (currentCell.getType() == EMPTY){
-          notEmptyNeighborCount ++;
-        }
-     }
-     return new Pair(similarCount, notEmptyNeighborCount);
+    while (neighborsToCheck.peek() != null) {
+      Cell currentCell = neighborsToCheck.remove();
+      if (currentCell.getType() == type) {
+        similarCount++;
+      } else if (currentCell.getType() == EMPTY) {
+        notEmptyNeighborCount++;
+      }
+    }
+    return new Pair(similarCount, notEmptyNeighborCount);
   }
 
-  protected abstract Queue<Cell> findNeighbors(int i, int j);
-
-
-
- /* Pair checkLikeNeighbors(int i, int j, int type, boolean onlyFourNeighbors) {
-    int similarCount = 0;
-    int neighborCount = 0;
-    boolean isTopEdge = (i == 0);
-    boolean isBottomEdge = (i == numRows - 1);
-    boolean isLeftEdge = (j == 0);
-    boolean isRightEdge = (j == numColumns - 1);
-
-    if (!isLeftEdge && !isTopEdge && !onlyFourNeighbors) {
-      if (myCellGrid[i - 1][j - 1].getType() == type) {
-        similarCount++;
-      }
-      if (myCellGrid[i - 1][j - 1].getType() != EMPTY) {
-        neighborCount++;
+  protected Queue<Cell> findNeighbors(int i, int j) {
+    LinkedList<Cell> neighbors = new LinkedList<>();
+    for (Point p : neighborCoords) {
+      if (isLegalCell(i + p.x, j + p.y)) {
+        neighbors.add(myCellGrid[i + p.x][j + p.y]);
       }
     }
-    if (!isTopEdge) {
-      if (myCellGrid[i - 1][j].getType() == type) {
-        similarCount++;
-      }
-      if (myCellGrid[i - 1][j].getType() != EMPTY) {
-        neighborCount++;
-      }
-    }
-    if (!isTopEdge && !isRightEdge && !onlyFourNeighbors) {
-      if (myCellGrid[i - 1][j + 1].getType() == type) {
-        similarCount++;
-      }
-      if (myCellGrid[i - 1][j + 1].getType() != EMPTY) {
-        neighborCount++;
-      }
-    }
-    if (!isLeftEdge) {
-      if (myCellGrid[i][j - 1].getType() == type) {
-        similarCount++;
-      }
-      if (myCellGrid[i][j - 1].getType() != EMPTY) {
-        neighborCount++;
-      }
-    }
-    if (!isRightEdge) {
-      if (myCellGrid[i][j + 1].getType() == type) {
-        similarCount++;
-      }
-      if (myCellGrid[i][j + 1].getType() != EMPTY) {
-        neighborCount++;
-      }
-    }
-    if (!isBottomEdge && !isLeftEdge && !onlyFourNeighbors) {
-      if (myCellGrid[i + 1][j - 1].getType() == type) {
-        similarCount++;
-      }
-      if (myCellGrid[i + 1][j - 1].getType() != EMPTY) {
-        neighborCount++;
-      }
-    }
-    if (!isBottomEdge) {
-      if (myCellGrid[i + 1][j].getType() == type) {
-        similarCount++;
-      }
-      if (myCellGrid[i + 1][j].getType() != EMPTY) {
-        neighborCount++;
-      }
-    }
-    if (!isBottomEdge && !isRightEdge && !onlyFourNeighbors) {
-      if (myCellGrid[i + 1][j + 1].getType() == type) {
-        similarCount++;
-      }
-      if (myCellGrid[i + 1][j + 1].getType() != EMPTY) {
-        neighborCount++;
-      }
-    }
-
-    return new Pair(similarCount, neighborCount);
-  }*/
+    return neighbors;
+  }
+  private boolean isLegalCell(int i, int j) {
+    boolean notLegal = (i >= numRows || i < 0 || j >= numColumns || j < 0);
+    return !notLegal;
+  }
+  
 
   public List<Pair> findEmptyCells() {
     ArrayList<Pair> emptyCells = new ArrayList<>();

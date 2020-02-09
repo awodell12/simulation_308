@@ -13,7 +13,7 @@ public class SegregationGrid extends Grid {
   private double satisfactionThreshold;
 
   public SegregationGrid(int cols, int rows, double threshold) {
-    super(cols, rows);
+    super(cols, rows, neighborLocations);
     satisfactionThreshold = threshold;
   }
 
@@ -28,7 +28,7 @@ public class SegregationGrid extends Grid {
           continue;
         }
 
-        Pair neighbors = checkLikeNeighbors(i, j, curType, false);
+        Pair neighbors = checkLikeNeighbors(i, j, curType);
         int similarNeighbors = (int) neighbors.getKey();
         int totalNeighbors = (int) neighbors.getValue();
         if (similarNeighbors < satisfactionThreshold * totalNeighbors) {

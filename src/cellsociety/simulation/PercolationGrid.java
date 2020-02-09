@@ -20,7 +20,7 @@ public class PercolationGrid extends Grid {
   private boolean isPercolated = false;
 
   public PercolationGrid(int cols, int rows) {
-    super(cols, rows);
+    super(cols, rows, neighborLocations);
   }
 
   @Override
@@ -36,7 +36,7 @@ public class PercolationGrid extends Grid {
         if (curCell.getType() != OPEN) {
           continue;
         }
-        Pair neighbors = checkLikeNeighbors(i, j, FILLED, false);
+        Pair neighbors = checkLikeNeighbors(i, j, FILLED);
         boolean fillUp = (int) neighbors.getKey() > 0;
         if (fillUp) {
           newType = FILLED;

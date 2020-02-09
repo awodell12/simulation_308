@@ -1,7 +1,10 @@
 package cellsociety.simulation;
 
+import java.awt.Point;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 import javafx.util.Pair;
 
 /**
@@ -15,8 +18,11 @@ public class FireGrid extends Grid {
 
   private double burnChance;
 
-  public FireGrid(int cols, int rows, double chance) {
-    super(cols, rows);
+
+
+
+  public FireGrid(int cols, int rows, double chance, List<Point> neighborLocations) {
+    super(cols, rows, neighborLocations);
     burnChance = chance;
   }
 
@@ -34,7 +40,7 @@ public class FireGrid extends Grid {
           updateList.add(new Cell(EMPTY, i, j));
           continue;
         }
-        Pair neighbors = checkLikeNeighbors(i, j, BURNING, true);
+        Pair neighbors = checkLikeNeighbors(i, j, BURNING);
         hasBurningNeighbor = ((int) neighbors.getKey() >= 1);
         if (hasBurningNeighbor) {
           if (Math.random() < burnChance) {
@@ -45,7 +51,6 @@ public class FireGrid extends Grid {
     }
     return updateList;
   }
-
 
 
 }

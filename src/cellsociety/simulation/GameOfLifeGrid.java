@@ -10,7 +10,7 @@ public class GameOfLifeGrid extends Grid {
   public static final int ALIVE = 1;
 
   public GameOfLifeGrid(int cols, int rows) {
-    super(cols, rows);
+    super(cols, rows, neighborLocations);
   }
 
   @Override
@@ -21,7 +21,7 @@ public class GameOfLifeGrid extends Grid {
       for (int j = 0; j < numColumns; j++) {
         Cell curCell = myCellGrid[i][j];
 
-        Pair neighbors = checkLikeNeighbors(i, j, ALIVE, false);
+        Pair neighbors = checkLikeNeighbors(i, j, ALIVE);
         int aliveNeighbors = (int) neighbors.getKey();
         if (aliveNeighbors >= 2 && aliveNeighbors < 4) {
           newType = ALIVE;
