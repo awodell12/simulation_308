@@ -2,7 +2,10 @@ package cellsociety;
 
 import javafx.event.ActionEvent;
 import javafx.scene.Scene;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
 import javafx.scene.control.*;
+import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import java.io.File;
@@ -11,18 +14,20 @@ import java.io.File;
 public class toolBar extends ToolBar {
 
     private simulationPanelFX fx;
-    ComboBox<String> simulationChoiceBox;
-    Slider sizeSlider;
-    Slider speedSlider;
-    Button playButton;
-    String playStop = "Play";
-    private ListView listview;
+    private ComboBox<String> simulationChoiceBox;
+    private Slider sizeSlider;
+    public Slider speedSlider;
+    private Button playButton;
+    private String playStop = "Play";
 
     public toolBar(simulationPanelFX fx){
         //Get the Main Panel in
         this.fx = fx;
 
         //Generate the Buttons
+        Button graphButton = new Button("Graph");
+        graphButton.setOnAction(this::handleGraph);
+
         Button loadButton = new Button("Load XML");
         loadButton.setOnAction(this::handleLoad);
 
@@ -38,8 +43,8 @@ public class toolBar extends ToolBar {
         Button resizeButton = new Button("Resize");
         resizeButton.setOnAction(this::handleResize);
 
-        playButton = new Button(playStop);
-        playButton.setOnAction(this::handlePlay);
+        this.playButton = new Button(playStop);
+        this.playButton.setOnAction(this::handlePlay);
 
         //Generate the Labels
         final Label sizeLabel = new Label("Size:");
@@ -69,7 +74,27 @@ public class toolBar extends ToolBar {
                 fx.drawChoiceBox, new Separator(),
                 speedLabel, speedSlider, playButton, stepButton, new Separator(),
                 sizeLabel, sizeSlider, resizeButton, new Separator(),
-                newWindow, loadButton);
+                newWindow, loadButton, graphButton);
+    }
+
+    private void handleGraph(ActionEvent actionEvent) {
+        //Get Graph
+        NumberAxis xAxis = new NumberAxis(0, fx.getIterationNo(), 10);
+        xAxis.setLabel("Time");
+
+        NumberAxis yAxis = new NumberAxis(0, fx.getCols()*fx.getRows(), 50);
+        yAxis.setLabel("No.of members");
+
+        LineChart lineChart = new LineChart(xAxis,yAxis);
+
+
+        lineChart.getData().addAll(fx.type0Data, fx.type1Data, fx.type2Data);
+        StackPane stackPane = new StackPane();
+        stackPane.getChildren().add(lineChart);
+        Scene scene = new Scene(stackPane, 950, 950);
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.show();
     }
 
     private void handleLoad(ActionEvent actionEvent) {
@@ -78,23 +103,11 @@ public class toolBar extends ToolBar {
         File selectedFile = fc.showOpenDialog(new Stage());
 
         if((selectedFile) != null) {
-            listview.getItems().add(selectedFile.getName());
+            //listview.getItems().add(selectedFile.getName());
 
         } else{
             System.out.println("File is not valid");
         }
-    }
-
-    private void handleStage(ActionEvent actionEvent) {
-        simulationPanelFX mainPanel = new simulationPanelFX();
-        Scene scene = new Scene(mainPanel, 830, 900);
-        Stage stage = new Stage();
-        stage.setTitle("New Window");
-        stage.setScene(scene);
-        int randomInt = (int)(10.0 * Math.random());
-        stage.setX(randomInt);
-        stage.setY(randomInt);
-        stage.show();
     }
 
     private void handleWindow(ActionEvent actionEvent) {
@@ -117,6 +130,7 @@ public class toolBar extends ToolBar {
         if(!this.fx.play) {
             this.fx.resizeGrid((int) sizeSlider.getValue(), fx.currentSim);
             this.fx.draw();
+            this.fx.resetGraphData();
         }
     }
 
@@ -124,6 +138,7 @@ public class toolBar extends ToolBar {
         if(!this.fx.play) {
             this.fx.getMainGrid().updateCells(this.fx.getMainGrid().checkForUpdates());
             this.fx.draw();
+            this.fx.updateGraphData();
         }
     }
 
@@ -132,6 +147,7 @@ public class toolBar extends ToolBar {
             this.fx.currentSim = simulationChoiceBox.getValue();
             this.fx.simChecker(fx.currentSim);
             this.fx.draw();
+            this.fx.resetGraphData();
         }
     }
 

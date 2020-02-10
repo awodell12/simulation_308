@@ -7,6 +7,7 @@ import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.geometry.Point2D;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.input.MouseEvent;
@@ -26,7 +27,14 @@ import java.util.ArrayList;
 
 public class simulationPanelFX extends VBox implements EventHandler {
 
-    //
+    //create graph parameters
+    public XYChart.Series<Integer,Integer> type0Data;
+    public XYChart.Series<Integer,Integer> type1Data;
+    public XYChart.Series<Integer,Integer> type2Data;
+    private int iterationNo;
+
+
+    //create timeline parameters
     public boolean play;
     public int simSpeed = 500;
     private Timeline timeline;
@@ -51,13 +59,11 @@ public class simulationPanelFX extends VBox implements EventHandler {
     private static final String WATOR = "data/Wator.xml";
 
     //create simulation parameters
-
     private  double canvasWidth = 830;
     private  double canvasHeight = 830;
-
     private int cols, rows;
-
     private List<Point> neighbors;
+
 
     public simulationPanelFX() {
         //add the canvas to the panel and handle it
@@ -65,11 +71,11 @@ public class simulationPanelFX extends VBox implements EventHandler {
         this.canvas.setOnMousePressed(this::handleDraw);
         this.canvas.setOnMouseDragged(this::handleDraw);
 
-      neighbors = new ArrayList<>();
-      neighbors.add(new Point(0,1));
-      neighbors.add(new Point(0,-1));
-      neighbors.add(new Point(1,0));
-      neighbors.add(new Point(-1,0));
+        neighbors = new ArrayList<>();
+        neighbors.add(new Point(0,1));
+        neighbors.add(new Point(0,-1));
+        neighbors.add(new Point(1,0));
+        neighbors.add(new Point(-1,0));
 
         //create initial grid and scale the simulation
         createGridFromXML(PERCOLATION);
@@ -87,12 +93,38 @@ public class simulationPanelFX extends VBox implements EventHandler {
         timeline.play();
     }
 
+    public void resetGraphData(){
+        type0Data = new XYChart.Series<>();
+        type1Data = new XYChart.Series<>();
+        type2Data = new XYChart.Series<>();
+    }
+
+    public void updateGraphData() {
+        iterationNo ++;
+        int type0 = 0;
+        int type1 = 0;
+        int type2 = 0;
+
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                if(mainGrid.getGrid()[i][j].getType() == 0){type0++;}
+                if(mainGrid.getGrid()[i][j].getType() == 1){type1++;}
+                if(mainGrid.getGrid()[i][j].getType() == 2){type2++;}
+            }
+        }
+
+        type0Data.getData().add(new XYChart.Data<>(iterationNo,type0));
+        type1Data.getData().add(new XYChart.Data<>(iterationNo,type1));
+        type2Data.getData().add(new XYChart.Data<>(iterationNo,type2));
+    }
+
     private void doStep(ActionEvent actionEvent) {
         simSpeed = (int) this.tb.speedSlider.getValue();
         this.timeline.setRate(simSpeed);
         if(this.play) {
           //mainGrid.printCells();
             mainGrid.updateCells(mainGrid.checkForUpdates());
+            updateGraphData();
             draw();
         }
     }
@@ -237,5 +269,14 @@ public class simulationPanelFX extends VBox implements EventHandler {
 
     public Grid getMainGrid() {
         return this.mainGrid;
+    }
+    public int getCols() {
+        return this.cols;
+    }
+    public int getRows() {
+        return this.rows;
+    }
+    public int getIterationNo() {
+        return this.iterationNo;
     }
 }
