@@ -6,8 +6,12 @@ import java.util.List;
 import javafx.util.Pair;
 
 /**
- * Cells Types: 0-open 1-blocked 2-Filled We are defining this class to have the condition that system
- * will be percolated once the bottom right-cell is filled
+ *
+ * Purpose: Create and manage a Percolation Cellular Automation
+ * Assumptions: Cells Types: 0-open 1-blocked 2-Filled  We are defining this class to have the condition that system
+ * will be percolated once the bottom right-cell is filled, could adjust so this location is set in constructor
+ * Dependencies: Grid and cell
+ * Example: create grid then updateCells(checkForUpdates())
  *
  * @author Austin Odell
  */
@@ -50,7 +54,6 @@ public class PercolationGrid extends Grid {
             break;
           }
         }
-
       }
       if (isPercolated) break;
     }
