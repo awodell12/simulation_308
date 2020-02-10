@@ -5,6 +5,14 @@ import java.util.ArrayList;
 import java.util.List;
 import javafx.util.Pair;
 
+/**
+ * @author Austin Odell
+ * Purpose: The purpose of this class is to create and mantain a grid for the Segregation simulation
+ * Assumptions: The threshold value given is between 0 and 1.
+ * Dependencies: Grid and Cell
+ * Example: Use in the same way as other Grid(checkForUpdates and updateCells), except with additional
+ * parameter of threshold for satisfaction which determines if someone will be happy with their current neighbors
+ */
 public class SegregationGrid extends Grid {
 
   public static final int TYPE_A = 1;
@@ -13,6 +21,15 @@ public class SegregationGrid extends Grid {
 
   private double satisfactionThreshold;
 
+  /**
+   *
+   * @param cols
+   * @param rows
+   * @param threshold The percentage at or above which a person is happy with the amount of neighbors
+   *                  that are like them, otherwise they will want to move
+   * @param neighborLocations
+   * @param edges
+   */
   public SegregationGrid(int cols, int rows, double threshold,
       List<Point> neighborLocations, edgeType edges) {
     super(cols, rows, neighborLocations, edges);

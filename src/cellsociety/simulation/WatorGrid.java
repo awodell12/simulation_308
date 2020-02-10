@@ -10,13 +10,20 @@ import java.util.Queue;
 import java.util.Set;
 import javafx.util.Pair;
 
-@SuppressWarnings("SpellCheckingInspection")
+/**
+ * Purpose: This class is used to make and manage grid for the WaTorWorld/Predation+Play simulation.
+ * Assumptions:
+ * Dependencies: Grid and Cell
+ * Use it in the same way as described in the general grid class except with a extra parameters for
+ * how long it takes fish to breed, sharks to breed, and sharks to die.
+ *
+ */
 public class WatorGrid extends Grid {
 
   public static final int SHARK = 2;
   public static final int FISH = 1;
   public static final int EMPTY = 0;
-  public static final int ENERGY_FROM_FISH = 5;
+  public static final int ENERGY_FROM_FISH = 3;
 
   private int fishTimeToBreed;
   private int sharkTimeToBreed;
@@ -28,10 +35,19 @@ public class WatorGrid extends Grid {
   private Set<Integer> fishToRemove = new HashSet<>();
   private Set<Integer> myFishToAdd = new HashSet<>();
   private List<Point> neighborLocs;
-  private boolean initialize = true;
 
 
-
+  /**
+   *
+   * @param cols
+   * @param rows
+   * @param sharkBreed time it takes for a shark to breed (produce a new shark)
+   * @param fishBreed time it takes for a fish to breed (produce a new fish)
+   * @param sharkDie amount of time it takes for a shark to die, food increases this by decreasing the
+   *                 time since the shark last ate.
+   * @param neighbors
+   * @param edges
+   */
   public WatorGrid(int cols, int rows, int sharkBreed, int fishBreed, int sharkDie, List<Point> neighbors, edgeType edges) {
     super(cols, rows, neighbors, edges);
     fishTimeToBreed = fishBreed;
@@ -56,7 +72,6 @@ public class WatorGrid extends Grid {
         emptyCells.removeAll(myFish);
         emptyCells.removeAll(mySharks);
       }
-      initialize = false;
     super.updateCells(updateList);
   }
 
