@@ -3,14 +3,19 @@ package cellsociety;
 import javafx.event.ActionEvent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import xml.Configuration;
+import xml.Reader;
+import xml.XMLException;
+import xml.XMLParser;
+
 import java.io.File;
 
 
 public class toolBar extends ToolBar {
 
     private simulationPanelFX fx;
+    private Configuration config;
     ComboBox<String> simulationChoiceBox;
     Slider sizeSlider;
     Slider speedSlider;
@@ -73,28 +78,22 @@ public class toolBar extends ToolBar {
     }
 
     private void handleLoad(ActionEvent actionEvent) {
-        FileChooser fc = new FileChooser();
-        fc.setInitialDirectory(new File(System.getProperty("user.dir") + File.separator + "data"));
-        File selectedFile = fc.showOpenDialog(new Stage());
-
-        if((selectedFile) != null) {
-            listview.getItems().add(selectedFile.getName());
-
-        } else{
-            System.out.println("File is not valid");
+        File dataFile = Reader.FILE_CHOOSER.showOpenDialog(new Stage());
+        while (dataFile != null) {
+            try {
+                XMLParser myParser = new XMLParser();
+                this.fx.config = myParser.getConfiguration(dataFile);
+                this.fx.dataFile = dataFile;
+                this.fx.currentSim = fx.config.getType();
+                this.fx.simChecker(fx.currentSim);
+                this.fx.draw();
+            }
+            catch (XMLException e) {
+                // handle error of unexpected file format
+                Reader.showMessage(Alert.AlertType.ERROR, e.getMessage());
+            }
+            break;
         }
-    }
-
-    private void handleStage(ActionEvent actionEvent) {
-        simulationPanelFX mainPanel = new simulationPanelFX();
-        Scene scene = new Scene(mainPanel, 830, 900);
-        Stage stage = new Stage();
-        stage.setTitle("New Window");
-        stage.setScene(scene);
-        int randomInt = (int)(10.0 * Math.random());
-        stage.setX(randomInt);
-        stage.setY(randomInt);
-        stage.show();
     }
 
     private void handleWindow(ActionEvent actionEvent) {
@@ -106,6 +105,7 @@ public class toolBar extends ToolBar {
         stage.setY(10);
         stage.show();
     }
+
     private void handlePlay(ActionEvent actionEvent) {
         if(playStop.equals("Play")){playStop = "Stop";}
         else if(playStop.equals("Stop")){playStop = "Play";}

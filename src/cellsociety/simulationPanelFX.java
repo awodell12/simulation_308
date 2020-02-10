@@ -26,11 +26,13 @@ import java.util.ArrayList;
 
 public class simulationPanelFX extends VBox implements EventHandler {
 
-    //
     public boolean play;
     public int simSpeed = 500;
     private Timeline timeline;
     private toolBar tb;
+
+    File dataFile;
+    Configuration config;
 
     //create Panel features
     public ComboBox<Integer> drawChoiceBox;
@@ -73,7 +75,7 @@ public class simulationPanelFX extends VBox implements EventHandler {
 
         //create initial grid and scale the simulation
         createGridFromXML(PERCOLATION);
-        currentSim = "Percolation";
+        currentSim = config.getType();
         this.affine = new Affine();
         this.affine.appendScale(canvasWidth/cols,canvasHeight/rows);
 
@@ -195,7 +197,7 @@ public class simulationPanelFX extends VBox implements EventHandler {
 
         private void createGridFromXML (String file){
             XMLParser myParser = new XMLParser();
-            Configuration config = myParser.getConfiguration(new File(file));
+            config = myParser.getConfiguration(new File(file));
 
             cols = config.getWidth();
             rows = config.getHeight();

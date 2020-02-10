@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <sim>
     <data>
-        <type>Segregation</type>
-        <title>Segregation</title>
+        <type>Prey/Predator</type>
+        <title>Wator</title>
         <author>Robert Chen</author>
     </data>
     <config>
