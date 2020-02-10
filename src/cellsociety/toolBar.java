@@ -8,6 +8,11 @@ import javafx.scene.control.*;
 import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import xml.Configuration;
+import xml.Reader;
+import xml.XMLException;
+import xml.XMLParser;
+
 import java.io.File;
 
 
@@ -19,6 +24,9 @@ public class toolBar extends ToolBar {
     public Slider speedSlider;
     private Button playButton, graphButton, loadButton, newWindow, changesButton, stepButton, resizeButton;
     private String playStop = "Play";
+
+    private Configuration config;
+    private ListView listview;
 
     public toolBar(simulationPanelFX fx){
         //Get the Main Panel in
@@ -119,15 +127,21 @@ public class toolBar extends ToolBar {
     }
 
     private void handleLoad(ActionEvent actionEvent) {
-        FileChooser fc = new FileChooser();
-        fc.setInitialDirectory(new File(System.getProperty("user.dir") + File.separator + "data"));
-        File selectedFile = fc.showOpenDialog(new Stage());
-
-        if((selectedFile) != null) {
-            //listview.getItems().add(selectedFile.getName());
-
-        } else{
-            System.out.println("File is not valid");
+        File dataFile = Reader.FILE_CHOOSER.showOpenDialog(new Stage());
+        while (dataFile != null) {
+            try {
+                XMLParser myParser = new XMLParser();
+                this.fx.config = myParser.getConfiguration(dataFile);
+                this.fx.dataFile = dataFile;
+                this.fx.currentSim = fx.config.getType();
+                this.fx.simChecker(fx.currentSim);
+                this.fx.draw();
+            }
+            catch (XMLException e) {
+                // handle error of unexpected file format
+                Reader.showMessage(Alert.AlertType.ERROR, e.getMessage());
+            }
+            break;
         }
     }
 

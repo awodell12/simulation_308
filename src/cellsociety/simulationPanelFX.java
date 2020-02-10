@@ -39,6 +39,9 @@ public class simulationPanelFX extends VBox implements EventHandler {
     private Timeline timeline;
     private toolBar tb;
 
+    File dataFile;
+    Configuration config;
+
     //create Panel features
     public ComboBox<Integer> drawChoiceBox;
     private Canvas canvas;
@@ -80,7 +83,7 @@ public class simulationPanelFX extends VBox implements EventHandler {
 
         //create initial grid and scale the simulation
         createGridFromXML(PERCOLATION);
-        currentSim = "Percolation";
+        currentSim = config.getType();
         this.affine = new Affine();
         this.affine.appendScale(canvasWidth/cols,canvasHeight/rows);
 
@@ -228,7 +231,7 @@ public class simulationPanelFX extends VBox implements EventHandler {
 
         private void createGridFromXML (String file){
             XMLParser myParser = new XMLParser();
-            Configuration config = myParser.getConfiguration(new File(file));
+            config = myParser.getConfiguration(new File(file));
 
             cols = config.getWidth();
             rows = config.getHeight();
