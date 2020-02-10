@@ -32,14 +32,16 @@ public class simulationPanelFX extends VBox implements EventHandler {
     public XYChart.Series<Integer,Integer> type0Data;
     public XYChart.Series<Integer,Integer> type1Data;
     public XYChart.Series<Integer,Integer> type2Data;
-    private int iterationNo;
-
+    public int iterationNo;
 
     //create timeline parameters
     public boolean play;
     public int simSpeed = 500;
     private Timeline timeline;
     private toolBar tb;
+
+    File dataFile;
+    Configuration config;
 
     //create Panel features
     public ComboBox<Integer> drawChoiceBox;
@@ -73,7 +75,9 @@ public class simulationPanelFX extends VBox implements EventHandler {
         this.canvas.setOnMousePressed(this::handleDraw);
         this.canvas.setOnMouseDragged(this::handleDraw);
 
+
         //TODO: Find a way to get rid of hard-coding of neighbors and edge type
+
         neighbors = new ArrayList<>();
         neighbors.add(new Point(0,1));
         neighbors.add(new Point(0,-1));
@@ -83,7 +87,7 @@ public class simulationPanelFX extends VBox implements EventHandler {
 
         //create initial grid and scale the simulation
         createGridFromXML(PERCOLATION);
-        currentSim = "Percolation";
+        currentSim = config.getType();
         this.affine = new Affine();
         this.affine.appendScale(canvasWidth/cols,canvasHeight/rows);
 
@@ -98,13 +102,13 @@ public class simulationPanelFX extends VBox implements EventHandler {
     }
 
     public void resetGraphData(){
+        iterationNo = 0;
         type0Data = new XYChart.Series<>();
         type1Data = new XYChart.Series<>();
         type2Data = new XYChart.Series<>();
     }
 
     public void updateGraphData() {
-        iterationNo ++;
         int type0 = 0;
         int type1 = 0;
         int type2 = 0;
@@ -120,13 +124,13 @@ public class simulationPanelFX extends VBox implements EventHandler {
         type0Data.getData().add(new XYChart.Data<>(iterationNo,type0));
         type1Data.getData().add(new XYChart.Data<>(iterationNo,type1));
         type2Data.getData().add(new XYChart.Data<>(iterationNo,type2));
+        iterationNo ++;
     }
 
     private void doStep(ActionEvent actionEvent) {
         simSpeed = (int) this.tb.speedSlider.getValue();
         this.timeline.setRate(simSpeed);
         if(this.play) {
-          //mainGrid.printCells();
             mainGrid.updateCells(mainGrid.checkForUpdates());
             updateGraphData();
             draw();
@@ -231,7 +235,7 @@ public class simulationPanelFX extends VBox implements EventHandler {
 
         private void createGridFromXML (String file){
             XMLParser myParser = new XMLParser();
-            Configuration config = myParser.getConfiguration(new File(file));
+            config = myParser.getConfiguration(new File(file));
 
             cols = config.getWidth();
             rows = config.getHeight();
@@ -271,16 +275,8 @@ public class simulationPanelFX extends VBox implements EventHandler {
             if (str.equals("Game of Life")) { mainGrid = new GameOfLifeGrid(size,size,neighbors,myEdgeType);}
     }
 
-    public Grid getMainGrid() {
-        return this.mainGrid;
-    }
-    public int getCols() {
-        return this.cols;
-    }
-    public int getRows() {
-        return this.rows;
-    }
-    public int getIterationNo() {
-        return this.iterationNo;
-    }
+    /* Here we can see a wild group of getters */
+    public Grid getMainGrid() { return this.mainGrid; }
+    public int getCols() { return this.cols; }
+    public int getRows() { return this.rows; }
 }
