@@ -124,7 +124,6 @@ public class simulationPanelFX extends VBox implements EventHandler {
         simSpeed = (int) this.tb.speedSlider.getValue();
         this.timeline.setRate(simSpeed);
         if(this.play) {
-          //mainGrid.printCells();
             mainGrid.updateCells(mainGrid.checkForUpdates());
             updateGraphData();
             draw();
