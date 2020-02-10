@@ -18,6 +18,11 @@ public abstract class Grid {
   int numRows;
   Cell[][] myCellGrid;
   private List<Point> neighborCoords;
+  boolean rapAroundEdges;
+  enum edgeType{
+    FIXED, TOROIDAL
+  }
+  edgeType myEdgeType = edgeType.TOROIDAL;
 
   public Grid(int cols, int rows) {
     numColumns = cols;
@@ -29,7 +34,7 @@ public abstract class Grid {
       }
     }
   }
-  public Grid(int cols, int rows, List<Point> neighborLocations) {
+  public Grid(int cols, int rows, List<Point> neighborLocations) { // edgeType edges
     this(cols, rows);
     neighborCoords = neighborLocations;
   }
@@ -100,8 +105,12 @@ public abstract class Grid {
   protected Queue<Cell> findNeighbors(int i, int j) {
     LinkedList<Cell> neighbors = new LinkedList<>();
     for (Point p : neighborCoords) {
-      if (isLegalCell(i + p.x, j + p.y)) {
-        neighbors.add(myCellGrid[i + p.x][j + p.y]);
+//      if (isLegalCell(i + p.x, j + p.y)) {
+//        neighbors.add(myCellGrid[i + p.x][j + p.y]);
+//      }
+      Integer validNeighbor = legalNeighbor(i+ p.x,j + p.y);
+      if(validNeighbor != null) {
+        neighbors.add(myCellGrid[validNeighbor/numColumns][validNeighbor%numColumns]);
       }
     }
     return neighbors;
@@ -109,6 +118,37 @@ public abstract class Grid {
   boolean isLegalCell(int i, int j) {
     boolean notLegal = (i >= numRows || i < 0 || j >= numColumns || j < 0);
     return !notLegal;
+  }
+  Integer legalNeighbor(int i, int j){
+    switch (myEdgeType){
+      case FIXED:
+        if (isLegalCell(i,j)){
+          return i*numColumns + j;
+        }
+        return null;
+
+      case TOROIDAL:
+        if (isLegalCell(i,j)){
+          return i*numColumns + j;
+        }
+        return wrappedLoc(i,j);
+      default:
+        throw new IllegalStateException("Unacceptable Edge Style: " + myEdgeType);
+    }
+  }
+
+  protected Integer wrappedLoc(int i, int j){
+    if (i<0)
+    return (numRows-1)*(numColumns ) + j;
+    if (i >= numColumns){
+      return j;
+    }
+    if(j<0){
+      return i*numColumns + (numColumns -1);
+    }
+    else {
+      return i *numColumns;
+    }
   }
 
   public List<Pair> findEmptyCells() {

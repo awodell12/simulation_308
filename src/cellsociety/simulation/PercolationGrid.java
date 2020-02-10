@@ -6,9 +6,8 @@ import java.util.List;
 import javafx.util.Pair;
 
 /**
- * Cells Types: 0-open 1-blocked 2-Filled We are defining this class to have the condition that on
- * start-up only cell(s) on the left side will be filled and that the system will be percolated once
- * a right edge is filled.
+ * Cells Types: 0-open 1-blocked 2-Filled We are defining this class to have the condition that system
+ * will be percolated once the bottom right-cell is filled
  *
  * @author Austin Odell
  */
@@ -19,9 +18,13 @@ public class PercolationGrid extends Grid {
   public static final int BLOCKED = 1;
 
   private boolean isPercolated = false;
+  private int destX;
+  private int destY;
 
   public PercolationGrid(int cols, int rows, List<Point> neighborLocations) {
     super(cols, rows, neighborLocations);
+    destX = rows -1;
+    destY = cols -1;
   }
 
   @Override
@@ -41,16 +44,18 @@ public class PercolationGrid extends Grid {
         boolean fillUp = (int) neighbors.getKey() > 0;
         if (fillUp) {
           newType = FILLED;
-        } else {
-          newType = OPEN;
-        }
-        if (newType == FILLED) {
           updateList.add(new Cell(newType, i, j));
-          if (j == numColumns - 1) {
+          if(i == destX&&j==destY){
             isPercolated = true;
+            break;
           }
         }
+
       }
+      if (isPercolated) break;
+    }
+    if (myCellGrid[destX][destY].getType() == FILLED){
+      isPercolated = true;
     }
     return updateList;
   }
