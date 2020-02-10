@@ -27,6 +27,9 @@ Main class: MainFX
 Data files needed: 
 
 Features implemented:
+* Two typed of edges: Toroidal and finite
+* Custom selection of neighborhood. 
+* Fire, WaTor, Segregation, GameOfLife, and Percolation
 
 
 
