@@ -19,8 +19,8 @@ public class FireGrid extends Grid {
   private double burnChance;
 
 
-  public FireGrid(int cols, int rows, double chance, List<Point> neighborLocations) {
-    super(cols, rows, neighborLocations);
+  public FireGrid(int cols, int rows, double chance, List<Point> neighborLocations, edgeType edges) {
+    super(cols, rows, neighborLocations, edges);
     burnChance = chance;
   }
 

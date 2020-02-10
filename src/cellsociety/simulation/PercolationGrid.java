@@ -21,8 +21,8 @@ public class PercolationGrid extends Grid {
   private int destX;
   private int destY;
 
-  public PercolationGrid(int cols, int rows, List<Point> neighborLocations) {
-    super(cols, rows, neighborLocations);
+  public PercolationGrid(int cols, int rows, List<Point> neighborLocations, edgeType edges) {
+    super(cols, rows, neighborLocations, edges);
     destX = rows -1;
     destY = cols -1;
   }

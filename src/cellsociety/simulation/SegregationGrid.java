@@ -14,8 +14,8 @@ public class SegregationGrid extends Grid {
   private double satisfactionThreshold;
 
   public SegregationGrid(int cols, int rows, double threshold,
-      List<Point> neighborLocations) {
-    super(cols, rows, neighborLocations);
+      List<Point> neighborLocations, edgeType edges) {
+    super(cols, rows, neighborLocations, edges);
     satisfactionThreshold = threshold;
   }
 

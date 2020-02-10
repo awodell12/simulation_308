@@ -1,6 +1,7 @@
 package cellsociety;
 
 import cellsociety.simulation.*;
+import cellsociety.simulation.Grid.edgeType;
 import java.util.List;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -63,6 +64,7 @@ public class simulationPanelFX extends VBox implements EventHandler {
     private  double canvasHeight = 830;
     private int cols, rows;
     private List<Point> neighbors;
+    private edgeType myEdgeType;
 
 
     public simulationPanelFX() {
@@ -71,11 +73,13 @@ public class simulationPanelFX extends VBox implements EventHandler {
         this.canvas.setOnMousePressed(this::handleDraw);
         this.canvas.setOnMouseDragged(this::handleDraw);
 
+        //TODO: Find a way to get rid of hard-coding of neighbors and edge type
         neighbors = new ArrayList<>();
         neighbors.add(new Point(0,1));
         neighbors.add(new Point(0,-1));
         neighbors.add(new Point(1,0));
         neighbors.add(new Point(-1,0));
+        myEdgeType = edgeType.TOROIDAL;
 
         //create initial grid and scale the simulation
         createGridFromXML(PERCOLATION);
@@ -236,15 +240,15 @@ public class simulationPanelFX extends VBox implements EventHandler {
             //currentSim = config.getCurrentSim();
 
             if (file.equals(PERCOLATION)) {
-                mainGrid = new PercolationGrid(cols, rows, neighbors);
+                mainGrid = new PercolationGrid(cols, rows, neighbors, myEdgeType);
             } else if (file.equals(GAME_OF_LIFE)) {
-                mainGrid = new GameOfLifeGrid(cols, rows, neighbors);
+                mainGrid = new GameOfLifeGrid(cols, rows, neighbors, myEdgeType);
             } else if (file.equals(FIRE)) {
-                mainGrid = new FireGrid(cols, rows, percentage, neighbors);
+                mainGrid = new FireGrid(cols, rows, percentage, neighbors, myEdgeType);
             } else if (file.equals(SEGREGATION)) {
-                mainGrid = new SegregationGrid(cols, rows, percentage, neighbors);
+                mainGrid = new SegregationGrid(cols, rows, percentage, neighbors, myEdgeType);
             } else if (file.equals(WATOR)) {
-                mainGrid = new WatorGrid(cols, rows, 5, 3, 2, neighbors);
+                mainGrid = new WatorGrid(cols, rows, 5, 3, 2, neighbors, myEdgeType);
             }
             // TODO don't hard code these in
 
@@ -260,11 +264,11 @@ public class simulationPanelFX extends VBox implements EventHandler {
         cols = size;
         rows = size;
         // TODO: REFACTOR
-            if (str.equals("Percolation")) { mainGrid = new PercolationGrid(size,size,neighbors);}
-            if (str.equals("Fire")) { mainGrid = new FireGrid(size,size,percentage,neighbors);}
-            if (str.equals("Segregation")) { mainGrid = new SegregationGrid(size,size,percentage,neighbors);}
-            if (str.equals("Prey/Predator")) { mainGrid = new WatorGrid(size,size,5,3,2,neighbors);}
-            if (str.equals("Game of Life")) { mainGrid = new GameOfLifeGrid(size,size,neighbors);}
+            if (str.equals("Percolation")) { mainGrid = new PercolationGrid(size,size,neighbors, myEdgeType);}
+            if (str.equals("Fire")) { mainGrid = new FireGrid(size,size,percentage,neighbors,myEdgeType);}
+            if (str.equals("Segregation")) { mainGrid = new SegregationGrid(size,size,percentage,neighbors,myEdgeType);}
+            if (str.equals("Prey/Predator")) { mainGrid = new WatorGrid(size,size,5,3,2,neighbors,myEdgeType);}
+            if (str.equals("Game of Life")) { mainGrid = new GameOfLifeGrid(size,size,neighbors,myEdgeType);}
     }
 
     public Grid getMainGrid() {

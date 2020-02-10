@@ -18,12 +18,12 @@ public abstract class Grid {
   int numRows;
   Cell[][] myCellGrid;
   private List<Point> neighborCoords;
-  enum edgeType{
+  public enum edgeType{
     FIXED, TOROIDAL
   }
-  edgeType myEdgeType = edgeType.TOROIDAL;
+  edgeType myEdgeType;
 
-  public Grid(int cols, int rows, edgeType edge) {
+  public Grid(int cols, int rows, List<Point> neighborLocations, edgeType edges) { // edgeType edges
     numColumns = cols;
     numRows = rows;
     myCellGrid = new Cell[numRows][numColumns];
@@ -31,11 +31,8 @@ public abstract class Grid {
       for (int j = 0; j < numColumns; j++) {
         myCellGrid[i][j] = new Cell(EMPTY, i, j);
       }
-      myEdgeType = edge;
+      myEdgeType = edges;
     }
-  }
-  public Grid(int cols, int rows, List<Point> neighborLocations) { // edgeType edges
-    this(cols, rows, edgeType.FIXED);
     neighborCoords = neighborLocations;
   }
 
@@ -61,9 +58,9 @@ public abstract class Grid {
    * @return
    */
   public Cell[][] getGrid() {
-    //Cell[][] retu = new Cell[myCellGrid.length][myCellGrid[0].length];
-    //System.arraycopy(myCellGrid, 0, retu, 0, myCellGrid.length);
-    return myCellGrid;
+    Cell[][] retu = new Cell[myCellGrid.length][myCellGrid[0].length];
+    System.arraycopy(myCellGrid, 0, retu, 0, myCellGrid.length);
+    return retu;
   }
 
   /**

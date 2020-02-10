@@ -10,8 +10,8 @@ public class GameOfLifeGrid extends Grid {
   public static final int DEAD = 0;
   public static final int ALIVE = 1;
 
-  public GameOfLifeGrid(int cols, int rows, List<Point> neighborLocations) {
-    super(cols, rows, neighborLocations);
+  public GameOfLifeGrid(int cols, int rows, List<Point> neighborLocations, edgeType edges) {
+    super(cols, rows, neighborLocations, edges);
   }
 
   @Override

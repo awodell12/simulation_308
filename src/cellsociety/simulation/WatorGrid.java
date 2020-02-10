@@ -32,13 +32,12 @@ public class WatorGrid extends Grid {
 
 
 
-  public WatorGrid(int cols, int rows, int sharkBreed, int fishBreed, int sharkDie, List<Point> neighbors ) {
-    super(cols, rows, neighbors);
+  public WatorGrid(int cols, int rows, int sharkBreed, int fishBreed, int sharkDie, List<Point> neighbors, edgeType edges) {
+    super(cols, rows, neighbors, edges);
     fishTimeToBreed = fishBreed;
     sharkDeathTime = sharkDie;
     sharkTimeToBreed = sharkBreed;
     neighborLocs = neighbors;
-    //setNeighborLocs(neighbors);
   }
 
 
