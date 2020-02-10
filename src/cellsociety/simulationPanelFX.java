@@ -31,8 +31,7 @@ public class simulationPanelFX extends VBox implements EventHandler {
     public XYChart.Series<Integer,Integer> type0Data;
     public XYChart.Series<Integer,Integer> type1Data;
     public XYChart.Series<Integer,Integer> type2Data;
-    private int iterationNo;
-
+    public int iterationNo;
 
     //create timeline parameters
     public boolean play;
@@ -71,6 +70,8 @@ public class simulationPanelFX extends VBox implements EventHandler {
         this.canvas.setOnMousePressed(this::handleDraw);
         this.canvas.setOnMouseDragged(this::handleDraw);
 
+
+        //Trying to get rid of this
         neighbors = new ArrayList<>();
         neighbors.add(new Point(0,1));
         neighbors.add(new Point(0,-1));
@@ -94,13 +95,13 @@ public class simulationPanelFX extends VBox implements EventHandler {
     }
 
     public void resetGraphData(){
+        iterationNo = 0;
         type0Data = new XYChart.Series<>();
         type1Data = new XYChart.Series<>();
         type2Data = new XYChart.Series<>();
     }
 
     public void updateGraphData() {
-        iterationNo ++;
         int type0 = 0;
         int type1 = 0;
         int type2 = 0;
@@ -116,6 +117,7 @@ public class simulationPanelFX extends VBox implements EventHandler {
         type0Data.getData().add(new XYChart.Data<>(iterationNo,type0));
         type1Data.getData().add(new XYChart.Data<>(iterationNo,type1));
         type2Data.getData().add(new XYChart.Data<>(iterationNo,type2));
+        iterationNo ++;
     }
 
     private void doStep(ActionEvent actionEvent) {
@@ -267,16 +269,8 @@ public class simulationPanelFX extends VBox implements EventHandler {
             if (str.equals("Game of Life")) { mainGrid = new GameOfLifeGrid(size,size,neighbors);}
     }
 
-    public Grid getMainGrid() {
-        return this.mainGrid;
-    }
-    public int getCols() {
-        return this.cols;
-    }
-    public int getRows() {
-        return this.rows;
-    }
-    public int getIterationNo() {
-        return this.iterationNo;
-    }
+    /* Here we can see a wild group of getters */
+    public Grid getMainGrid() { return this.mainGrid; }
+    public int getCols() { return this.cols; }
+    public int getRows() { return this.rows; }
 }
