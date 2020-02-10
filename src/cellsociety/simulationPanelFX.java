@@ -62,8 +62,8 @@ public class simulationPanelFX extends VBox implements EventHandler {
     private static final String WATOR = "data/Wator.xml";
 
     //create simulation parameters
-    private  double canvasWidth = 830;
-    private  double canvasHeight = 830;
+    private double canvasWidth = 830;
+    private double canvasHeight = 830;
     private int cols, rows;
     private List<Point> neighbors;
     private edgeType myEdgeType;
@@ -75,15 +75,15 @@ public class simulationPanelFX extends VBox implements EventHandler {
         this.canvas.setOnMousePressed(this::handleDraw);
         this.canvas.setOnMouseDragged(this::handleDraw);
 
-
         //TODO: Find a way to get rid of hard-coding of neighbors and edge type
-
         neighbors = new ArrayList<>();
         neighbors.add(new Point(0,1));
         neighbors.add(new Point(0,-1));
         neighbors.add(new Point(1,0));
         neighbors.add(new Point(-1,0));
         myEdgeType = edgeType.TOROIDAL;
+
+        iterationNo = 0;
 
         //create initial grid and scale the simulation
         createGridFromXML(PERCOLATION);
@@ -109,22 +109,28 @@ public class simulationPanelFX extends VBox implements EventHandler {
     }
 
     public void updateGraphData() {
-        int type0 = 0;
-        int type1 = 0;
-        int type2 = 0;
-
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                if(mainGrid.getGrid()[i][j].getType() == 0){type0++;}
-                if(mainGrid.getGrid()[i][j].getType() == 1){type1++;}
-                if(mainGrid.getGrid()[i][j].getType() == 2){type2++;}
+        if(tb.started) {
+            int type0 = 0;
+            int type1 = 0;
+            int type2 = 0;
+            for (int i = 0; i < rows; i++) {
+                for (int j = 0; j < cols; j++) {
+                    if (mainGrid.getGrid()[i][j].getType() == 0) {
+                        type0++;
+                    }
+                    if (mainGrid.getGrid()[i][j].getType() == 1) {
+                        type1++;
+                    }
+                    if (mainGrid.getGrid()[i][j].getType() == 2) {
+                        type2++;
+                    }
+                }
             }
+            type0Data.getData().add(new XYChart.Data<>(iterationNo, type0));
+            type1Data.getData().add(new XYChart.Data<>(iterationNo, type1));
+            type2Data.getData().add(new XYChart.Data<>(iterationNo, type2));
+            iterationNo++;
         }
-
-        type0Data.getData().add(new XYChart.Data<>(iterationNo,type0));
-        type1Data.getData().add(new XYChart.Data<>(iterationNo,type1));
-        type2Data.getData().add(new XYChart.Data<>(iterationNo,type2));
-        iterationNo ++;
     }
 
     private void doStep(ActionEvent actionEvent) {

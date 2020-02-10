@@ -6,7 +6,6 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.control.*;
 import javafx.scene.layout.StackPane;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import xml.Configuration;
 import xml.Reader;
@@ -24,9 +23,9 @@ public class toolBar extends ToolBar {
     public Slider speedSlider;
     private Button playButton, graphButton, loadButton, newWindow, changesButton, stepButton, resizeButton;
     private String playStop = "Play";
+    public boolean started;
 
     private Configuration config;
-    private ListView listview;
 
     public toolBar(simulationPanelFX fx){
         //Get the Main Panel in
@@ -164,6 +163,7 @@ public class toolBar extends ToolBar {
 
     private void handleResize(ActionEvent actionEvent) {
         if(!this.fx.play) {
+            started = true;
             this.fx.resizeGrid((int) sizeSlider.getValue(), fx.currentSim);
             this.fx.draw();
             this.fx.resetGraphData();
@@ -174,11 +174,13 @@ public class toolBar extends ToolBar {
         if(!this.fx.play) {
             this.fx.getMainGrid().updateCells(this.fx.getMainGrid().checkForUpdates());
             this.fx.draw();
+            this.fx.updateGraphData();
         }
     }
 
     private void handleChanges(ActionEvent actionEvent) {
         if(!this.fx.play) {
+            started = true;
             this.fx.currentSim = simulationChoiceBox.getValue();
             this.fx.simChecker(fx.currentSim);
             this.fx.draw();
