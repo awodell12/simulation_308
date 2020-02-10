@@ -13,12 +13,14 @@ Finish Date: 2/9/2020
 
 Hours Spent:
 * Austin: 12 Basic & 10 Complete
+* Robert: 20 Basic & 7 Complete
 
 ### Primary Roles
 Austin - Simulation back end (the whole Simulation sub-package)
+Robert - XML file formatting and parsing
 
 ### Resources Used
-
+Spike simulation lab, Oracle java documentation
 
 ### Running the Program
 
@@ -30,12 +32,14 @@ Features implemented:
 * Two typed of edges: Toroidal and finite
 * Custom selection of neighborhood. 
 * Fire, WaTor, Segregation, GameOfLife, and Percolation
-
+* Configuration data are read in from XML files and allows users to select files with .xml extension.
 
 
 ### Notes/Assumptions
 
 Assumptions or Simplifications:
+There are some hard-coded values that we didn't end up resolving. For example, neighbors and
+Toroidal are hard-coded just for demonstration. That's on me (robert)
 
 Interesting data files:
 
