@@ -18,13 +18,12 @@ public abstract class Grid {
   int numRows;
   Cell[][] myCellGrid;
   private List<Point> neighborCoords;
-  boolean rapAroundEdges;
   enum edgeType{
     FIXED, TOROIDAL
   }
   edgeType myEdgeType = edgeType.TOROIDAL;
 
-  public Grid(int cols, int rows) {
+  public Grid(int cols, int rows, edgeType edge) {
     numColumns = cols;
     numRows = rows;
     myCellGrid = new Cell[numRows][numColumns];
@@ -32,10 +31,11 @@ public abstract class Grid {
       for (int j = 0; j < numColumns; j++) {
         myCellGrid[i][j] = new Cell(EMPTY, i, j);
       }
+      myEdgeType = edge;
     }
   }
   public Grid(int cols, int rows, List<Point> neighborLocations) { // edgeType edges
-    this(cols, rows);
+    this(cols, rows, edgeType.FIXED);
     neighborCoords = neighborLocations;
   }
 
