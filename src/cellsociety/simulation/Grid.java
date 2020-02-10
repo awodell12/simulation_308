@@ -8,6 +8,16 @@ import java.util.Queue;
 import javafx.util.Pair;
 
 /**
+ * @author  Austin Odell
+ * purpose: The parent class for all grids that are the backbone for a cellular automata simulation.
+ * Maintain the grid of cells. Is extended to make grids for specific types of simulations.
+ * Assumptions: The grid is of a fixed side. If it needs to be larger, a new grid must be created
+ * Dependencies: the Cell class
+ * Example: 1. create a new grid via the constructor
+ * 2. pass in a list of intial values to the updateCells method
+ * 3. For each generation call updateCells(checkForUpdates)
+ * 4. A copy of the grid can be retrieved for use in visualization
+ *
  * By default all cells are initialized to their 0 state. If you want initial states you must call
  * UpdateCells with a list of non-zero initial cells.
  */
@@ -23,6 +33,14 @@ public abstract class Grid {
   }
   edgeType myEdgeType;
 
+  /**
+   *
+   * @param cols number of columns in the grid
+   * @param rows number of rows in the grid
+   * @param neighborLocations a List of Points, where each is the offset from the central cell used
+   * to describe its neighbors
+   * @param edges The type of edges being implemented
+   */
   public Grid(int cols, int rows, List<Point> neighborLocations, edgeType edges) { // edgeType edges
     numColumns = cols;
     numRows = rows;
@@ -36,6 +54,12 @@ public abstract class Grid {
     neighborCoords = neighborLocations;
   }
 
+  /**
+   * The purpose of this method is to find any cells that need to be updated based on their state and that
+   * of their neighbors.
+   * assumptions: Only passed valid cells.
+   * @return List of cells that will need to be updated at the end of this generation
+   */
   public abstract List<Cell> checkForUpdates();
 
   /**
@@ -55,7 +79,7 @@ public abstract class Grid {
   /**
    * Because its an array I thought returning a copy would be a good way to make it immutable
    *
-   * @return
+   * @return a copy of the current state of the grid
    */
   public Cell[][] getGrid() {
     Cell[][] retu = new Cell[myCellGrid.length][myCellGrid[0].length];
@@ -63,24 +87,6 @@ public abstract class Grid {
     return retu;
   }
 
-  /**
-   * debug/testing method to print out current states
-   *
-   * @return
-   */
-  public void printCells() {
-    for (int i = 0; i < numRows; i++) {
-      for (int j = 0; j < numColumns; j++) {
-        if (myCellGrid[i][j] == null) {
-          System.out.print("x ");
-        } else {
-          System.out.print(myCellGrid[i][j].getType() + " ");
-        }
-      }
-      System.out.println();
-    }
-    System.out.println();
-  }
 
   Pair checkLikeNeighbors(int i, int j, int type) {
     int similarCount = 0;
@@ -112,6 +118,7 @@ public abstract class Grid {
     }
     return neighbors;
   }
+
   boolean isLegalCell(int i, int j) {
     boolean notLegal = (i >= numRows || i < 0 || j >= numColumns || j < 0);
     return !notLegal;
@@ -148,7 +155,7 @@ public abstract class Grid {
     }
   }
 
-  public List<Pair> findEmptyCells() {
+  protected List<Pair> findEmptyCells() {
     ArrayList<Pair> emptyCells = new ArrayList<>();
     for (int i = 0; i < numRows; i++) {
       for (int j = 0; j < numColumns; j++) {
