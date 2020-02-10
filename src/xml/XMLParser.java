@@ -14,7 +14,15 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-
+/**
+ * @author Robert Chen
+ * Purpose: The purpose of this class is to extract the necessary information from the XML files based on the fields
+ * specified in Configuration.java, and return a Configuration object that contains all of that information.
+ * Assumptions: For the coordinates, we assume that they are labled by type: typeOne and typeTwo.
+ * Dependencies: Configuration and XMLException
+ * Example: Create a new XMLParser object, call getConfiguration, and use the getter methods in the configuration object
+ * to extract the information from the file.
+ */
 public class XMLParser {
     private final DocumentBuilder DOCUMENT_BUILDER;
 
@@ -22,6 +30,12 @@ public class XMLParser {
         DOCUMENT_BUILDER = getDocumentBuilder();
     }
 
+    /**
+     * Purpose: Returns a Configuration object that contains all of the important information held in the XML file.
+     * Assumptions: For the coordinates, we assume that they are labeled by type: typeOne and typeTwo.
+     * @param dataFile - the XML file
+     * @return Configuration - a Configuration object that contains the information needed.
+     */
     public Configuration getConfiguration (File dataFile) {
         Element root = getRootElement(dataFile);
         Map<String, String> config = new HashMap<>();
@@ -40,27 +54,20 @@ public class XMLParser {
                 String coordinate = element.getTextContent();
 
                 String stringType = element.getParentNode().getNodeName();
-
-                // TODO: refactor this when I get a chance to
-                int intType;
+                int intType = 0;
                 if (stringType.equals("typeOne")) {
                     intType = 1;
                 }
                 else if (stringType.equals("typeTwo")) {
                     intType = 2;
                 }
-                else if (stringType.equals("typeZero")){
-                    intType = 0;
-                }
-                else intType=0;
                 coordinates.put(stringToPoint(coordinate), intType);
             }
         }
-
         return new Configuration(config, coordinates);
     }
 
-    public Element getRootElement (File xmlFile) {
+    private Element getRootElement (File xmlFile) {
         try {
             DOCUMENT_BUILDER.reset();
             Document xmlDocument = DOCUMENT_BUILDER.parse(xmlFile);
@@ -71,7 +78,7 @@ public class XMLParser {
         }
     }
 
-    public String getTextValue (Element e, String tagName) {
+    private String getTextValue (Element e, String tagName) {
         NodeList nodeList = e.getElementsByTagName(tagName);
         if (nodeList != null && nodeList.getLength() > 0) {
             return nodeList.item(0).getTextContent();
@@ -82,7 +89,7 @@ public class XMLParser {
         }
     }
 
-    public Point stringToPoint (String coordinate) {
+    private Point stringToPoint (String coordinate) {
         String[] coords = coordinate.split(",");
         return new Point(Integer.parseInt(coords[0]), Integer.parseInt(coords[1]));
     }
@@ -95,5 +102,4 @@ public class XMLParser {
             throw new XMLException(e);
         }
     }
-
 }
