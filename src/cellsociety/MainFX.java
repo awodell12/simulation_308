@@ -25,13 +25,13 @@ import java.util.ArrayList;
  * Feel free to completely change this code or delete it entirely.
  */
 public class MainFX extends Application {
+
     private final int simWidth = 830, simHeight = 873;
 
     @Override
     public void start(Stage stage) throws Exception {
 
         simulationPanelFX mainPanel = new simulationPanelFX();
-
         Scene scene = new Scene(mainPanel, simWidth, simHeight);
         stage.setTitle("Main Simulation");
         stage.setScene(scene);
@@ -40,16 +40,8 @@ public class MainFX extends Application {
         mainPanel.draw();
     }
 
-
     public static void main (String[] args) {
         launch();
-    }
-
-    public int getSimHeight() {
-        return this.simHeight;
-    }
-    public int getSimWidth() {
-        return this.simWidth;
     }
 }
 
