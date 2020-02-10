@@ -202,9 +202,10 @@ public class WatorGrid extends Grid {
   protected Queue<Integer> findNeighbors(int location) {
     LinkedList<Integer> neighbors = new LinkedList<>();
     for (Point p : neighborLocs) {
-      if (isLegalCell((location / numColumns) + p.x , (location % numColumns) + p.y)) {
-        neighbors.add(location + calcLocation(p.x,p.y));
-      }
+        Integer validNeighbor = legalNeighbor(location/numColumns + p.x,location%numColumns + p.y);
+        if(validNeighbor != null) {
+          neighbors.add(validNeighbor);
+        }
     }
     return neighbors;
   }
