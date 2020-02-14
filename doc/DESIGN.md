@@ -70,8 +70,12 @@ then calling the correct methods to implement the desired result of these intera
 - XML files that weren't formatted correctly would cause the simulation to run wrong.
 
 
-
 ## New Features HowTo
+Configuration:
+* For styling aspects of the simulation, have a button that allows users to read in a stylesheet XML file, which is
+formatted in a certain way that specifies what aspect should be changed and what the value should be changed to, one
+in the tag, one in the content. For example, <gridThickness> 2 </gridThickness>. Create a new Style class in xml, which
+would be similar to Configuration. Alter XMLParser slightly to account for 
 
 #### Easy to Add Features
 
