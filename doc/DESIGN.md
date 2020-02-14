@@ -78,6 +78,17 @@ in the tag, one in the content. For example, <gridThickness> 2 </gridThickness>.
 would be similar to Configuration. Alter XMLParser slightly to account for 
 
 #### Easy to Add Features
-
+1. Implementing a grid out of triangles wouldn't be too hard because an x,y coordinate system like the square
+one would work for it and then neighbors wouldn't need any adjusting. You would have to decide to enumerate 
+the horizontal axis either along the top of a row or the bottom. 
 #### Other Features not yet Done
+1. Implementing a grid out hexagons would be difficult because they don't lend themselves as well to an
+x,y coordinate system. With some medium-sized changes this could be done and still utilize a lot of the
+current functionality. It would just need an effective coordinate system mapping. 
+2. Having the grid expand would be a pretty big overhaul on the back-end but probably could be done on 
+the front-end. This is because the front end already allows the size of the grid to change (though this 
+resets the simulation), it could be expanded for a growing grid. The back-end of the grid
+utilizes a fixed size array so it would not be easy to have this expand well. The core functions of the
+program would still work, though a different grid data structure implementation would probably have to be used
+one that allows readily for changes in size. 
 
