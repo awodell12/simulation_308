@@ -99,3 +99,6 @@ resets the simulation), it could be expanded for a growing grid. The back-end of
 utilizes a fixed size array so it would not be easy to have this expand well. The core functions of the
 program would still work, though a different grid data structure implementation would probably have to be used
 one that allows readily for changes in size. 
+3. Additional Simulations: These would require extending the Grid class and implementing the necessary
+method of checkForUpdates. These simulations tend to be on the more complex side like WaTor
+so they might need some extra methods or to use additional classes. 
